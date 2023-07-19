@@ -6,7 +6,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _RawCardLevelComputed_instances, _RawCardLevelComputed_computeMainStat, _RawCardLevelComputed_computeSecondaryStat, _RawCardLevelComputed_computeLifeStat;
 import UUID from "../Tools/UUID.js";
 class RawCardLevelComputed {
-    constructor(rawCarac, level, title, img) {
+    constructor(rawCarac, level, title, img, capacities = new Map()) {
         _RawCardLevelComputed_instances.add(this);
         this._rawCarac = rawCarac;
         this._uuid = UUID.generateUUID();
@@ -14,12 +14,20 @@ class RawCardLevelComputed {
         this._title = title;
         this._img = img;
         this._animation = new Map();
+        this._capacities = capacities;
     }
     getObjecForFight() { return null; }
     getUUID() { return this._uuid; }
     getTitle() { return this._title; }
     getImg() { return this._img; }
     getLevel() { return this._level; }
+    getCapacities() { return this._capacities; ; }
+    addCapacity(capacity) { this._capacities.set(UUID.generateUUID(), capacity); }
+    getCapacityByUUID(uuid) { return this._capacities.get(uuid); }
+    getRandomCapacity() {
+        let keys = Array.from(this._capacities.keys());
+        return this._capacities.get(keys[Math.floor(Math.random() * keys.length)]);
+    }
     getAnimationMap() { return this._animation; }
     addAnimation(animation, uuid = UUID.generateUUID()) {
         this._animation.set(uuid, animation);

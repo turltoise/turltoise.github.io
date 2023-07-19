@@ -1,3 +1,4 @@
+// TO DELETE ?
 class Fighter {
 	private _currentStatusList: Map<string, string>;
 	private _capacityList: Map<string, string>;

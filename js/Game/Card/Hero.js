@@ -2,8 +2,8 @@ import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
 import RawCardLevelComputed from "./RawCardLevelComputed.js";
 import UUID from "../Tools/UUID.js";
 class Hero extends RawCardLevelComputed {
-    constructor(rawCarac, level, title, img) {
-        super(rawCarac, level, title, img);
+    constructor(rawCarac, level, title, img, capacities = new Map()) {
+        super(rawCarac, level, title, img, capacities);
         this._itemList = new Map();
     }
     addItem(item) {

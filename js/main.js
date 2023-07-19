@@ -92,6 +92,8 @@ myDeck.addCard(cardA);
 const myResource = new Resource();
 const myWorldList = new WorldList();
 const myState = new State(document, myCollection, myDeck, myResource, myWorldList);
+// hack TT
+myWorldList.generateWorldList(myState);
 const myStore = new Store(myState);
 const myGStore = new StoreGraphicComponent(myState, myStore);
 const myCombat = new Combat(myState);

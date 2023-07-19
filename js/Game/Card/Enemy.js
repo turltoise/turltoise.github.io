@@ -1,8 +1,8 @@
 import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
 import RawCardLevelComputed from "./RawCardLevelComputed.js";
 class Enemy extends RawCardLevelComputed {
-    constructor(rawCarac, level, title, img, gold = 5) {
-        super(rawCarac, level, title, img);
+    constructor(rawCarac, level, title, img, gold = 5, capacities = new Map()) {
+        super(rawCarac, level, title, img, capacities);
         this._gold = gold;
     }
     getObjecForFight() {

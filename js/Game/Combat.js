@@ -120,13 +120,17 @@ class Combat {
 _Combat_instances = new WeakSet(), _Combat_fight = function _Combat_fight(currentEnemy, currentHero) {
     if (this._phase == Combat.PHASE_HERO()) {
         this._state.setCombatStatusText("Your turn !");
-        currentHero.hit(currentEnemy, this._state);
+        //currentHero.hit(currentEnemy, this._state);
+        currentHero.triggerStatus();
+        currentHero.getRandomCapacity().trigger(currentHero, currentEnemy);
         this._state.getLevel().setNextHero();
         this._phase = Combat.PHASE_ENEMY();
     }
     else if (this._phase == Combat.PHASE_ENEMY()) {
         this._state.setCombatStatusText("Enemy turn !");
-        currentEnemy.hit(currentHero, this._state);
+        //currentEnemy.hit(currentHero, this._state);
+        currentEnemy.triggerStatus();
+        currentEnemy.getRandomCapacity().trigger(currentEnemy, currentHero);
         this._phase = Combat.PHASE_HERO();
     }
 }, _Combat_getCurrentLevelName = function _Combat_getCurrentLevelName() {

@@ -2,13 +2,16 @@ import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
 import RawCardLevelComputed from "./RawCardLevelComputed.js";
 import Item from "./Item.js";
 import UUID from "../Tools/UUID.js";
+import RawCarac from "./RawCarac.js";
+import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
+import PhysicalAttack from "../Fight/Capacity/List/PhysicalAttack.js";
 
 class Hero extends RawCardLevelComputed {
 	private _itemList: Map<string, Item>;
 
-	constructor(rawCarac,level,title,img) {
-		super(rawCarac,level,title,img);
-		this._itemList = new Map();
+	constructor(rawCarac: RawCarac, level: number, title: string, img: string, capacities: Map<string, AbstractCapacity> = new Map()) {
+		super(rawCarac, level, title, img, capacities);
+		this._itemList = new Map(); 
 	}
 
 	addItem(item : Item) {

@@ -1,12 +1,14 @@
+import State from "../../State/State.js";
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 
 class Hell extends AbstractWorld {
 	constructor(
+		state: State,
 		title="Title",
 		background="Background"
 		) {
-		super(title,background);
+		super(state, title, background);
 		this.addWorldLevel(this.#generateWorldLevelOne());
 		this.addWorldLevel(this.#generateWorldLevelTwo());
 		this.addWorldLevel(this.#generateWorldLevelThree());

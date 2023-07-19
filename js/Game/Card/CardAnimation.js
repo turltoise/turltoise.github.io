@@ -5,7 +5,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _CardAnimation_instances, _CardAnimation_isTypeExists;
 class CardAnimation {
-    constructor(type, data1 = null, data2 = null, data3 = null) {
+    constructor(type, data1, data2, data3) {
         _CardAnimation_instances.add(this);
         __classPrivateFieldGet(this, _CardAnimation_instances, "m", _CardAnimation_isTypeExists).call(this, type);
         this._type = type;

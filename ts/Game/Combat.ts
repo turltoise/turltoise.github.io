@@ -127,14 +127,16 @@ class Combat {
 	#fight(currentEnemy, currentHero) {
 		if (this._phase == Combat.PHASE_HERO()) {
 			this._state.setCombatStatusText("Your turn !");
-			currentHero.hit(currentEnemy, this._state);
-
+			//currentHero.hit(currentEnemy, this._state);
+			currentHero.triggerStatus();
+			currentHero.getRandomCapacity().trigger(currentHero, currentEnemy);
 			this._state.getLevel().setNextHero();
 			this._phase = Combat.PHASE_ENEMY();
 		} else if (this._phase == Combat.PHASE_ENEMY()) {
 			this._state.setCombatStatusText("Enemy turn !");
-			currentEnemy.hit(currentHero, this._state);
-			
+			//currentEnemy.hit(currentHero, this._state);
+			currentEnemy.triggerStatus();
+			currentEnemy.getRandomCapacity().trigger(currentEnemy, currentHero);
 			this._phase = Combat.PHASE_HERO();
 		}
 	}

@@ -1,3 +1,4 @@
+// TO DELETE ?
 class Fighter {
     constructor() {
         this._currentStatusList = new Map();

@@ -7,8 +7,8 @@ var _Hell_instances, _Hell_generateWorldLevelOne, _Hell_generateWorldLevelTwo, _
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Hell extends AbstractWorld {
-    constructor(title = "Title", background = "Background") {
-        super(title, background);
+    constructor(state, title = "Title", background = "Background") {
+        super(state, title, background);
         _Hell_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Hell_instances, "m", _Hell_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Hell_instances, "m", _Hell_generateWorldLevelTwo).call(this));

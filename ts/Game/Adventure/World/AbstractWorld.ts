@@ -1,11 +1,13 @@
+import State from "../../State/State.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 
 class AbstractWorld {
+	protected _state: State;
 	private _title: string;
 	private _background: string;
 	private _worldLevelList: Map<number, WorldLevel>;
 
-	constructor(title?: string, background?: string) {
+	constructor(state: State, title?: string, background?: string) {
 		this._title = (title) ? title : this.constructor.name;
 		this._background = background;
 		this._worldLevelList = new Map();

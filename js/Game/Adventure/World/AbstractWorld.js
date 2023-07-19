@@ -1,5 +1,5 @@
 class AbstractWorld {
-    constructor(title, background) {
+    constructor(state, title, background) {
         this._title = (title) ? title : this.constructor.name;
         this._background = background;
         this._worldLevelList = new Map();

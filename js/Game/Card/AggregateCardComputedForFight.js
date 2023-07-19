@@ -90,6 +90,23 @@ class AggregateCardComputedForFight {
     getAccuracy() { return __classPrivateFieldGet(this, _AggregateCardComputedForFight_instances, "m", _AggregateCardComputedForFight_computeStat).call(this, 'getAccuracy'); }
     getEscape() { return __classPrivateFieldGet(this, _AggregateCardComputedForFight_instances, "m", _AggregateCardComputedForFight_computeStat).call(this, 'getEscape'); }
     getLife() { return __classPrivateFieldGet(this, _AggregateCardComputedForFight_instances, "m", _AggregateCardComputedForFight_computeStat).call(this, 'getLife'); }
+    getCapacities() {
+        let capacities = new Map();
+        this._sMap.forEach((computedCard) => {
+            capacities = new Map([...capacities, ...computedCard.getCapacities()]);
+            ;
+        });
+        return capacities;
+    }
+    getRandomCapacity() {
+        let capacities = new Map();
+        this._sMap.forEach((computedCard) => {
+            capacities = new Map([...capacities, ...computedCard.getCapacities()]);
+            ;
+        });
+        let keys = Array.from(capacities.keys());
+        return capacities.get(keys[Math.floor(Math.random() * keys.length)]);
+    }
 }
 _AggregateCardComputedForFight_instances = new WeakSet(), _AggregateCardComputedForFight_computeStat = function _AggregateCardComputedForFight_computeStat(methodName) {
     return __classPrivateFieldGet(this, _AggregateCardComputedForFight_instances, "m", _AggregateCardComputedForFight_aggregatedStatOfAllSoloCardLinkToThisAggregateCard).call(this, methodName) + __classPrivateFieldGet(this, _AggregateCardComputedForFight_instances, "m", _AggregateCardComputedForFight_checkBuffForCarac).call(this, methodName);

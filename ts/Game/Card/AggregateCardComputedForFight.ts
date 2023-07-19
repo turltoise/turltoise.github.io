@@ -112,13 +112,30 @@ class AggregateCardComputedForFight {
 
 	getLife() 					{return this.#computeStat('getLife');}
 
-	#computeStat(methodName) {
+	getCapacities() {
+		let capacities = new Map();
+		this._sMap.forEach((computedCard: RawCardLevelComputed) => {
+			capacities = new Map([...capacities, ...computedCard.getCapacities()]);;
+		});
+		return capacities;
+	}
+
+	getRandomCapacity() {
+		let capacities = new Map();
+		this._sMap.forEach((computedCard: RawCardLevelComputed) => {
+			capacities = new Map([...capacities, ...computedCard.getCapacities()]);;
+		});
+		let keys = Array.from(capacities.keys());
+		return capacities.get(keys[Math.floor(Math.random() * keys.length)]);
+	}
+
+	#computeStat(methodName: string) {
 		return this.#aggregatedStatOfAllSoloCardLinkToThisAggregateCard(methodName) + this.#checkBuffForCarac(methodName);
 	}
 
 	#aggregatedStatOfAllSoloCardLinkToThisAggregateCard(methodName) {
 		let stat = 0;
-		this._sMap.forEach((computedCard) => {
+		this._sMap.forEach((computedCard: RawCardLevelComputed) => {
 			stat+=computedCard[methodName]();
 		});
 		return stat;

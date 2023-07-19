@@ -7,8 +7,8 @@ var _Desert_instances, _Desert_generateWorldLevelOne, _Desert_generateWorldLevel
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Desert extends AbstractWorld {
-    constructor(title = "Title", background = "Background") {
-        super(title, background);
+    constructor(state, title = "Title", background = "Background") {
+        super(state, title, background);
         _Desert_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Desert_instances, "m", _Desert_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Desert_instances, "m", _Desert_generateWorldLevelTwo).call(this));

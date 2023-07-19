@@ -1,6 +1,5 @@
 import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
 import State from "../../../State/State.js";
-import Status from "../Status.js";
 
 class AbstractTick {
     protected _state: State;

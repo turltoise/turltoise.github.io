@@ -1,3 +1,4 @@
+import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import UUID from "../Tools/UUID.js";
 import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
 import CardAnimation from "./CardAnimation.js";
@@ -10,20 +11,30 @@ class RawCardLevelComputed {
 	private _title: string;
 	private _img: string;
 	private _animation: Map<string, CardAnimation>;
+	private _capacities: Map<string, AbstractCapacity>
 
-	constructor(rawCarac, level, title, img) {
+	constructor(rawCarac: RawCarac, level: number, title: string, img: string, capacities: Map<string, AbstractCapacity> = new Map()) {
 		this._rawCarac = rawCarac;
 		this._uuid = UUID.generateUUID();
 		this._level = level;
 		this._title = title;
 		this._img = img;
 		this._animation = new Map();
+		this._capacities = capacities;
 	}
 	getObjecForFight(): AggregateCardComputedForFight {return null;}
 	getUUID() {return this._uuid;}
 	getTitle() {return this._title;}
 	getImg() {return this._img;}
 	getLevel() {return this._level;}
+
+	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;;}
+	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}
+	getCapacityByUUID(uuid: string) : AbstractCapacity {return this._capacities.get(uuid);}
+	getRandomCapacity(): AbstractCapacity {
+		let keys = Array.from(this._capacities.keys());
+		return this._capacities.get(keys[Math.floor(Math.random() * keys.length)])
+	}
 
 	getAnimationMap() {return this._animation;}
 	addAnimation(animation, uuid=UUID.generateUUID()) {

@@ -1,11 +1,13 @@
+import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
+import RawCarac from "./RawCarac.js";
 import RawCardLevelComputed from "./RawCardLevelComputed.js";
 
 class Enemy extends RawCardLevelComputed {
 	private _gold: number;
 
-	constructor(rawCarac, level, title, img, gold=5) {
-		super(rawCarac, level, title, img);
+	constructor(rawCarac: RawCarac, level: number, title: string, img: string, gold: number = 5, capacities: Map<string, AbstractCapacity> = new Map()) {
+		super(rawCarac, level, title, img, capacities);
 		this._gold = gold;
 	}
 

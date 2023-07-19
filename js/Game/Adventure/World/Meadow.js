@@ -6,11 +6,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _Meadow_instances, _Meadow_generateWorldLevelOne, _Meadow_generateWorldLevelTwo, _Meadow_generateWorldLevelThree;
 import Enemy from "../../Card/Enemy.js";
 import RawCarac from "../../Card/RawCarac.js";
+import PhysicalAttack from "../../Fight/Capacity/List/PhysicalAttack.js";
+import UUID from "../../Tools/UUID.js";
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Meadow extends AbstractWorld {
-    constructor(title, background) {
-        super(title, background);
+    constructor(state, title, background) {
+        super(state, title, background);
         _Meadow_instances.add(this);
         this._caracE = new RawCarac(1, //strength=null,
         1, //dexterity=null,
@@ -37,22 +39,27 @@ class Meadow extends AbstractWorld {
     }
 }
 _Meadow_instances = new WeakSet(), _Meadow_generateWorldLevelOne = function _Meadow_generateWorldLevelOne() {
-    console.log(this._caracE);
-    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);
     return worldLevel;
 }, _Meadow_generateWorldLevelTwo = function _Meadow_generateWorldLevelTwo() {
-    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
-    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
+    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10, capacities2);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);
     worldLevel.addMonster(enemy2);
     return worldLevel;
 }, _Meadow_generateWorldLevelThree = function _Meadow_generateWorldLevelThree() {
-    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
-    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10);
-    const enemy3 = new Enemy(this._caracE, 3, 'Level 3 enemy', "illidan.webp", 15);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
+    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10, capacities2);
+    const capacities3 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const enemy3 = new Enemy(this._caracE, 3, 'Level 3 enemy', "illidan.webp", 15, capacities3);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);
     worldLevel.addMonster(enemy2);

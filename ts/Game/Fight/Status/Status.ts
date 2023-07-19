@@ -18,7 +18,7 @@ class Status {
     getTurn(): number {return  this._turn;}
     getBuff(): AbstractBuff {return  this._buff;}
     getTick(): AbstractTick {return  this._tick;}
-    setTurn(turn: number) {this._turn=turn;}
+    setTurn(turn: number) {this._turn = turn;}
 }
 
 export default Status;
