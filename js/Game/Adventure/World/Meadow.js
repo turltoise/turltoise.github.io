@@ -1,0 +1,63 @@
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _Meadow_instances, _Meadow_generateWorldLevelOne, _Meadow_generateWorldLevelTwo, _Meadow_generateWorldLevelThree;
+import Enemy from "../../Card/Enemy.js";
+import RawCarac from "../../Card/RawCarac.js";
+import AbstractWorld from "./AbstractWorld.js";
+import WorldLevel from "./WorldLevel/WorldLevel.js";
+class Meadow extends AbstractWorld {
+    constructor(title, background) {
+        super(title, background);
+        _Meadow_instances.add(this);
+        this._caracE = new RawCarac(1, //strength=null,
+        1, //dexterity=null,
+        1, //intelligence=null,
+        1, //luck=null,
+        1, //physicalDamage=null,
+        1, //physicalCriticalRate=null,
+        1, //physicalCriticalNumber=null,
+        1, //magicDamage=null,
+        1, //magicCriticalRate=null,
+        1, //magicCriticalNumber=null,
+        1, //fireResistance=null,
+        1, //waterResistance=null,
+        1, //plantResistance=null,
+        1, //necromancyResistance=null,
+        1, //blessingResistance=null,
+        1, //armor=null,
+        1, //accuracy=null,
+        1, //escape=null,
+        30);
+        this.addWorldLevel(__classPrivateFieldGet(this, _Meadow_instances, "m", _Meadow_generateWorldLevelOne).call(this));
+        this.addWorldLevel(__classPrivateFieldGet(this, _Meadow_instances, "m", _Meadow_generateWorldLevelTwo).call(this));
+        this.addWorldLevel(__classPrivateFieldGet(this, _Meadow_instances, "m", _Meadow_generateWorldLevelThree).call(this));
+    }
+}
+_Meadow_instances = new WeakSet(), _Meadow_generateWorldLevelOne = function _Meadow_generateWorldLevelOne() {
+    console.log(this._caracE);
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
+    const worldLevel = new WorldLevel();
+    worldLevel.addMonster(enemy1);
+    return worldLevel;
+}, _Meadow_generateWorldLevelTwo = function _Meadow_generateWorldLevelTwo() {
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
+    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10);
+    const worldLevel = new WorldLevel();
+    worldLevel.addMonster(enemy1);
+    worldLevel.addMonster(enemy2);
+    return worldLevel;
+}, _Meadow_generateWorldLevelThree = function _Meadow_generateWorldLevelThree() {
+    const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5);
+    const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10);
+    const enemy3 = new Enemy(this._caracE, 3, 'Level 3 enemy', "illidan.webp", 15);
+    const worldLevel = new WorldLevel();
+    worldLevel.addMonster(enemy1);
+    worldLevel.addMonster(enemy2);
+    worldLevel.addMonster(enemy3);
+    return worldLevel;
+};
+export default Meadow;
+//# sourceMappingURL=Meadow.js.map

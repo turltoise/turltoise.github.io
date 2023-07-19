@@ -1,0 +1,28 @@
+body {
+	font-family: Arial;
+	background-color: rgba(90,144,200,1);
+    background-image: url(../img/arches.png);
+    color: #333;
+    min-height: 100%;
+    padding: 0px;
+}
+
+
+/* Animation 1 */
+@keyframes colorFlash {
+	25% {color :red;}
+	50% {color : blue;}
+	75% {color : green;}
+	100% {color : black;}
+}
+
+p {
+	animation: 2s linear 0ms infinite normal none running colorFlash;
+}
+
+/*  Animation 2 */
+@keyframes attackCard {
+	0%   {margin-top:  0px;}
+	25%  {margin-top: -40px;}
+	100% {margin-top:  0px;}
+}
