@@ -5,18 +5,19 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _a, _CapacityProcessor_magicalStrikeDmgGiven, _CapacityProcessor_physicalDefenseDmgTaken, _CapacityProcessor_magicDefenseDmgTaken, _CapacityProcessor_touched, _CapacityProcessor_multiplicator, _CapacityProcessor_computeNormalDamage, _CapacityProcessor_isCriticalDamage, _CapacityProcessor_computeCriticalDamage, _CapacityProcessor_computeDefense, _CapacityProcessor_computeElementalResitance, _CapacityProcessor_computeRand1on2, _CapacityProcessor_rand1To100;
 import Element from "../Element.js";
+import CapacityMessage from "./CapacityMessage.js";
 class CapacityProcessor {
     static putStatus(state, attackName, thrower, target, status) {
         if (__classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_touched).call(CapacityProcessor, thrower, target)) {
             target.addStatus(status);
-            state.addChatMessage(attackName + " put on " + target.getTitle());
+            CapacityMessage.putStatus(state, attackName, target);
         }
         else {
-            state.addChatMessage(attackName + " failed.");
+            CapacityMessage.failed(state, attackName);
         }
     }
     static annoucementCapacityWithFocus(state, attackName, thrower, target) {
-        state.addChatMessage(thrower.getTitle() + " use " + attackName + " on " + target.getTitle() + ".");
+        CapacityMessage.capacityWithFocus(state, attackName, thrower, target);
     }
     static heal(state, thrower, target, power, heal) {
         if (heal === null) {
@@ -24,7 +25,8 @@ class CapacityProcessor {
         }
         heal = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, heal, power);
         target.heal(heal);
-        state.addChatMessage(target.getTitle() + " received " + heal + " of heal.");
+        CapacityMessage.heal(state, target, heal);
+        return heal;
     }
     static shield(state, thrower, target, power, shield) {
         if (shield === null) {
@@ -32,7 +34,8 @@ class CapacityProcessor {
         }
         shield = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, shield, power);
         target.shield(shield);
-        state.addChatMessage(target.getTitle() + " received " + shield + " of shield.");
+        CapacityMessage.shield(state, target, shield);
+        return shield;
     }
     static magicProc(state, attackName, thrower, target, power, element) {
         let dmgTaken = 0;
@@ -40,7 +43,7 @@ class CapacityProcessor {
         dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven, element);
         dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
         target.dmg(dmgTaken);
-        state.addChatMessage(attackName + " gave " + dmgTaken + " damage.");
+        CapacityMessage.damage(state, attackName, dmgTaken);
         return dmgTaken;
     }
     static magicAttack(state, attackName, thrower, target, power, element) {
@@ -50,10 +53,10 @@ class CapacityProcessor {
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven, element);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
             target.dmg(dmgTaken);
-            state.addChatMessage(attackName + " gave " + dmgTaken + " damage.");
+            CapacityMessage.damage(state, attackName, dmgTaken);
         }
         else {
-            state.addChatMessage(attackName + " missed target.");
+            CapacityMessage.failed(state, attackName);
         }
         return dmgTaken;
     }
@@ -64,10 +67,10 @@ class CapacityProcessor {
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_physicalDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
             target.dmg(dmgTaken);
-            state.addChatMessage(attackName + " gave " + dmgTaken + " damage.");
+            CapacityMessage.damage(state, attackName, dmgTaken);
         }
         else {
-            state.addChatMessage(attackName + " missed target.");
+            CapacityMessage.failed(state, attackName);
         }
         return dmgTaken;
     }
@@ -119,35 +122,4 @@ _a = CapacityProcessor, _CapacityProcessor_magicalStrikeDmgGiven = function _Cap
     return Math.floor(Math.random() * 100) + 1;
 };
 export default CapacityProcessor;
-/*
-    activate capacity :
-    an active capacity has a list of event
-    for each events : // deal damage, heal, apply status, ...
-        - select targets for event : number and criteria selection (enemies with max def or allies with low life)
-        - apply event (event trigger passif and status)
-*/
-// attack is 
-// applique status (sur toutes la listes)
-// look carac des throwers
-// look carac des targets
-// onEvent peuvent cancel ou autre (en fonction des status et des capacité passive)
-// applique damage/heal (sur toutes la listes)
-// look carac des throwers
-// look carac des targets
-// onEvent peuvent cancel ou autre (en fonction des status et des capacité passive)
-/*
-
-exemple avec vol de vie :
-vol de vie capacité passiv
-when event this.attack
-après avoir calculéé les dégats reçus par la liste des sad target
-
-
-
-
-capacité active (déclenche plusieurs events)
-capacité passive (on event déclenche quelque chose)
-onEvent apply effect
-
-*/ 
 //# sourceMappingURL=CapacityProcessor.js.map

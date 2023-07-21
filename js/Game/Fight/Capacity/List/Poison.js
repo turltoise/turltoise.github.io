@@ -4,9 +4,10 @@ import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 class Poison extends AbstractCapacity {
     constructor(state) {
-        super(state, 'poison');
+        super(state, 'Poison');
     }
     trigger(thrower, target) {
+        super.trigger(thrower, target);
         const status = new Status(this.getName(), 3, null, new PoisonTick(this._state, thrower, target));
         CapacityProcessor.putStatus(this._state, this.getName(), thrower, target, status);
     }

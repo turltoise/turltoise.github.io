@@ -5,11 +5,12 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class Shield extends AbstractCapacity {
     constructor(state: State) {
-        super(state, 'shield');
+      super(state, 'Shield');
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
-		CapacityProcessor.shield(this._state, thrower, target, 120, null);
+      super.trigger(thrower, target);
+		  CapacityProcessor.shield(this._state, thrower, target, 120, null);
     }
 }
 export default Shield;

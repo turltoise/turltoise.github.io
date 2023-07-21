@@ -4,6 +4,8 @@ import ChatMessage from "./Chat/ChatMessage.js";
 import Enemy from "./Card/Enemy.js";
 import StackPlayCard from "./Card/StackPlayCard.js";
 import Hero from "./Card/Hero.js";
+import AbstractCapacity from "./Fight/Capacity/List/AbstractCapacity.js";
+import CardAnimation from "./Card/CardAnimation.js";
 
 class Level {
 	private _state: State;
@@ -32,18 +34,45 @@ class Level {
 		if (this._phase == Level.PHASE_HERO()) {
 			this._state.setCombatStatusText("Your turn !");
 			//currentHero.hit(currentEnemy, this._state);
-			currentHero.triggerStatus();
-			currentHero.getRandomCapacity(this._state).trigger(currentHero, currentEnemy);
-			this._state.getLevel().setNextHero();
+			this.#action(currentHero, currentEnemy);
 			this._phase = Level.PHASE_ENEMY();
+
+			this._state.getLevel().setNextHero();
 		} else if (this._phase == Level.PHASE_ENEMY()) {
 			this._state.setCombatStatusText("Enemy turn !");
 			//currentEnemy.hit(currentHero, this._state);
-			currentEnemy.triggerStatus();
-			currentEnemy.getRandomCapacity(this._state).trigger(currentEnemy, currentHero);
+			this.#action(currentEnemy, currentHero);
 			this._phase = Level.PHASE_HERO();
 		}
 	}
+
+	#action(thrower: StackPlayCard, target: StackPlayCard) {
+		thrower.triggerStatus();
+		thrower.playCapacity(this._state, target);
+		/*capacity.trigger(thrower, target);
+		thrower.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
+		target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
+	}
+	/**
+	hit(card, state) {
+		state.addChatMessage(this._title + " hits " + card._title + " for " + this._currentStrength + ".", ChatMessage.SWORD());
+		console.debug(card._currentLife + "/" + card._life);
+		card._currentLife = parseInt(card._currentLife) - parseInt(this._currentStrength);
+		console.debug(card._currentLife + "/" + card._life);
+
+		this._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.ATTACK()));
+
+		card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DAMAGE(), "-"+this._currentStrength));
+		if (card._currentLife <= 0) {
+			state.addChatMessage(card._title + " dies!", ChatMessage.DIES());
+			card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DIE()));
+			if (card._type == Card.ENEMY_TYPE()) {
+				state._resource._gold = state._resource._gold + card._gold;
+				state.addChatMessage(card._gold + " gold earned.", ChatMessage.GOLD());
+			}
+		}
+	}
+**/
 
 	prestart(): void {
 		this.#generateHeroListForFight();

@@ -3,29 +3,37 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _StackPlayCard_instances, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
+var _StackPlayCard_instances, _StackPlayCard_getRandomCapacity, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
+import CardAnimation from './CardAnimation.js';
+import Hero from './Hero.js';
 class StackPlayCard extends AbstractPrintableCard {
     constructor(playCardMap) {
-        super(playCardMap.get('this').getTitle(), playCardMap.get('this').getImg(), playCardMap.get('this').getUUID());
+        super(playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID());
         _StackPlayCard_instances.add(this);
         this._sMap = playCardMap;
         this._statusList = new Map();
         this._currentLife = this.getLife();
         this._currentShield = 0;
     }
-    getMainPlayCard() { return this._sMap.get('this'); }
+    getDisplayableLife() { return this._currentLife; }
+    getMainPlayCard() { return this._sMap.get(StackPlayCard.MAIN_KEY()); }
+    isYours() {
+        return (this.getMainPlayCard().getCollectionCard() instanceof Hero) ? true : false;
+    }
     isAlive() {
         return (this._currentLife > 0) ? true : false;
     }
     heal(heal) {
         this._currentLife += heal;
         this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+        this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + heal.toString(), '#43a047'));
     }
     shield(shield) {
         this._currentShield += shield;
+        this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + shield.toString(), '#2196f3'));
     }
     dmg(dmg) {
         if (this._currentShield > 0) {
@@ -39,6 +47,7 @@ class StackPlayCard extends AbstractPrintableCard {
             }
         }
         this._currentLife -= dmg;
+        this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
     }
     addStatus(status) {
         this._statusList.set(UUID.generateUUID(), status);
@@ -81,21 +90,27 @@ class StackPlayCard extends AbstractPrintableCard {
         });
         return capacities;
     }
-    getRandomCapacity(state) {
-        let capacities = new Map();
-        this._sMap.forEach((computedCard) => {
-            capacities = new Map([...capacities, ...computedCard.getCapacities()]);
-            ;
-        });
-        let keys = Array.from(capacities.keys());
-        let capacity = capacities.get(keys[Math.floor(Math.random() * keys.length)]);
-        if (!capacity) {
-            capacity = new PhysicalAttack(state);
-        }
-        return capacity;
+    playCapacity(state, target) {
+        let capacity = __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_getRandomCapacity).call(this, state);
+        capacity.trigger(this, target);
+        this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
+        console.log(this._fightAnimation);
     }
+    static MAIN_KEY() { return 'this'; }
 }
-_StackPlayCard_instances = new WeakSet(), _StackPlayCard_computeStat = function _StackPlayCard_computeStat(methodName) {
+_StackPlayCard_instances = new WeakSet(), _StackPlayCard_getRandomCapacity = function _StackPlayCard_getRandomCapacity(state) {
+    let capacities = new Map();
+    this._sMap.forEach((computedCard) => {
+        capacities = new Map([...capacities, ...computedCard.getCapacities()]);
+        ;
+    });
+    let keys = Array.from(capacities.keys());
+    let capacity = capacities.get(keys[Math.floor(Math.random() * keys.length)]);
+    if (!capacity) {
+        capacity = new PhysicalAttack(state);
+    }
+    return capacity;
+}, _StackPlayCard_computeStat = function _StackPlayCard_computeStat(methodName) {
     return __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard).call(this, methodName) + __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_checkBuffForCarac).call(this, methodName);
 }, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard = function _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard(methodName) {
     let stat = 0;

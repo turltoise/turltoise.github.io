@@ -7,10 +7,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class AttackBuffCapacity extends AbstractCapacity {
     constructor(state: State) {
-        super(state, 'attack_buff');
+        super(state, 'Attack buff');
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
+        super.trigger(thrower, target);
         const status = new Status(this.getName(), 5, new AttackBuff(this._state, thrower, target), null);
         CapacityProcessor.putStatus(this._state, this.getName(), thrower, target, status);
     }

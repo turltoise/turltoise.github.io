@@ -9,6 +9,7 @@ class PlayCard {
         _PlayCard_instances.add(this);
         this._c = collectionCard;
     }
+    getCollectionCard() { return this._c; }
     getUUID() { return this._c.getUUID(); }
     getTitle() { return this._c.getTitle(); }
     getImg() { return this._c.getImg(); }

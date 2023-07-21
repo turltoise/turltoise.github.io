@@ -17,6 +17,37 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
         const self = this;
         setInterval(() => self.internalLoop(), 20);
 
+        let  style = `
+        .message-box {
+          font-family: "Arial Narrow", Arial, sans-serif;
+        }
+        /* Combat message */
+        .message-combat-primary {
+          color: #eee;
+        }
+
+        .message-combat-secondary {
+          color: #999;
+        }
+
+        .message-hero-target {
+          color: #bbdefb;
+          font-weight: 900;
+        }
+
+        .message-enemy-target {
+          color: #cb3974;
+          font-weight: 900;
+        }
+
+        .message-combat-skill {
+          font-style: italic;
+        }
+        `;
+        let templateStyle = this.getCurrentDocument().createElement( 'style' );
+        templateStyle.innerHTML = style;
+        this._instanceContainer.appendChild(templateStyle);
+
         const templateMessage = this.getCurrentDocument().createElement('div');
         this._templateMessage = templateMessage;
         this._templateMessage.style.width = "calc(100% - 2x2px)";

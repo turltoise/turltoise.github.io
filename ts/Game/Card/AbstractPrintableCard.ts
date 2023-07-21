@@ -5,7 +5,7 @@ class AbstractPrintableCard {
     protected _title: string;
     protected _img: string;
     protected _uuid: string;
-    private _fightAnimation: Map<string, CardAnimation>;
+    protected _fightAnimation: Map<string, CardAnimation>;
 
     constructor(title: string, img: string, uuid: string) {
         this._title = title;
@@ -16,6 +16,7 @@ class AbstractPrintableCard {
     getImg(): string {return this._img;}
     getTitle() : string {return this._title;}
     getUUID() : string {return this._uuid;}
+    getDisplayableLife(): number {return 0;}
 
     getFightAnimationMap() : Map<string, CardAnimation> {return this._fightAnimation;}
 	addFightAnimation(animation: CardAnimation, uuid: string = UUID.generateUUID()) {this._fightAnimation.set(uuid, animation);}

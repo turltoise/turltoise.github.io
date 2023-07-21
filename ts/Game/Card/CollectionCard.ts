@@ -30,6 +30,7 @@ class CollectionCard extends AbstractPrintableCard {
 	getPlayCard() : PlayCard {return new PlayCard(this);}
 	getStackPlayCard(): StackPlayCard {return null;}
 	getLevel(): number {return this._level;}
+	getDisplayableLife(): number {return this.getLife();}
 
 	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;}
 	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}

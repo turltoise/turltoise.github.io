@@ -20,7 +20,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         this._title = card.getTitle();
         this._img = card.getImg();
         //this._strength  = card.getStrength();
-        //this._life      = card.getLife();
+        this._life = card.getDisplayableLife();
         this._cardUUID = card.getUUID();
         this._combatAnimation = 0;
         //# on se retrouve avec plusieurs div avec le même id
@@ -165,6 +165,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         return 'CardGraphicComponent-card-container';
     }
     internalLoop() {
+        // _combatAnimation counter
         this._combatAnimation = this._combatAnimation + 1;
         if (this._combatAnimation > (1000 / AbstractGraphicComponent.MS_LOOP())) {
             __classPrivateFieldGet(this, _CardGraphicComponent_instances, "m", _CardGraphicComponent_cancelCombatAnimation).call(this);
@@ -181,8 +182,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
     }
 }
 _CardGraphicComponent_instances = new WeakSet(), _CardGraphicComponent_lifeUpdate = function _CardGraphicComponent_lifeUpdate() {
-    //this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
-    this._instanceCardLife.innerHTML = Number.displayNumber(0);
+    this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getDisplayableLife());
 }, _CardGraphicComponent_isInAdventurePanel = function _CardGraphicComponent_isInAdventurePanel() {
     if (this.parentElement.classList.contains('AdventureSceneGraphicComponent-container-card')) {
         return true;

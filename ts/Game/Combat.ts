@@ -73,10 +73,7 @@ class Combat {
 			// start the new level
 			this._state.setCombatState(CombatMenuGraphicComponent.getStart());
 		} else {
-			this._state.addChatMessage(
-				"Level can't be reduce",
-				ChatMessage.ERROR()
-			);
+			this._state.addChatMessage("Level can't be reduce", ChatMessage.ERROR());
 			this._state.setCombatState(CombatMenuGraphicComponent.getStop());
 		}
 	}

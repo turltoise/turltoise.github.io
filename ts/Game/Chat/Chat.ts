@@ -16,7 +16,7 @@ class Chat {
 	}
 
 	addChatMessage(text: string, type: string) {
-		console.info(text);
+		//console.info(text);
 		let uuid = UUID.generateUUID();
 		let newMessage = new ChatMessage(text, type)
 		this._messageList.set(uuid, newMessage);

@@ -14,7 +14,7 @@ class Enemy extends CollectionCard {
 
 	getStackPlayCard(): StackPlayCard {
 		let playCardList = <Map<string, PlayCard>> new Map();
-		playCardList.set('this', this.getPlayCard());
+		playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
 		return new StackPlayCard(playCardList);
 	}
 

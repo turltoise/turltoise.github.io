@@ -41,7 +41,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         this._img       = card.getImg();
         
         //this._strength  = card.getStrength();
-        //this._life      = card.getLife();
+        this._life      = card.getDisplayableLife();
         this._cardUUID = card.getUUID();
         this._combatAnimation = 0;
         //# on se retrouve avec plusieurs div avec le même id
@@ -227,6 +227,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
     }
 
     internalLoop() {
+        // _combatAnimation counter
         this._combatAnimation=this._combatAnimation+1;
         if (this._combatAnimation > (1000 / AbstractGraphicComponent.MS_LOOP())) {
             this.#cancelCombatAnimation();
@@ -243,8 +244,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
     }
 
     #lifeUpdate() {
-        //this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
-        this._instanceCardLife.innerHTML = Number.displayNumber(0);
+        this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getDisplayableLife());
     }
 
     #isInAdventurePanel() {

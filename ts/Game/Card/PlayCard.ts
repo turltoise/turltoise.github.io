@@ -7,10 +7,12 @@ class PlayCard {
 		this._c =collectionCard;
 	}
 
+	getCollectionCard(): CollectionCard {return this._c;}
 	getUUID(): string {return this._c.getUUID();}
 	getTitle(): string {return this._c.getTitle();}
 	getImg(): string {return this._c.getImg();}
 	getLevel(): number {return this._c.getLevel();}
+	
 	getCapacities():  Map<string, AbstractCapacity> {return this._c.getCapacities();}
 
 	getStrength(): number {		return this._c.getStrength()}

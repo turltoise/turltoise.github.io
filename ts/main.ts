@@ -103,26 +103,26 @@ const myState = new State(document, myCollection, myDeck, myResource, myWorldLis
 // hack TT
 myWorldList.generateWorldList(myState);
 const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(myState)]]);
-const cardA = new Hero(myCarac,1,"A","illidan.webp", capacities1);
+const cardA = new Hero(myCarac,1,"My card A","illidan.webp", capacities1);
 
 myCollection.addCard(cardA);
-myCollection.addCard(new Hero(myCarac,1,"B","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,2,"C","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,3,"D","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,4,"E","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,5,"F","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,6,"G","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,7,"H","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,8,"I","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,9,"J","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,10,"K","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,11,"L","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,12,"M","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,13,"N","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,14,"O","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,15,"P","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,16,"Q","illidan.webp", capacities1));
-myCollection.addCard(new Hero(myCarac,17,"R","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,1,"My card B","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,2,"My card C","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,3,"My card D","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,4,"My card E","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,5,"My card F","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,6,"My card G","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,7,"My card H","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,8,"My card I","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,9,"My card J","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,10,"My card K","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,11,"My card L","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,12,"My card M","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,13,"My card N","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,14,"My card O","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,15,"My card P","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,16,"My card Q","illidan.webp", capacities1));
+myCollection.addCard(new Hero(myCarac,17,"My card R","illidan.webp", capacities1));
 myDeck.addCard(cardA);
 
 

@@ -5,11 +5,12 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class PhysicalAttack extends AbstractCapacity {
     constructor(state: State) {
-        super(state, 'physical_attack');
+        super(state, 'Physical attack');
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
-		  CapacityProcessor.physicalAttack(this._state, this.getName(), thrower, target, 100);
+        super.trigger(thrower, target);
+		CapacityProcessor.physicalAttack(this._state, this.getName(), thrower, target, 100);
     }
 }
 export default PhysicalAttack;

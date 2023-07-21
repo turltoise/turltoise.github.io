@@ -4,6 +4,8 @@ import Status from '../Fight/Status/Status.js';
 import State from '../State/State.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
+import CardAnimation from './CardAnimation.js';
+import Hero from './Hero.js';
 import PlayCard from './PlayCard.js';
 
 class StackPlayCard extends AbstractPrintableCard {
@@ -11,13 +13,12 @@ class StackPlayCard extends AbstractPrintableCard {
 	private _statusList: Map<string, Status>;
 	private _currentLife: number;
 	private _currentShield: number;
-	
 
 	constructor(playCardMap: Map<string, PlayCard>) {
 		super(
-			playCardMap.get('this').getTitle(),
-			playCardMap.get('this').getImg(),
-			playCardMap.get('this').getUUID()
+			playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(),
+			playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(),
+			playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID()
 		);
 		this._sMap = playCardMap;
 		this._statusList = new Map<string, Status>();
@@ -26,7 +27,11 @@ class StackPlayCard extends AbstractPrintableCard {
 		
 	}
 
-	getMainPlayCard() : PlayCard {return this._sMap.get('this');}
+	getDisplayableLife(): number {return this._currentLife;}
+	getMainPlayCard() : PlayCard {return this._sMap.get(StackPlayCard.MAIN_KEY());}
+	isYours(): boolean {
+		return (this.getMainPlayCard().getCollectionCard() instanceof Hero) ? true : false;
+	}
 
 	isAlive(): boolean {
 		return (this._currentLife > 0) ? true : false;
@@ -35,10 +40,12 @@ class StackPlayCard extends AbstractPrintableCard {
 	heal(heal: number): void {
 		this._currentLife += heal;
 		this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + heal.toString(), '#43a047'));
 	}
 
 	shield(shield: number): void {
 		this._currentShield += shield;
+		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + shield.toString(), '#2196f3'));
 	}
 
 	dmg(dmg: number): void {
@@ -52,6 +59,7 @@ class StackPlayCard extends AbstractPrintableCard {
 			}
 		}
 		this._currentLife -= dmg;
+		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
 	}
 
 	addStatus(status: Status): void {
@@ -103,7 +111,14 @@ class StackPlayCard extends AbstractPrintableCard {
 		return capacities;
 	}
 
-	getRandomCapacity(state: State): AbstractCapacity {
+	playCapacity(state: State,  target: StackPlayCard) {
+		let capacity: AbstractCapacity = this.#getRandomCapacity(state);
+		capacity.trigger(this, target);
+		this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
+		console.log(this._fightAnimation);
+	}
+
+	#getRandomCapacity(state: State): AbstractCapacity {
 		let capacities = <Map<string, AbstractCapacity>> new Map();
 		this._sMap.forEach((computedCard: PlayCard) => {
 			capacities = new Map([...capacities, ...computedCard.getCapacities()]);;
@@ -136,5 +151,7 @@ class StackPlayCard extends AbstractPrintableCard {
 		});
 		return stat;
 	}
+
+	static MAIN_KEY(): string {return 'this';}
 }
 export default StackPlayCard;

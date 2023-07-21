@@ -24,7 +24,7 @@ class Hero extends CollectionCard {
         this._itemList.forEach((item) => {
             playCardList.set(item.getUUID(), item.getPlayCard());
         });
-        playCardList.set('this', this.getPlayCard());
+        playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
         return new StackPlayCard(playCardList);
     }
 }

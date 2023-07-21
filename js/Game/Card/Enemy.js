@@ -7,7 +7,7 @@ class Enemy extends CollectionCard {
     }
     getStackPlayCard() {
         let playCardList = new Map();
-        playCardList.set('this', this.getPlayCard());
+        playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
         return new StackPlayCard(playCardList);
     }
     getGold() {

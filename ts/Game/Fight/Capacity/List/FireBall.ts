@@ -6,11 +6,12 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class FireBall extends AbstractCapacity {
     constructor(state: State) {
-        super(state, 'fire_ball');
+        super(state, 'Fireball');
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
-		CapacityProcessor.magicAttack(this._state, this.getName(), thrower, target, 130, Element.FIRE());
+      super.trigger(thrower, target);
+		  CapacityProcessor.magicAttack(this._state, this.getName(), thrower, target, 130, Element.FIRE());
     }
 }
 export default FireBall;
