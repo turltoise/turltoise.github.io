@@ -1,5 +1,8 @@
+import Container from "../../Container.js";
+import Collection from "../../Game/CardManager/Collection.js";
+import Deck from "../../Game/CardManager/Deck.js";
+import Chat from "../../Game/Chat/Chat.js";
 import ChatMessage from "../../Game/Chat/ChatMessage.js";
-import State from "../../Game/State/State.js";
 import CardGraphicComponent from "../CardGraphicComponent.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 
@@ -7,9 +10,8 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     private _templateContainerCard: HTMLElement;
     private _templateBtnCollectionAction: HTMLElement;
 
-    constructor(state : State) {
-        super(state);
-        this._state = state;
+    constructor(container : Container) {
+        super(container);
 
         this._instanceContainer.style.backgroundColor = "#C0C0C0";//"#0C5D20";//"#145f24";
         this._instanceContainer.style.backgroundImage = "url(./img/play-table.png)";
@@ -40,10 +42,11 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     render() {
-        var cardList = this._state.getCollection().getCardList();
+        const collection: Collection = this._container.get('Collection');
+        var cardList = collection.getCardList();
         cardList.forEach((card, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._state, card);
+            const graphicCard = new CardGraphicComponent(this._container, card);
 
             const instanceBtnCollectionAction = <HTMLElement> this._templateBtnCollectionAction.cloneNode(true);
             const divId = "btn-action-collection-" + uuid;
@@ -52,8 +55,8 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
             instanceContainerCard.appendChild(graphicCard);
             instanceContainerCard.appendChild(instanceBtnCollectionAction);
             this._instanceContainer.appendChild(instanceContainerCard);
-
-            if (this._state.getDeck().getCardList().has(uuid)) {
+            const deck: Deck = this._container.get('Deck');
+            if (deck.getCardList().has(uuid)) {
                 this.#setToRemoveBtn(instanceBtnCollectionAction, card, divId);
             } else {
                 this.#setToAddBtn(instanceBtnCollectionAction, card, divId);
@@ -78,20 +81,24 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     btnActionAddToDeck(card, divId) {
-        if(!this._state.getDeck().addCard(card)) {
-            this._state.addChatMessage("Max card in deck reached. Max is set to : "+this._state.getDeck().getMaxCard(), ChatMessage.ERROR());
+        const deck: Deck = this._container.get('Deck');
+        const chat: Chat = this._container.get('Chat');
+        if(!deck.addCard(card)) {
+            chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.ERROR());
             return;
         }
         const btn = this._shadowRoot.getElementById(divId);
         this.#setToRemoveBtn(btn, card, divId);
-        this._state.addChatMessage("Card "+card._title +" add to deck.", ChatMessage.ADD());
+        chat.addChatMessage("Card "+card._title +" add to deck.", ChatMessage.ADD());
     }
 
     btnActionRemoveFromDeck(card, divId) {
-        this._state.getDeck().removeCard(card);
+        const deck: Deck = this._container.get('Deck');
+        const chat: Chat = this._container.get('Chat');
+        deck.removeCard(card);
         const btn = this._shadowRoot.getElementById(divId);
         this.#setToAddBtn(btn, card, divId);
-        this._state.addChatMessage("Card "+card._title +" remove from deck.", ChatMessage.REMOVE());
+        chat.addChatMessage("Card "+card._title +" remove from deck.", ChatMessage.REMOVE());
     }
 }
 customElements.define('collection-panel', CollectionPanelGraphicComponent);

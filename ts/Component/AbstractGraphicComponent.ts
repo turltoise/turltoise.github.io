@@ -1,15 +1,16 @@
+import Container from "../Container.js";
 import State from "../Game/State/State.js";
 
 class AbstractGraphicComponent extends HTMLElement {
-    protected _state: State;
+    protected _container: Container;
     protected _shadowRoot: ShadowRoot;
     protected _instanceContainer: HTMLElement;
  
-	constructor(state: State) {
+	constructor(container: Container) {
         super();
 
         // attributs
-        this._state = state;
+        this._container = container;
         this._shadowRoot = this.attachShadow({mode: 'open'});
         
         // container for all component
@@ -49,7 +50,8 @@ class AbstractGraphicComponent extends HTMLElement {
     }
 
     onClickContainer(): void {
-    	if (this._state.getDebug()) {
+        const state:State = this._container.get('State');
+    	if (state.getDebug()) {
     		console.debug("Click on " + this.getClassName('container'));
     	}
     }

@@ -1,9 +1,9 @@
-import State from "../../Game/State/State.js";
+import Container from "../../Container.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 
 class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
-    constructor(state: State) {
-        super(state);
+    constructor(container: Container) {
+        super(container);
 
         this._instanceContainer.innerHTML = "Opening Panel";
     }

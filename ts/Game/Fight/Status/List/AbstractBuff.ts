@@ -1,13 +1,13 @@
+import Container from "../../../../Container.js";
 import StackPlayCard from "../../../Card/StackPlayCard.js";
-import State from "../../../State/State.js";
 
 class AbstractBuff {
-    protected _state: State;
+    protected _container: Container;
     protected _thrower: StackPlayCard;
     protected _target: StackPlayCard;
 
-    constructor(state: State, thrower: StackPlayCard, target: StackPlayCard) {
-        this._state = state;
+    constructor(container: Container, thrower: StackPlayCard, target: StackPlayCard) {
+        this._container = container;
         this._thrower = thrower;
         this._target = target;
     }

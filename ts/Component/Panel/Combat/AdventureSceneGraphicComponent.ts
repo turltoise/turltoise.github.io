@@ -1,4 +1,7 @@
+import Container from "../../../Container.js";
 import CollectionCard from "../../../Game/Card/CollectionCard.js";
+import StackPlayCard from "../../../Game/Card/StackPlayCard.js";
+import State from "../../../Game/State/State.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 
@@ -10,10 +13,9 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     private _heroTitle: HTMLElement;
     private _interfaceEnemyView: HTMLElement;
     private _interfaceDeckView: HTMLElement;
- 
 
-    constructor(state) {
-        super(state);
+    constructor(container: Container) {
+        super(container);
 
         const templateContainerCard = this.getCurrentDocument().createElement('div');
         templateContainerCard.setAttribute('class', this.getClassName('container-card'));
@@ -74,7 +76,8 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     }
 
     #updateCurrentEnemy() {
-        const currentEnemy = this._state.getCurrentEnemy();
+        const state: State = this._container.get('State');
+        const currentEnemy:StackPlayCard = state.getCurrentEnemy();
         const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_ENEMY_VIEW() +" card-card");
         if (currentEnemy) {
             let displayNew = true;
@@ -90,7 +93,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
             if (displayNew) {
                 const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
                 const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-                const graphicCard = new CardGraphicComponent(this._state, currentEnemy);
+                const graphicCard = new CardGraphicComponent(this._container, currentEnemy);
                 instanceContainerCard.appendChild(graphicCard);
                 this._interfaceEnemyView.appendChild(instanceContainerCard);
             }
@@ -102,7 +105,8 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     }
 
     #updateDeckCardList() {
-        const cardList = new Map(this._state.getCardDeckList());
+        const state: State = this._container.get('State');
+        const cardList = new Map(state.getCardDeckList());
 
         // Remove all card not in deck but displayed in panel combat
         const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_DECK_VIEW() +" card-card");
@@ -115,13 +119,12 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
                 cardList.delete(gCard.getCardUUID());
             }
         });
-
         // Add all card in deck but not in panel combat
         const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW())[0];
         // loop on non graphic card
         cardList.forEach((card: CollectionCard, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._state, card);
+            const graphicCard = new CardGraphicComponent(this._container, card);
             instanceContainerCard.appendChild(graphicCard);
             this._interfaceDeckView.appendChild(instanceContainerCard);
         });
@@ -129,7 +132,6 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
 
     static ID_DECK_VIEW() { return "id-deck-view";}
     static ID_ENEMY_VIEW() { return "id-enemy-view";}
-
 }
 customElements.define('adventure-adventure', AdventureSceneGraphicComponent);
 export default AdventureSceneGraphicComponent;

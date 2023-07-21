@@ -1,7 +1,6 @@
 import AbstractBuff from "./List/AbstractBuff.js";
 import AbstractTick from "./List/AbstractTick.js";
 
-
 class Status {
     private _name: string;
     private _turn: number;

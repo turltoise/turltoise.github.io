@@ -10,6 +10,7 @@ import CombatPanelGraphicComponent from "./Component/Panel/CombatPanelGraphicCom
 import OpeningPanelGraphicComponent from "./Component/Panel/OpeningPanelGraphicComponent.js";
 import ShopPanelGraphicComponent from "./Component/Panel/ShopPanelGraphicComponent.js";
 import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
+import Container from "./Container.js";
 
 import WorldList from "./Game/Adventure/WorldList.js";
 import Hero from "./Game/Card/Hero.js";
@@ -23,6 +24,34 @@ import Resource from "./Game/Resource.js";
 import State from "./Game/State/State.js";
 import Store from "./Game/Store.js";
 import UUID from "./Game/Tools/UUID.js";
+
+const  mainContainer = new Container();
+mainContainer.add(new Collection(mainContainer));
+mainContainer.add(new Deck(mainContainer));
+
+mainContainer.add(new WorldList(mainContainer));
+
+mainContainer.add(new Store(mainContainer));
+mainContainer.add(new StoreGraphicComponent(mainContainer));
+mainContainer.add(new Combat(mainContainer));
+mainContainer.add(new State(mainContainer));
+
+mainContainer.add(new Resource(mainContainer));
+mainContainer.add(new GoldIndicatorGraphicComponent(mainContainer));
+
+mainContainer.add(new AdventureSceneGraphicComponent(mainContainer));
+mainContainer.add(new CombatMenuGraphicComponent(mainContainer));
+
+mainContainer.add(new CombatPanelGraphicComponent(mainContainer));
+mainContainer.add(new CollectionPanelGraphicComponent(mainContainer));
+mainContainer.add(new OpeningPanelGraphicComponent(mainContainer));
+mainContainer.add(new ShopPanelGraphicComponent(mainContainer));
+mainContainer.add(new MainScreen(mainContainer));
+mainContainer.add(new MainMenuGraphicComponent(mainContainer));
+mainContainer.add(new ChatGraphicComponent(mainContainer));
+
+mainContainer.add(new HeaderGraphicComponent(mainContainer));
+mainContainer.add(new BodyGraphicComponent(mainContainer));
 
 const body = document.body;
 body.style.margin = "0";
@@ -94,12 +123,12 @@ const myCarac = new RawCarac(
 
 myCollection.getCardFromUUID("This is a warning to test");
 
-const myDeck = new Deck();
+//const myDeck = new Deck();
 
 
-const myResource = new Resource();
-const myWorldList = new WorldList();
-const myState = new State(document, myCollection, myDeck, myResource, myWorldList);
+//const myResource = new Resource();
+//const myWorldList = new WorldList();
+//const myState = new State(document, myCollection, myDeck, myResource, myWorldList);
 // hack TT
 myWorldList.generateWorldList(myState);
 const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(myState)]]);
@@ -127,7 +156,7 @@ myDeck.addCard(cardA);
 
 
 
-const myStore = new Store(myState);
+//const myStore = new Store(myState);
 const myGStore = new StoreGraphicComponent(myState, myStore);
 
 

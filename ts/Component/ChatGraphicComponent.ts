@@ -1,5 +1,6 @@
+import Container from "../Container.js";
+import Chat from "../Game/Chat/Chat.js";
 import ChatMessage from "../Game/Chat/ChatMessage.js";
-import State from "../Game/State/State.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 
 class ChatGraphicComponent extends AbstractGraphicComponent {
@@ -11,8 +12,8 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     private _instanceContainerMessage: HTMLElement;
     private _instanceMessage: HTMLElement;
 
-    constructor(state: State) {
-        super(state);
+    constructor(container: Container) {
+        super(container);
 
         const self = this;
         setInterval(() => self.internalLoop(), 20);
@@ -117,8 +118,9 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     }
 
     #refreshChat() {
+      let chat:Chat = this._container.get('Chat');
     	// Add new messages
-    	this._state.getChat().getGraphicMessageToAdd().forEach((message: ChatMessage, uuid: string) => {
+    	chat.getGraphicMessageToAdd().forEach((message: ChatMessage, uuid: string) => {
     		this._instanceMessage = <HTMLElement> this._templateMessage.cloneNode(true);
     		this._instanceMessage.setAttribute('id', uuid);
     		this._instanceMessage.innerHTML = message.getText();
@@ -130,12 +132,12 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     	// Delete old messages
     	const messageBoxList = this._shadowRoot.querySelectorAll(".message-box");
       messageBoxList.forEach((element) => {
-        if (this._state.getChat().getGraphicMessageToDelete().has(element.id)) {
+        if (chat.getGraphicMessageToDelete().has(element.id)) {
           element.remove();
         }
       });
-      this._state.getChat().resetGraphicMessageToAdd();
-      this._state.getChat().resetGraphicMessageToDelete();
+      chat.resetGraphicMessageToAdd();
+      chat.resetGraphicMessageToDelete();
     }
 }
 customElements.define('chat-chat', ChatGraphicComponent);

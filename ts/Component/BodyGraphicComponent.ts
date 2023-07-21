@@ -1,3 +1,4 @@
+import Container from "../Container.js";
 import State from "../Game/State/State.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 import ChatGraphicComponent from "./ChatGraphicComponent.js";
@@ -10,15 +11,14 @@ class BodyGraphicComponent extends AbstractGraphicComponent {
 
     private _templateSubContainerBody: HTMLElement;
 
-	constructor(
-		state: State,
-		combatPanel : CombatPanelGraphicComponent,
-		collectionPanel : CollectionPanelGraphicComponent,
-		openingPanel: OpeningPanelGraphicComponent,
-		shopPanel: ShopPanelGraphicComponent,
-		chatComponent: ChatGraphicComponent
-	) {
-        super(state);
+	constructor(container: Container) {
+        super(container);
+
+        const combatPanel: CombatPanelGraphicComponent = container.get('CombatPanelGraphicComponent');
+		const collectionPanel: CollectionPanelGraphicComponent = container.get('CollectionPanelGraphicComponent');
+		const openingPanel: OpeningPanelGraphicComponent = container.get('OpeningPanelGraphicComponent');
+		const shopPanel: ShopPanelGraphicComponent = container.get('ShopPanelGraphicComponent');
+		const chatComponent: ChatGraphicComponent = container.get('ChatGraphicComponent');
 
         this._instanceContainer.style.margin = "40px";
 

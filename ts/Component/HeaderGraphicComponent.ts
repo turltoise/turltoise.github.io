@@ -1,9 +1,11 @@
-import State from "../Game/State/State.js";
+import Container from "../Container.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
+import GoldIndicatorGraphicComponent from "./GoldIndicatorGraphicComponent.js";
+import MainMenuGraphicComponent from "./MainMenuGraphicComponent.js";
 
 class HeaderGraphicComponent extends AbstractGraphicComponent {
-	constructor(state: State, myGoldIndicator, myMainMenu) {
-        super(state);
+	constructor(container: Container) {
+        super(container);
         this._instanceContainer.style.backgroundImage = "url(./img/b1.png)";
         this._instanceContainer.style.height = "180px";
 
@@ -12,8 +14,11 @@ class HeaderGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.style.padding = "10px";
         this._instanceContainer.style.margin = "40px";
 
-        this._instanceContainer.appendChild(myGoldIndicator);
-        this._instanceContainer.appendChild(myMainMenu);
+        const goldIndicator: GoldIndicatorGraphicComponent = this._container.get('GoldIndicatorGraphicComponent');
+        const mainMenu: MainMenuGraphicComponent = this._container.get('MainMenuGraphicComponent');
+
+        this._instanceContainer.appendChild(goldIndicator);
+        this._instanceContainer.appendChild(mainMenu);
     }
 }
 customElements.define('header-header', HeaderGraphicComponent);

@@ -2,10 +2,10 @@ import State from "./State/State.js";
 
 // TO DO - TO REWORK
 class Store {
-	private _state: State;
-	constructor(state) {
+
+	constructor() {
 		//super();
-		this._state = state
+
 	}
 
 	save()

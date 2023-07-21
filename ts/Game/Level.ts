@@ -6,6 +6,7 @@ import StackPlayCard from "./Card/StackPlayCard.js";
 import Hero from "./Card/Hero.js";
 import AbstractCapacity from "./Fight/Capacity/List/AbstractCapacity.js";
 import CardAnimation from "./Card/CardAnimation.js";
+import WorldLevel from "./Adventure/World/WorldLevel/WorldLevel.js";
 
 class Level {
 	private _state: State;
@@ -90,7 +91,7 @@ class Level {
 	}
 
 	getCurrentEnemy(): StackPlayCard {
-		const currentEnemy = this._enemyList.get(this._currentPositionOfEnemyInList.toString());
+		const currentEnemy: StackPlayCard = this._enemyList.get(this._currentPositionOfEnemyInList.toString());
 		if (currentEnemy) { 
 			return (currentEnemy.isAlive()) ? currentEnemy : this.#getNextEnemy();
 		} else {
@@ -99,7 +100,7 @@ class Level {
 	}
 
 	getCurrentHero(): StackPlayCard {
-		const currentPositionOfHeroInList = this._heroListForFight.get(this._currentPositionOfHeroInList.toString());
+		const currentPositionOfHeroInList: StackPlayCard = this._heroListForFight.get(this._currentPositionOfHeroInList.toString());
 		return (currentPositionOfHeroInList.isAlive()) ? currentPositionOfHeroInList : this.#getNextAliveHero();
 	}
 
@@ -109,7 +110,7 @@ class Level {
 
 	#generateEnemyList(): void {
 		let idListCard = Level.ZERO();
-		const currentLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
+		const currentLevel: WorldLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
 		currentLevel.getMonsterList().forEach((enemy: Enemy, uuid) => {
             this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
             idListCard++;

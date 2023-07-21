@@ -1,12 +1,13 @@
-import State from "../Game/State/State.js";
+import Container from "../Container.js";
+import Resource from "../Game/Resource.js";
 import Number from "../Game/Tools/Number.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 
 class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
 	private _instanceDisplay: HTMLElement;
 
-	    constructor(state :State) {
-        super(state);
+	    constructor(container :Container) {
+        super(container);
 
 		let keyframes = `
         @keyframes shinyGoldBefore {
@@ -69,39 +70,42 @@ class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
         templateStyle.innerHTML = keyframes;
         this._instanceContainer.appendChild(templateStyle);
 
-    		const templateDisplay = this.getCurrentDocument().createElement('div');
-		    templateDisplay.setAttribute('class', this.getClassName('display'));
-		    const instanceDisplay = <HTMLElement> templateDisplay.cloneNode(true);
-		    instanceDisplay.innerHTML = Number.displayNumber(this._state.getResource().getGold()) + " GOLD";
-		    instanceDisplay.style.boxSizing = "border-box";
-		    instanceDisplay.style.backgroundColor = "#FDC911";
-		    //instanceDisplay.style.padding = "10px";
-		    //instanceDisplay.style.width = "150px";
-		    instanceDisplay.style.fontWeight = "bold";
-		    instanceDisplay.style.lineHeight = "40px";
-		    instanceDisplay.style.height = "100%";
-		    instanceDisplay.style.textAlign = "center";
-		    
-		    instanceDisplay.style.color = "#333";
-		    instanceDisplay.style.position = "relative";
-            this._instanceDisplay = instanceDisplay;
+		const resource: Resource = this._container.get('Resource');
+
+		const templateDisplay = this.getCurrentDocument().createElement('div');
+		templateDisplay.setAttribute('class', this.getClassName('display'));
+		const instanceDisplay = <HTMLElement> templateDisplay.cloneNode(true);
+		instanceDisplay.innerHTML = Number.displayNumber(resource.getGold()) + " GOLD";
+		instanceDisplay.style.boxSizing = "border-box";
+		instanceDisplay.style.backgroundColor = "#FDC911";
+		//instanceDisplay.style.padding = "10px";
+		//instanceDisplay.style.width = "150px";
+		instanceDisplay.style.fontWeight = "bold";
+		instanceDisplay.style.lineHeight = "40px";
+		instanceDisplay.style.height = "100%";
+		instanceDisplay.style.textAlign = "center";
+		
+		instanceDisplay.style.color = "#333";
+		instanceDisplay.style.position = "relative";
+		this._instanceDisplay = instanceDisplay;
 
 
-        	this._instanceContainer.appendChild(this._instanceDisplay);
+		this._instanceContainer.appendChild(this._instanceDisplay);
 
-        	this._instanceContainer.style.width = "150px";
-        	this._instanceContainer.style.height = "40px";
-        	this._instanceContainer.style.margin = "10px";
-        	this._instanceContainer.style.backgroundColor = "red";
-        	this._instanceContainer.style.borderRadius = "5px";
-        	this._instanceContainer.style.overflow = "hidden";
-        	this._instanceContainer.style.boxShadow = "6px 3px 3px #000";
-        	this._instanceContainer.style.backgroundColor = "#FDC911";
-        }
+		this._instanceContainer.style.width = "150px";
+		this._instanceContainer.style.height = "40px";
+		this._instanceContainer.style.margin = "10px";
+		this._instanceContainer.style.backgroundColor = "red";
+		this._instanceContainer.style.borderRadius = "5px";
+		this._instanceContainer.style.overflow = "hidden";
+		this._instanceContainer.style.boxShadow = "6px 3px 3px #000";
+		this._instanceContainer.style.backgroundColor = "#FDC911";
+	}
 
-        internalLoop() {
-            this._instanceDisplay.innerHTML = Number.displayNumber(this._state.getResource().getGold()) + " GOLD";
-        }
+	internalLoop() {
+		const resource: Resource = this._container.get('Resource');
+		this._instanceDisplay.innerHTML = Number.displayNumber(resource.getGold()) + " GOLD";
+	}
 }
 customElements.define('gold-indicator', GoldIndicatorGraphicComponent);
 export default GoldIndicatorGraphicComponent;

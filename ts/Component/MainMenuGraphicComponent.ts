@@ -1,5 +1,5 @@
+import Container from "../Container.js";
 import MainScreen from "../Game/MainScreen.js";
-import State from "../Game/State/State.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 
 class MainMenuGraphicComponent extends AbstractGraphicComponent {
@@ -9,12 +9,11 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
     private _instanceMenuOpening: HTMLElement;
     private _instanceMenuShop: HTMLElement;
 
-	constructor(state: State, mainScreen: MainScreen) {
-		super(state);
+	constructor(container: Container) {
+		super(container);
 
-		this._mainScreen = mainScreen;
-
-        
+        this._mainScreen = this._container.get('MainScreen');
+    
         let keyframes = `
         @keyframes clickMenu {
             0%   {

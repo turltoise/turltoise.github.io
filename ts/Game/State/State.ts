@@ -8,6 +8,8 @@ import Resource from "../Resource.js";
 import AllWorldProgress from "./AllWorldProgress.js";
 import AbstractWorld from "../Adventure/World/AbstractWorld.js";
 import WorldList from "../Adventure/WorldList.js";
+import CollectionCard from "../Card/CollectionCard.js";
+import StackPlayCard from "../Card/StackPlayCard.js";
 
 class State extends AbstractClass {
 	private _collection: Collection;
@@ -62,30 +64,15 @@ class State extends AbstractClass {
 	
 	getLevel() : Level{return this._level;}
 	setLevel(level: Level) {this._level = level;}
-	
-	getAllWorldProgress(): AllWorldProgress {return this._allWorldProgress;}
-	getChat() : Chat{return this._chat;}
-	getResource(): Resource {return this._resource;}
-	getCollection(): Collection {return this._collection;}
-	getDeck(): Deck {return this._deck;}
-	getWorldList(): WorldList {return this._worldList;}
+
 	getCurrentWorld(): AbstractWorld {return this._currentWorld;}
 	setCurrentWorld(currentWorld: AbstractWorld) {this._currentWorld=currentWorld;}
 
-	getCardDeckList() {return this._deck.getCardList();}
+	getCardDeckList() : Map<string, CollectionCard> {return this._deck.getCardList();}
 
-	addChatMessage(text, type=null) {
-		this._chat.addChatMessage(text, type);
-	}
+	getCurrentEnemy(): StackPlayCard{return (this._level) ? this._level.getCurrentEnemy() : null;}
 
-	getCurrentEnemy()
-	 {
-	 	return (this._level) ? this._level.getCurrentEnemy() : null;	 	
-	 }
-
-	getDebug():  boolean {
-		return this._debug;
-	}
+	getDebug():  boolean {return this._debug;}
 }
 
 export default State;

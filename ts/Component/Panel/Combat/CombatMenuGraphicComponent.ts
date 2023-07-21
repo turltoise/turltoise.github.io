@@ -1,19 +1,21 @@
+import Container from "../../../Container.js";
+import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import State from "../../../Game/State/State.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
+import AdventureSceneGraphicComponent from "./AdventureSceneGraphicComponent.js";
 
 class CombatMenuGraphicComponent extends AbstractGraphicComponent {
-    private _adventureSceneGraphicComponent: HTMLElement;
+    private _adventureSceneGraphicComponent: AdventureSceneGraphicComponent;
     private _templateLevelText: HTMLElement;
     private _templateBtn: HTMLElement;
     private _templateStatusCombat: HTMLElement;
     private _instanceLevelText: HTMLElement;
     private _instanceStatusCombat: HTMLElement;
 
-	    constructor(state: State, adventureSceneGraphicComponent) {
-        super(state);
+	    constructor(container: Container) {
+        super(container);
 
-        this._state = state;
-        this._adventureSceneGraphicComponent = adventureSceneGraphicComponent;
+        this._adventureSceneGraphicComponent = this._container.get('AdventureSceneGraphicComponent');
 
         this._instanceContainer.style.backgroundColor = "#C0C0C0";//"#0C5D20";//"#145f24";
         
@@ -89,12 +91,13 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
 
     }
 
-    setCombatState(state: string) {
-        this._state.setCombatState(state);
-        if (this._state.getCombatState() == CombatMenuGraphicComponent.getStart()) {
-            this._state.setCombatCountDownLevel(3);
+    setCombatState(combatState: string) {
+        const state: State = this._container.get('State');
+        state.setCombatState(combatState);
+        if (state.getCombatState() == CombatMenuGraphicComponent.getStart()) {
+            state.setCombatCountDownLevel(3);
         }
-        console.info("Combat state set to : " + this._state.getCombatState());
+        console.info("Combat state set to : " + state.getCombatState());
     }
 
     internalLoop() {
@@ -104,8 +107,9 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     }
 
     #setBackgroundImage() {
-        if (this._state.getCurrentWorld()) {
-            const url = "url(./img/world/"+this._state.getCurrentWorld().constructor.name+".jpg)";
+        const state: State = this._container.get('State');
+        if (state.getCurrentWorld()) {
+            const url = "url(./img/world/" + state.getCurrentWorld().constructor.name + ".jpg)";
             this._instanceContainer.style.backgroundImage = url;
             this._instanceContainer.style.backgroundPosition = "-25%, -25%";
             this._instanceContainer.style.backgroundSize = "150%";
@@ -113,8 +117,9 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     }
 
     #updateTextStatus() {
+        const state: State = this._container.get('State');
         const statutCombatDiv = this._shadowRoot.querySelectorAll("#statut-combat")[0];
-        statutCombatDiv.innerHTML = this._state.getCombatStatusText();
+        statutCombatDiv.innerHTML = state.getCombatStatusText();
     }
 
     #updateLevelText() {
@@ -123,15 +128,19 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     }
 
     #getCurrentLevelName() {
-        if (this._state.getCurrentWorld()) {
-            return this._state.getCurrentWorld().getName() + "_" + this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName());
+        const state: State = this._container.get('State');
+        const allWorldProgress: AllWorldProgress = this._container.get('AllWorldProgress');
+        if (state.getCurrentWorld()) {
+            return state.getCurrentWorld().getName() + "_" + allWorldProgress.getCurrentLevelForWorld(state.getCurrentWorld().getName());
         }
         return "EMPTY";
     }
 
     #getMaxLevelReachName() {
-        if (this._state.getCurrentWorld()) {
-            return this._state.getCurrentWorld().getName() + "_" + this._state.getAllWorldProgress().getMaxLevelReachForWorld(this._state.getCurrentWorld().getName());
+        const state: State = this._container.get('State');
+        const allWorldProgress: AllWorldProgress = this._container.get('AllWorldProgress');
+        if (state.getCurrentWorld()) {
+            return state.getCurrentWorld().getName() + "_" + allWorldProgress.getMaxLevelReachForWorld(state.getCurrentWorld().getName());
         }
         return "EMPTY";
     }

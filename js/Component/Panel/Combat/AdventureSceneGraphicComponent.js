@@ -54,7 +54,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(this._interfaceDeckView);
     }
     internalLoop() {
-        __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateDeckCardList).call(this);
+        //this.#updateDeckCardList();  
         __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateCurrentEnemy).call(this);
     }
     static ID_DECK_VIEW() { return "id-deck-view"; }

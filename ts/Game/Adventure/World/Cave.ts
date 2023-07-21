@@ -1,14 +1,14 @@
-import State from "../../State/State.js";
+import Container from "../../../Container.js";
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 
 class Cave extends AbstractWorld {
 	constructor(
-		state: State,
+		container: Container,
 		title="Title",
 		background="Background"
 		) {
-		super(state, title, background);
+		super(container, title, background);
 		this.addWorldLevel(this.#generateWorldLevelOne());
 		this.addWorldLevel(this.#generateWorldLevelTwo());
 		this.addWorldLevel(this.#generateWorldLevelThree());

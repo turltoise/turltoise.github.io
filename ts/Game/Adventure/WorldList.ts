@@ -1,4 +1,4 @@
-import State from "../State/State.js";
+import Container from "../../Container.js";
 import AbstractWorld from "./World/AbstractWorld.js";
 import Beach from "./World/Beach.js";
 import Cave from "./World/Cave.js";
@@ -15,17 +15,17 @@ class WorldList {
 	constructor() {
 	}
 
-	generateWorldList(state: State) {
+	generateWorldList(container: Container) {
 		this._list = new Map();
-		this._list.set(1, new Meadow(state));
-		this._list.set(2, new Forest(state));
-		this._list.set(3, new Desert(state));
-		this._list.set(4, new Mountain(state));
-		this._list.set(5, new Beach(state));
-		this._list.set(6, new Ocean(state));
-		this._list.set(7, new Cave(state));
-		this._list.set(8, new Hell(state));
-		this._list.set(9, new Heaven(state));
+		this._list.set(1, new Meadow(container));
+		this._list.set(2, new Forest(container));
+		this._list.set(3, new Desert(container));
+		this._list.set(4, new Mountain(container));
+		this._list.set(5, new Beach(container));
+		this._list.set(6, new Ocean(container));
+		this._list.set(7, new Cave(container));
+		this._list.set(8, new Hell(container));
+		this._list.set(9, new Heaven(container));
 	}
 
 	getList(): Map<number, AbstractWorld> {

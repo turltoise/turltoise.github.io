@@ -1,5 +1,5 @@
+import Container from "../../../Container.js";
 import StackPlayCard from "../../Card/StackPlayCard.js";
-import State from "../../State/State.js";
 import Element from "../Element.js";
 import Status from "../Status/Status.js";
 import CapacityMessage from "./CapacityMessage.js";
@@ -7,81 +7,81 @@ import CapacityMessage from "./CapacityMessage.js";
 
 class CapacityProcessor {
 
-	static putStatus(state: State, attackName: string, thrower: StackPlayCard, target: StackPlayCard, status: Status) {
+	static putStatus(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard, status: Status) {
 		if (CapacityProcessor.#touched(thrower, target)) {
 			target.addStatus(status);
-			CapacityMessage.putStatus(state, attackName, target);
+			CapacityMessage.putStatus(container, attackName, target);
 		} else {
-			CapacityMessage.failed(state, attackName);
+			CapacityMessage.failed(container, attackName);
 		}
 	}
 
-	static annoucementCapacityWithFocus(state: State, attackName: string, thrower: StackPlayCard, target: StackPlayCard) {
-		CapacityMessage.capacityWithFocus(state, attackName, thrower, target);
+	static annoucementCapacityWithFocus(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard) {
+		CapacityMessage.capacityWithFocus(container, attackName, thrower, target);
 	}
 
-	static heal(state: State, thrower: StackPlayCard, target: StackPlayCard, power: number, heal?: number):  number {
+	static heal(container: Container, thrower: StackPlayCard, target: StackPlayCard, power: number, heal?: number):  number {
 		if (heal === null) {
 			heal = CapacityProcessor.#magicalStrikeDmgGiven(thrower);
 		}
 		heal = CapacityProcessor.#multiplicator(heal, power);
 		target.heal(heal);
-		CapacityMessage.heal(state, target, heal);
+		CapacityMessage.heal(container, target, heal);
 		return heal;
 	}
 
-	static shield(state: State, thrower: StackPlayCard, target: StackPlayCard, power: number, shield?: number):  number {
+	static shield(container: Container, thrower: StackPlayCard, target: StackPlayCard, power: number, shield?: number):  number {
 		if (shield === null) {
 			shield = CapacityProcessor.#magicalStrikeDmgGiven(thrower);
 		}
 		shield = CapacityProcessor.#multiplicator(shield, power);
 		target.shield(shield);
-		CapacityMessage.shield(state, target, shield);
+		CapacityMessage.shield(container, target, shield);
 		return shield;
 	}
 
-	static magicProc(state: State, attackName: string, thrower: StackPlayCard, target: StackPlayCard, power: number, element: string):  number {
+	static magicProc(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard, power: number, element: string):  number {
 		let dmgTaken = 0;
 
 		let dmgGiven = CapacityProcessor.#magicalStrikeDmgGiven(thrower);
 		dmgTaken = CapacityProcessor.#magicDefenseDmgTaken(target, dmgGiven, element);
 		dmgTaken = CapacityProcessor.#multiplicator(dmgTaken, power);
 		target.dmg(dmgTaken);
-		CapacityMessage.damage(state, attackName, dmgTaken);
+		CapacityMessage.damage(container, attackName, dmgTaken);
 	
 		return dmgTaken;
 	}
 
-	static magicAttack(state: State, attackName: string, thrower: StackPlayCard, target: StackPlayCard, power: number, element: string):  number {
+	static magicAttack(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard, power: number, element: string):  number {
 		let dmgTaken = 0;
 		if (CapacityProcessor.#touched(thrower, target)) {
 			let dmgGiven = CapacityProcessor.#magicalStrikeDmgGiven(thrower);
 			dmgTaken = CapacityProcessor.#magicDefenseDmgTaken(target, dmgGiven, element);
 			dmgTaken = CapacityProcessor.#multiplicator(dmgTaken, power);
 			target.dmg(dmgTaken);
-			CapacityMessage.damage(state, attackName, dmgTaken);
+			CapacityMessage.damage(container, attackName, dmgTaken);
 		} else {
-			CapacityMessage.failed(state, attackName);
+			CapacityMessage.failed(container, attackName);
 		}
 		return dmgTaken;
 	}
 
-	static physicalAttack(state: State, attackName: string, thrower: StackPlayCard, target:StackPlayCard, power:number):  number {
+	static physicalAttack(container: Container, attackName: string, thrower: StackPlayCard, target:StackPlayCard, power:number):  number {
 		let dmgTaken = 0;
 		if (CapacityProcessor.#touched(thrower, target)) {
-			let dmgGiven = CapacityProcessor.physicalStrikeDmgGiven(state, thrower);
+			let dmgGiven = CapacityProcessor.physicalStrikeDmgGiven(container, thrower);
 			dmgTaken = CapacityProcessor.#physicalDefenseDmgTaken(target, dmgGiven);
 			dmgTaken = CapacityProcessor.#multiplicator(dmgTaken, power);
 			target.dmg(dmgTaken);
-			CapacityMessage.damage(state, attackName, dmgTaken);
+			CapacityMessage.damage(container, attackName, dmgTaken);
 		} else {
-			CapacityMessage.failed(state, attackName);
+			CapacityMessage.failed(container, attackName);
 		}
 		return dmgTaken;
 	}
 
 
-	static physicalStrikeDmgGiven(state: State, thrower: StackPlayCard):  number {
+	static physicalStrikeDmgGiven(container: Container, thrower: StackPlayCard):  number {
 		let dmg = CapacityProcessor.#computeNormalDamage(thrower.getPhysicalDamage());
 		if (CapacityProcessor.#isCriticalDamage(thrower.getPhysicalCriticalRate())) {
 			dmg = CapacityProcessor.#computeCriticalDamage(thrower.getPhysicalDamage(), thrower.getPhysicalCriticalNumber()

@@ -39,12 +39,8 @@ class State extends AbstractClass {
     getCurrentWorld() { return this._currentWorld; }
     setCurrentWorld(currentWorld) { this._currentWorld = currentWorld; }
     getCardDeckList() { return this._deck.getCardList(); }
-    addChatMessage(text, type = null) {
-        this._chat.addChatMessage(text, type);
-    }
-    getCurrentEnemy() {
-        return (this._level) ? this._level.getCurrentEnemy() : null;
-    }
+    addChatMessage(text, type = null) { this._chat.addChatMessage(text, type); }
+    getCurrentEnemy() { return (this._level) ? this._level.getCurrentEnemy() : null; }
     getDebug() {
         return this._debug;
     }

@@ -12,7 +12,7 @@ class CardAnimation {
 		this._data3=data3;
 	}
 
-	#isTypeExists(type) {
+	#isTypeExists(type: string): boolean {
 		const exists = ([
 			CardAnimation.ATTACK(),
 			CardAnimation.DIE(),

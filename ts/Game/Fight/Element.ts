@@ -7,7 +7,7 @@ class Element {
 	static BLESSING() {return "blessing"};
 	static NORMAL() {return "normal"};
 
-	getNaturalResistance(attack, defend) {
+	getNaturalResistance(attack: string, defend: string): number {
 		switch(attack) {
 			case(Element.FIRE()):
 				switch(defend) {
