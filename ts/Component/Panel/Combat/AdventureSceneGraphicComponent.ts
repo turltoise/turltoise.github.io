@@ -1,4 +1,4 @@
-import RawCardLevelComputed from "../../../Game/Card/RawCardLevelComputed.js";
+import CollectionCard from "../../../Game/Card/CollectionCard.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 
@@ -90,7 +90,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
             if (displayNew) {
                 const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
                 const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-                const graphicCard = new CardGraphicComponent(this._state, currentEnemy.getMainRawCard());
+                const graphicCard = new CardGraphicComponent(this._state, currentEnemy);
                 instanceContainerCard.appendChild(graphicCard);
                 this._interfaceEnemyView.appendChild(instanceContainerCard);
             }
@@ -119,7 +119,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         // Add all card in deck but not in panel combat
         const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW())[0];
         // loop on non graphic card
-        cardList.forEach((card: RawCardLevelComputed, uuid) => {
+        cardList.forEach((card: CollectionCard, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
             const graphicCard = new CardGraphicComponent(this._state, card);
             instanceContainerCard.appendChild(graphicCard);

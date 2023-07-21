@@ -1,18 +1,18 @@
-import RawCardLevelComputed from "../Card/RawCardLevelComputed.js";
+import CollectionCard from "../Card/CollectionCard.js";
 import UUID from "../Tools/UUID.js";
 
 class AbstractCardManager {
-	protected _cardList: Map<string, RawCardLevelComputed>;
+	protected _cardList: Map<string, CollectionCard>;
 
 	constructor() {
-		this._cardList = new Map<string, RawCardLevelComputed>();
+		this._cardList = new Map<string, CollectionCard>();
 	}
 
-	getCardList(): Map<string, RawCardLevelComputed> {
+	getCardList(): Map<string, CollectionCard> {
 		return this._cardList;
 	}
 
-	addCard(card: RawCardLevelComputed): void {
+	addCard(card: CollectionCard): void {
 		if (this.isCard(card)) {
 			this._cardList.set(card.getUUID(), card);
 			console.info(card.getUUID() + " added!");
@@ -21,7 +21,7 @@ class AbstractCardManager {
 		}
 	}
 
-	removeCard(card: RawCardLevelComputed): void {
+	removeCard(card: CollectionCard): void {
 		if (this.isCard(card)) {
 			this._cardList.delete(card.getUUID());
 			console.info(card.getUUID() + " removed!");
@@ -48,7 +48,7 @@ class AbstractCardManager {
 		}
 	}
 
-	getCardFromUUID(uuid: string): RawCardLevelComputed {
+	getCardFromUUID(uuid: string): CollectionCard {
 		if (UUID.checkUUID(uuid)) {
 			return this._cardList.get(uuid);
 		} else {
@@ -57,7 +57,7 @@ class AbstractCardManager {
 		}
 	}
 
-	private isCard(card: RawCardLevelComputed): boolean {
+	private isCard(card: CollectionCard): boolean {
 		if (card.constructor.name == "Hero" || card.constructor.name == "Enemy" || card.constructor.name == "Item") {
 			return true;
 		} else {

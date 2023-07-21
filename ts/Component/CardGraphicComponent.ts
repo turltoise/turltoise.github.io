@@ -1,13 +1,12 @@
 import CardAnimation from "../Game/Card/CardAnimation.js";
-import Hero from "../Game/Card/Hero.js";
-import RawCardLevelComputed from "../Game/Card/RawCardLevelComputed.js";
 import State from "../Game/State/State.js";
 import Number from "../Game/Tools/Number.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
+import AbstractPrintableCard from "../Game/Card/AbstractPrintableCard.js";
 
 class CardGraphicComponent extends AbstractGraphicComponent {
 
-    private _card: RawCardLevelComputed;
+    private _card: AbstractPrintableCard;
     private _title: string;
     private _img: string;
     private _strength: number;
@@ -28,7 +27,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
     private _instanceAnimationDamage: HTMLElement;
     private _instanceAnimationDie: HTMLElement;
 
-    constructor(state: State, card: RawCardLevelComputed) {
+    constructor(state: State, card: AbstractPrintableCard) {
         super(state);
         if (card.constructor.name != "Hero" 
             && card.constructor.name != "Enemy" && 
@@ -41,8 +40,8 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         this._title     = card.getTitle();
         this._img       = card.getImg();
         
-        this._strength  = card.getStrength();
-        this._life      = card.getLife();
+        //this._strength  = card.getStrength();
+        //this._life      = card.getLife();
         this._cardUUID = card.getUUID();
         this._combatAnimation = 0;
         //# on se retrouve avec plusieurs div avec le même id
@@ -183,13 +182,13 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         const instanceCardStat = this._templateCardStat.cloneNode(true);
 
         const instanceCardStrength : HTMLElement = <HTMLElement> this._templateStatElem.cloneNode(true);
-        instanceCardStrength.innerHTML = Number.displayNumber(this._strength);
+        instanceCardStrength.innerHTML = Number.displayNumber(0);
 
         const instanceCardSlashStat : HTMLElement = <HTMLElement> this._templateStatElem.cloneNode(true);
         instanceCardSlashStat.innerHTML = "&nbsp;-&nbsp;";
 
         this._instanceCardLife = <HTMLElement> this._templateStatElem.cloneNode(true);
-        this._instanceCardLife.innerHTML = Number.displayNumber(this._life);
+        this._instanceCardLife.innerHTML = Number.displayNumber(0);
 
         instanceCardStat.appendChild(instanceCardStrength);
         instanceCardStat.appendChild(instanceCardSlashStat);
@@ -234,17 +233,18 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         }
         if (this.#isInAdventurePanel()) {
             // play all animations of combat
-            this._card.getAnimationMap().forEach((animation) => {
+            this._card.getFightAnimationMap().forEach((animation) => {
                 this.#combatAnimation(animation);
             });
             // then clean the animation list
-            this._card.resetAnimationMap();
+            this._card.resetFigthAnimationMap();
             this.#lifeUpdate(); 
         }
     }
 
     #lifeUpdate() {
-        this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
+        //this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
+        this._instanceCardLife.innerHTML = Number.displayNumber(0);
     }
 
     #isInAdventurePanel() {

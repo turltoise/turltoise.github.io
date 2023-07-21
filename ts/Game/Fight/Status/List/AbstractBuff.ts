@@ -1,12 +1,12 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
 
 class AbstractBuff {
     protected _state: State;
-    protected _thrower: AggregateCardComputedForFight;
-    protected _target: AggregateCardComputedForFight;
+    protected _thrower: StackPlayCard;
+    protected _target: StackPlayCard;
 
-    constructor(state: State, thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight) {
+    constructor(state: State, thrower: StackPlayCard, target: StackPlayCard) {
         this._state = state;
         this._thrower = thrower;
         this._target = target;

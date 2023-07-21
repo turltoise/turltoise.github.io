@@ -1,9 +1,10 @@
-import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
-import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
+import StackPlayCard from "./StackPlayCard.js";
 import RawCarac from "./RawCarac.js";
-import RawCardLevelComputed from "./RawCardLevelComputed.js";
+import CollectionCard from "./CollectionCard.js";
+import PlayCard from "./PlayCard.js";
+import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 
-class Enemy extends RawCardLevelComputed {
+class Enemy extends CollectionCard {
 	private _gold: number;
 
 	constructor(rawCarac: RawCarac, level: number, title: string, img: string, gold: number = 5, capacities: Map<string, AbstractCapacity> = new Map()) {
@@ -11,15 +12,14 @@ class Enemy extends RawCardLevelComputed {
 		this._gold = gold;
 	}
 
-	getObjecForFight(): AggregateCardComputedForFight {
-		const soloCardComputedMap = new Map();
-		soloCardComputedMap.set('this', this);
-		return new AggregateCardComputedForFight(soloCardComputedMap);
+	getStackPlayCard(): StackPlayCard {
+		let playCardList = <Map<string, PlayCard>> new Map();
+		playCardList.set('this', this.getPlayCard());
+		return new StackPlayCard(playCardList);
 	}
 
 	getGold() {
 		return this._gold;
 	}
 }
-
 export default Enemy;

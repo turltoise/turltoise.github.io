@@ -2,7 +2,7 @@ import State from "../../State/State.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 
 class AbstractWorld {
-	protected _state: State;
+	private _state: State;
 	private _title: string;
 	private _background: string;
 	private _worldLevelList: Map<number, WorldLevel>;
@@ -11,6 +11,7 @@ class AbstractWorld {
 		this._title = (title) ? title : this.constructor.name;
 		this._background = background;
 		this._worldLevelList = new Map();
+		this._state = state;
 	}
 
 	addWorldLevel(worldLevel: WorldLevel) {
@@ -22,17 +23,10 @@ class AbstractWorld {
 		return this._worldLevelList.get(number);
 	}
 
-	getName(): string {
-		return this.constructor.name;
-	}
-
-	getTitle(): string {
-		return this._title;
-	}
-
-	getBackground(): string {
-		return this._background;
-	}
+	getState(): State {return this._state;}
+	getName(): string {return this.constructor.name;}
+	getTitle(): string {return this._title;}
+	getBackground(): string {return this._background;}
 }
 
 export default AbstractWorld;

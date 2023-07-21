@@ -13,24 +13,12 @@ class CardAnimation {
         this._data2 = data2;
         this._data3 = data3;
     }
-    isAttacking() {
-        return (this._type == CardAnimation.ATTACK());
-    }
-    isTakingDamage() {
-        return (this._type == CardAnimation.DAMAGE());
-    }
-    isDying() {
-        return (this._type == CardAnimation.DIE());
-    }
-    static ATTACK() {
-        return "attack";
-    }
-    static DIE() {
-        return "die";
-    }
-    static DAMAGE() {
-        return "damage";
-    }
+    isAttacking() { return (this._type == CardAnimation.ATTACK()); }
+    isTakingDamage() { return (this._type == CardAnimation.DAMAGE()); }
+    isDying() { return (this._type == CardAnimation.DIE()); }
+    static ATTACK() { return "attack"; }
+    static DIE() { return "die"; }
+    static DAMAGE() { return "damage"; }
 }
 _CardAnimation_instances = new WeakSet(), _CardAnimation_isTypeExists = function _CardAnimation_isTypeExists(type) {
     const exists = ([

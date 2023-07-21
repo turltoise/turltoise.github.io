@@ -3,6 +3,7 @@ class AbstractWorld {
         this._title = (title) ? title : this.constructor.name;
         this._background = background;
         this._worldLevelList = new Map();
+        this._state = state;
     }
     addWorldLevel(worldLevel) {
         let size = this._worldLevelList.size;
@@ -11,15 +12,10 @@ class AbstractWorld {
     getWorlLeveldByNumber(number) {
         return this._worldLevelList.get(number);
     }
-    getName() {
-        return this.constructor.name;
-    }
-    getTitle() {
-        return this._title;
-    }
-    getBackground() {
-        return this._background;
-    }
+    getState() { return this._state; }
+    getName() { return this.constructor.name; }
+    getTitle() { return this._title; }
+    getBackground() { return this._background; }
 }
 export default AbstractWorld;
 //# sourceMappingURL=AbstractWorld.js.map

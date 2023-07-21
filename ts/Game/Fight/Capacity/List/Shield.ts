@@ -1,6 +1,6 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class Shield extends AbstractCapacity {
@@ -8,8 +8,8 @@ class Shield extends AbstractCapacity {
         super(state, 'shield');
     }
 
-    trigger(thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight) {
-		Capacity.shield(this._state, thrower, target, 120, null);
+    trigger(thrower: StackPlayCard, target: StackPlayCard) {
+		CapacityProcessor.shield(this._state, thrower, target, 120, null);
     }
 }
 export default Shield;

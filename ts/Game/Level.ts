@@ -2,15 +2,17 @@
 import State from "./State/State.js";
 import ChatMessage from "./Chat/ChatMessage.js";
 import Enemy from "./Card/Enemy.js";
-import AggregateCardComputedForFight from "./Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "./Card/StackPlayCard.js";
+import Hero from "./Card/Hero.js";
 
 class Level {
 	private _state: State;
 	private _levelNumber: number;
-	private _enemyList: Map<String, AggregateCardComputedForFight>;
-	private _heroListForFight: Map<String, AggregateCardComputedForFight>;
+	private _enemyList: Map<String, StackPlayCard>;
+	private _heroListForFight: Map<String, StackPlayCard>;
 	private _currentPositionOfEnemyInList: number;
 	private _currentPositionOfHeroInList: number;
+	private _phase: string;
 
 	constructor(state: State, levelNumber: number) {
 		this._state  = state;
@@ -20,6 +22,27 @@ class Level {
 		this._heroListForFight = new Map();
 		this._currentPositionOfEnemyInList = Level.ZERO();
 		this._currentPositionOfHeroInList  = Level.ZERO();
+
+		this._phase = Level.PHASE_HERO();
+	}
+
+	fight(): void {
+		let currentHero: StackPlayCard = this.getCurrentHero();
+		let currentEnemy: StackPlayCard = this.getCurrentEnemy();
+		if (this._phase == Level.PHASE_HERO()) {
+			this._state.setCombatStatusText("Your turn !");
+			//currentHero.hit(currentEnemy, this._state);
+			currentHero.triggerStatus();
+			currentHero.getRandomCapacity(this._state).trigger(currentHero, currentEnemy);
+			this._state.getLevel().setNextHero();
+			this._phase = Level.PHASE_ENEMY();
+		} else if (this._phase == Level.PHASE_ENEMY()) {
+			this._state.setCombatStatusText("Enemy turn !");
+			//currentEnemy.hit(currentHero, this._state);
+			currentEnemy.triggerStatus();
+			currentEnemy.getRandomCapacity(this._state).trigger(currentEnemy, currentHero);
+			this._phase = Level.PHASE_HERO();
+		}
 	}
 
 	prestart(): void {
@@ -37,7 +60,7 @@ class Level {
 		this._heroListForFight = new Map();
 	}
 
-	getCurrentEnemy(): AggregateCardComputedForFight {
+	getCurrentEnemy(): StackPlayCard {
 		const currentEnemy = this._enemyList.get(this._currentPositionOfEnemyInList.toString());
 		if (currentEnemy) { 
 			return (currentEnemy.isAlive()) ? currentEnemy : this.#getNextEnemy();
@@ -46,20 +69,20 @@ class Level {
 		}
 	}
 
-	getCurrentHero(): AggregateCardComputedForFight {
+	getCurrentHero(): StackPlayCard {
 		const currentPositionOfHeroInList = this._heroListForFight.get(this._currentPositionOfHeroInList.toString());
 		return (currentPositionOfHeroInList.isAlive()) ? currentPositionOfHeroInList : this.#getNextAliveHero();
 	}
 
-	setNextHero(): AggregateCardComputedForFight {
+	setNextHero(): StackPlayCard {
 		return this.#getNextAliveHero();
 	}
 
 	#generateEnemyList(): void {
 		let idListCard = Level.ZERO();
 		const currentLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
-		currentLevel.getMonsterList().forEach((enemy :Enemy, uuid) => {
-            this._enemyList.set(idListCard.toString(), enemy.getObjecForFight());
+		currentLevel.getMonsterList().forEach((enemy: Enemy, uuid) => {
+            this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
             idListCard++;
         });
 	}
@@ -67,13 +90,13 @@ class Level {
 	// Map of cards with id from 0 to n
 	#generateHeroListForFight(): void {
 		let idListCard = Level.ZERO();
-		this._state.getCardDeckList().forEach((hero, uuid) => {
-            this._heroListForFight.set(idListCard.toString(), hero.getObjecForFight());
+		this._state.getCardDeckList().forEach((hero: Hero, uuid) => {
+            this._heroListForFight.set(idListCard.toString(), hero.getStackPlayCard());
             idListCard++;
         });
 	}
 
-	#getNextEnemy(): AggregateCardComputedForFight {
+	#getNextEnemy(): StackPlayCard {
 		this.#setNextEnemy();
 		return (this.#isLastEnemyAlreadyDefeated()) ? null : this._enemyList.get(this._currentPositionOfEnemyInList.toString());
 	}
@@ -86,7 +109,7 @@ class Level {
 		return (this._enemyList.size > this._currentPositionOfEnemyInList) ? false : true;
 	}
 
-	#getNextAliveHero(): AggregateCardComputedForFight {
+	#getNextAliveHero(): StackPlayCard {
 		(this.#isLastHero()) ? this.#resetIdHero() : this.#incrementIdHero();
 
 		// start with right part of Map
@@ -120,6 +143,14 @@ class Level {
 
 	static ZERO(): number {
 		return 0;
+	}
+
+	static PHASE_HERO(): string {
+		return "hero";
+	}
+
+	static PHASE_ENEMY(): string {
+		return "enemy";
 	}
 }
 export default Level;

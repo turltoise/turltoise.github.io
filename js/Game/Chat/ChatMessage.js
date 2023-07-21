@@ -8,7 +8,7 @@ class ChatMessage {
     constructor(text, type) {
         _ChatMessage_instances.add(this);
         this._text = text;
-        this._type = type;
+        this._type = type !== null && type !== void 0 ? type : ChatMessage.NONE();
         this._mapType = new Map();
         __classPrivateFieldGet(this, _ChatMessage_instances, "m", _ChatMessage_generateMapType).call(this);
     }
@@ -27,6 +27,7 @@ class ChatMessage {
     static ADD() { return 'add'; }
     static REMOVE() { return 'remove'; }
     static ERROR() { return 'error'; }
+    static NONE() { return 'none'; }
 }
 _ChatMessage_instances = new WeakSet(), _ChatMessage_computeType = function _ChatMessage_computeType() {
     return this._mapType.get(this._type);
@@ -42,6 +43,7 @@ _ChatMessage_instances = new WeakSet(), _ChatMessage_computeType = function _Cha
     this._mapType.set(ChatMessage.ADD(), "➕");
     this._mapType.set(ChatMessage.REMOVE(), "➖");
     this._mapType.set(ChatMessage.ERROR(), "❗");
+    this._mapType.set(ChatMessage.NONE(), "");
 };
 export default ChatMessage;
 //# sourceMappingURL=ChatMessage.js.map

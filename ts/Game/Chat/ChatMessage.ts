@@ -5,7 +5,7 @@ class ChatMessage {
 
 	constructor(text: string, type: string) {
 		this._text = text;
-		this._type = type;
+		this._type = type ?? ChatMessage.NONE();
 		this._mapType = new Map();
 		this.#generateMapType();
 	}
@@ -30,6 +30,7 @@ class ChatMessage {
 		this._mapType.set(ChatMessage.ADD(), "➕");
 		this._mapType.set(ChatMessage.REMOVE(), "➖");
 		this._mapType.set(ChatMessage.ERROR(), "❗");
+		this._mapType.set(ChatMessage.NONE(), "");
 	}
 	//💥
 
@@ -44,6 +45,7 @@ class ChatMessage {
 	static ADD(): string {return 'add';}
 	static REMOVE(): string {return 'remove';}
 	static ERROR(): string {return 'error';}
+	static NONE(): string {return 'none';}
 
 }
 export default ChatMessage;

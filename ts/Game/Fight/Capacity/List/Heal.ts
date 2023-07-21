@@ -1,6 +1,6 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class Heal extends AbstractCapacity {
@@ -8,8 +8,8 @@ class Heal extends AbstractCapacity {
         super(state, 'heal');
     }
 
-    trigger(thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight) {
-		Capacity.shield(this._state, thrower, target, 100, null);
+    trigger(thrower: StackPlayCard, target: StackPlayCard) {
+		CapacityProcessor.shield(this._state, thrower, target, 100, null);
     }
 }
 export default Heal;

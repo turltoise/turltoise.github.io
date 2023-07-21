@@ -4,13 +4,11 @@ import Level from "./Level.js";
 import State from "./State/State.js";
 class Combat {
 	private _state: State;
-	private _phase: string;
 
 	constructor(state: State) {
 		this._state = state;
-		this._phase = Combat.PHASE_HERO();
 		const self = this;
-		setInterval(() => self.internalLoop(), 2000);
+		setInterval(() => self.internalLoop(), 1000);
 	}
 
 	internalLoop() {
@@ -20,17 +18,7 @@ class Combat {
 		    this.continue();
 		    break;
 		  case CombatMenuGraphicComponent.getStart():
-		  	this._state.setLevel(new Level(
-		  		this._state,
-		  		this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName())
-		  	));
-		  	this._state.getLevel().prestart();
-		  	this._state.setCombatCountDownLevel(2);
-		    this._state.setCombatState(CombatMenuGraphicComponent.getStarting());
-		    const text = "Level " + this.#getCurrentLevelName() + " starts in "+this._state.getCombatCountDownLevel() + ".";
-		    this._state.setCombatStatusText(text);
-		    this._state.addChatMessage(text, ChatMessage.COUNT_DOWN());
-		    this._state.setCombatCountDownLevel(this._state.getCombatCountDownLevel() -1);
+		  	this.preStart();
 		    break;
 		  case CombatMenuGraphicComponent.getStarting():
 		  	this.starting();
@@ -47,6 +35,20 @@ class Combat {
 		  default:
 		    break;
 		}
+	}
+
+	preStart() {
+		this._state.setLevel(new Level(
+			this._state,
+			this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName())
+		));
+		this._state.getLevel().prestart();
+		this._state.setCombatCountDownLevel(2);
+		this._state.setCombatState(CombatMenuGraphicComponent.getStarting());
+		const text = "Level " + this.#getCurrentLevelName() + " starts in "+this._state.getCombatCountDownLevel() + ".";
+		this._state.setCombatStatusText(text);
+		this._state.addChatMessage(text, ChatMessage.COUNT_DOWN());
+		this._state.setCombatCountDownLevel(this._state.getCombatCountDownLevel() -1);
 	}
 
 	nextLevel() {
@@ -121,32 +123,7 @@ class Combat {
 			this._state.setLevel(null);
 			return;
 		}
-		this.#fight(currentEnemy, currentHero);	
-	}
-
-	#fight(currentEnemy, currentHero) {
-		if (this._phase == Combat.PHASE_HERO()) {
-			this._state.setCombatStatusText("Your turn !");
-			//currentHero.hit(currentEnemy, this._state);
-			currentHero.triggerStatus();
-			currentHero.getRandomCapacity().trigger(currentHero, currentEnemy);
-			this._state.getLevel().setNextHero();
-			this._phase = Combat.PHASE_ENEMY();
-		} else if (this._phase == Combat.PHASE_ENEMY()) {
-			this._state.setCombatStatusText("Enemy turn !");
-			//currentEnemy.hit(currentHero, this._state);
-			currentEnemy.triggerStatus();
-			currentEnemy.getRandomCapacity().trigger(currentEnemy, currentHero);
-			this._phase = Combat.PHASE_HERO();
-		}
-	}
-
-	static PHASE_HERO() {
-		return "hero";
-	}
-
-	static PHASE_ENEMY() {
-		return "enemy";
+		this._state.getLevel().fight();	
 	}
 
 	#getCurrentLevelName() {

@@ -14,6 +14,26 @@ class Level {
         this._heroListForFight = new Map();
         this._currentPositionOfEnemyInList = Level.ZERO();
         this._currentPositionOfHeroInList = Level.ZERO();
+        this._phase = Level.PHASE_HERO();
+    }
+    fight() {
+        let currentHero = this.getCurrentHero();
+        let currentEnemy = this.getCurrentEnemy();
+        if (this._phase == Level.PHASE_HERO()) {
+            this._state.setCombatStatusText("Your turn !");
+            //currentHero.hit(currentEnemy, this._state);
+            currentHero.triggerStatus();
+            currentHero.getRandomCapacity(this._state).trigger(currentHero, currentEnemy);
+            this._state.getLevel().setNextHero();
+            this._phase = Level.PHASE_ENEMY();
+        }
+        else if (this._phase == Level.PHASE_ENEMY()) {
+            this._state.setCombatStatusText("Enemy turn !");
+            //currentEnemy.hit(currentHero, this._state);
+            currentEnemy.triggerStatus();
+            currentEnemy.getRandomCapacity(this._state).trigger(currentEnemy, currentHero);
+            this._phase = Level.PHASE_HERO();
+        }
     }
     prestart() {
         __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateHeroListForFight).call(this);
@@ -46,18 +66,24 @@ class Level {
     static ZERO() {
         return 0;
     }
+    static PHASE_HERO() {
+        return "hero";
+    }
+    static PHASE_ENEMY() {
+        return "enemy";
+    }
 }
 _Level_instances = new WeakSet(), _Level_generateEnemyList = function _Level_generateEnemyList() {
     let idListCard = Level.ZERO();
     const currentLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
     currentLevel.getMonsterList().forEach((enemy, uuid) => {
-        this._enemyList.set(idListCard.toString(), enemy.getObjecForFight());
+        this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
         idListCard++;
     });
 }, _Level_generateHeroListForFight = function _Level_generateHeroListForFight() {
     let idListCard = Level.ZERO();
     this._state.getCardDeckList().forEach((hero, uuid) => {
-        this._heroListForFight.set(idListCard.toString(), hero.getObjecForFight());
+        this._heroListForFight.set(idListCard.toString(), hero.getStackPlayCard());
         idListCard++;
     });
 }, _Level_getNextEnemy = function _Level_getNextEnemy() {

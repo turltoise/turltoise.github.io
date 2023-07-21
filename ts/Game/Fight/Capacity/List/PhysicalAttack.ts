@@ -1,6 +1,6 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class PhysicalAttack extends AbstractCapacity {
@@ -8,8 +8,8 @@ class PhysicalAttack extends AbstractCapacity {
         super(state, 'physical_attack');
     }
 
-    trigger(thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight) {
-		Capacity.physicalAttack(this._state, "physical_attack", thrower, target, 100);
+    trigger(thrower: StackPlayCard, target: StackPlayCard) {
+		  CapacityProcessor.physicalAttack(this._state, this.getName(), thrower, target, 100);
     }
 }
 export default PhysicalAttack;

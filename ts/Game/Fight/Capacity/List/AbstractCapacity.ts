@@ -1,6 +1,6 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 
 class AbstractCapacity {
     protected _state: State;
@@ -11,8 +11,8 @@ class AbstractCapacity {
         this._name = name;
     }
 
-    trigger(thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight): void {
-        Capacity.annoucementCapacityWithFocus(this._state, this.getName(), thrower, target);
+    trigger(thrower: StackPlayCard, target: StackPlayCard): void {
+        CapacityProcessor.annoucementCapacityWithFocus(this._state, this.getName(), thrower, target);
     }
 
     getName(): string {

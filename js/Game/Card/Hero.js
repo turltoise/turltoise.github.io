@@ -1,7 +1,7 @@
-import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
-import RawCardLevelComputed from "./RawCardLevelComputed.js";
+import StackPlayCard from "./StackPlayCard.js";
+import CollectionCard from "./CollectionCard.js";
 import UUID from "../Tools/UUID.js";
-class Hero extends RawCardLevelComputed {
+class Hero extends CollectionCard {
     constructor(rawCarac, level, title, img, capacities = new Map()) {
         super(rawCarac, level, title, img, capacities);
         this._itemList = new Map();
@@ -19,10 +19,13 @@ class Hero extends RawCardLevelComputed {
     getItemMap() {
         return this._itemList;
     }
-    getObjecForFight() {
-        const soloCardComputedMap = this._itemList;
-        soloCardComputedMap.set('this', this);
-        return new AggregateCardComputedForFight(soloCardComputedMap);
+    getStackPlayCard() {
+        let playCardList = new Map();
+        this._itemList.forEach((item) => {
+            playCardList.set(item.getUUID(), item.getPlayCard());
+        });
+        playCardList.set('this', this.getPlayCard());
+        return new StackPlayCard(playCardList);
     }
 }
 export default Hero;

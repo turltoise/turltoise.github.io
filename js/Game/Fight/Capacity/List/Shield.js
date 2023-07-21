@@ -1,11 +1,11 @@
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 class Shield extends AbstractCapacity {
     constructor(state) {
         super(state, 'shield');
     }
     trigger(thrower, target) {
-        Capacity.shield(this._state, thrower, target, 120, null);
+        CapacityProcessor.shield(this._state, thrower, target, 120, null);
     }
 }
 export default Shield;

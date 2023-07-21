@@ -1,46 +1,44 @@
-import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import UUID from "../Tools/UUID.js";
-import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
-import CardAnimation from "./CardAnimation.js";
+import StackPlayCard from "./StackPlayCard.js";
 import RawCarac from "./RawCarac.js";
+import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
+import PlayCard from "./PlayCard.js";
+import AbstractPrintableCard from "./AbstractPrintableCard.js";
+import State from "../State/State.js";
 
-class RawCardLevelComputed {
+/**
+ * Use in collection and shop : to display raw carac of leveled card 
+ */
+class CollectionCard extends AbstractPrintableCard {
 	private _rawCarac: RawCarac;
-	private _uuid: string;
 	private _level: number;
-	private _title: string;
-	private _img: string;
-	private _animation: Map<string, CardAnimation>;
 	private _capacities: Map<string, AbstractCapacity>
 
-	constructor(rawCarac: RawCarac, level: number, title: string, img: string, capacities: Map<string, AbstractCapacity> = new Map()) {
+	constructor(
+		rawCarac: RawCarac,
+		level: number,
+		title: string,
+		img: string,
+		capacities: Map<string, AbstractCapacity> = new Map(),
+		uuid: string = UUID.generateUUID()
+	) {
+		super(title, img, uuid);
 		this._rawCarac = rawCarac;
-		this._uuid = UUID.generateUUID();
 		this._level = level;
-		this._title = title;
-		this._img = img;
-		this._animation = new Map();
 		this._capacities = capacities;
 	}
-	getObjecForFight(): AggregateCardComputedForFight {return null;}
-	getUUID() {return this._uuid;}
-	getTitle() {return this._title;}
-	getImg() {return this._img;}
-	getLevel() {return this._level;}
+	getPlayCard() : PlayCard {return new PlayCard(this);}
+	getStackPlayCard(): StackPlayCard {return null;}
+	getLevel(): number {return this._level;}
 
-	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;;}
+	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;}
 	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}
 	getCapacityByUUID(uuid: string) : AbstractCapacity {return this._capacities.get(uuid);}
-	getRandomCapacity(): AbstractCapacity {
+	getRandomCapacity(state: State): AbstractCapacity {
 		let keys = Array.from(this._capacities.keys());
 		return this._capacities.get(keys[Math.floor(Math.random() * keys.length)])
 	}
 
-	getAnimationMap() {return this._animation;}
-	addAnimation(animation, uuid=UUID.generateUUID()) {
-		this._animation.set(uuid, animation);
-	}
-	resetAnimationMap() {this._animation = new Map();}
 	getStrength() {		return this.#computeMainStat(this._rawCarac._rawStrength);}
 	getDexterity() {		return this.#computeMainStat(this._rawCarac._rawDexterity);}
 	getIntelligence() {	return this.#computeMainStat(this._rawCarac._rawIntelligence);}
@@ -79,7 +77,7 @@ class RawCardLevelComputed {
 	}
 }
 
-export default RawCardLevelComputed;
+export default CollectionCard;
 
 /**
 	hit(card, state) {

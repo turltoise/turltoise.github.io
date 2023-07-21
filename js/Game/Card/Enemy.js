@@ -1,14 +1,14 @@
-import AggregateCardComputedForFight from "./AggregateCardComputedForFight.js";
-import RawCardLevelComputed from "./RawCardLevelComputed.js";
-class Enemy extends RawCardLevelComputed {
+import StackPlayCard from "./StackPlayCard.js";
+import CollectionCard from "./CollectionCard.js";
+class Enemy extends CollectionCard {
     constructor(rawCarac, level, title, img, gold = 5, capacities = new Map()) {
         super(rawCarac, level, title, img, capacities);
         this._gold = gold;
     }
-    getObjecForFight() {
-        const soloCardComputedMap = new Map();
-        soloCardComputedMap.set('this', this);
-        return new AggregateCardComputedForFight(soloCardComputedMap);
+    getStackPlayCard() {
+        let playCardList = new Map();
+        playCardList.set('this', this.getPlayCard());
+        return new StackPlayCard(playCardList);
     }
     getGold() {
         return this._gold;

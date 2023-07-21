@@ -28,24 +28,23 @@ class State extends AbstractClass {
 
 	//private _currentScript: HTMLOrSVGScriptElement;
 
-
 	constructor(documentArg: Document, collection: Collection, deck: Deck, resource: Resource, worldList: WorldList) {
 		super();
-		this._collection 	= collection;
-		this._deck 			= deck;
-		this._resource 		= resource;
-		this._worldList         = worldList;
+		this._collection = collection;
+		this._deck = deck;
+		this._resource = resource;
+		this._worldList = worldList;
 
 		// WorldProgress
 		this._allWorldProgress = new AllWorldProgress();
 		this._currentWorld = null;
 
-		this._document 		= documentArg;
+		this._document = documentArg;
 
 		// combat
-		this._combatState   		= CombatMenuGraphicComponent.getStop();
-		this._combatCountDownLevel 	= 0;
-		this._combatStatusText 		= "";
+		this._combatState = CombatMenuGraphicComponent.getStop();
+		this._combatCountDownLevel = 0;
+		this._combatStatusText = "";
 
 		this._level = null;
 		

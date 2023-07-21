@@ -15,7 +15,7 @@ class Chat {
 		this._graphicMessageToAdd = new Map();
 	}
 
-	addChatMessage(text, type) {
+	addChatMessage(text: string, type: string) {
 		console.info(text);
 		let uuid = UUID.generateUUID();
 		let newMessage = new ChatMessage(text, type)

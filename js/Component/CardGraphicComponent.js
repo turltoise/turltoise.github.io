@@ -19,8 +19,8 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         this._card = card;
         this._title = card.getTitle();
         this._img = card.getImg();
-        this._strength = card.getStrength();
-        this._life = card.getLife();
+        //this._strength  = card.getStrength();
+        //this._life      = card.getLife();
         this._cardUUID = card.getUUID();
         this._combatAnimation = 0;
         //# on se retrouve avec plusieurs div avec le même id
@@ -136,11 +136,11 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         const instanceCardStatContainer = this._templateCardStatContainer.cloneNode(true);
         const instanceCardStat = this._templateCardStat.cloneNode(true);
         const instanceCardStrength = this._templateStatElem.cloneNode(true);
-        instanceCardStrength.innerHTML = Number.displayNumber(this._strength);
+        instanceCardStrength.innerHTML = Number.displayNumber(0);
         const instanceCardSlashStat = this._templateStatElem.cloneNode(true);
         instanceCardSlashStat.innerHTML = "&nbsp;-&nbsp;";
         this._instanceCardLife = this._templateStatElem.cloneNode(true);
-        this._instanceCardLife.innerHTML = Number.displayNumber(this._life);
+        this._instanceCardLife.innerHTML = Number.displayNumber(0);
         instanceCardStat.appendChild(instanceCardStrength);
         instanceCardStat.appendChild(instanceCardSlashStat);
         instanceCardStat.appendChild(this._instanceCardLife);
@@ -171,17 +171,18 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         }
         if (__classPrivateFieldGet(this, _CardGraphicComponent_instances, "m", _CardGraphicComponent_isInAdventurePanel).call(this)) {
             // play all animations of combat
-            this._card.getAnimationMap().forEach((animation) => {
+            this._card.getFightAnimationMap().forEach((animation) => {
                 __classPrivateFieldGet(this, _CardGraphicComponent_instances, "m", _CardGraphicComponent_combatAnimation).call(this, animation);
             });
             // then clean the animation list
-            this._card.resetAnimationMap();
+            this._card.resetFigthAnimationMap();
             __classPrivateFieldGet(this, _CardGraphicComponent_instances, "m", _CardGraphicComponent_lifeUpdate).call(this);
         }
     }
 }
 _CardGraphicComponent_instances = new WeakSet(), _CardGraphicComponent_lifeUpdate = function _CardGraphicComponent_lifeUpdate() {
-    this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
+    //this._instanceCardLife.innerHTML = Number.displayNumber(this._card.getLife());
+    this._instanceCardLife.innerHTML = Number.displayNumber(0);
 }, _CardGraphicComponent_isInAdventurePanel = function _CardGraphicComponent_isInAdventurePanel() {
     if (this.parentElement.classList.contains('AdventureSceneGraphicComponent-container-card')) {
         return true;

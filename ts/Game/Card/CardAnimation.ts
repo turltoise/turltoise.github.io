@@ -24,28 +24,12 @@ class CardAnimation {
 		return exists;
 	}
 
-	isAttacking() {
-		return (this._type==CardAnimation.ATTACK());
-	}
+	isAttacking(): boolean {return (this._type==CardAnimation.ATTACK());}
+	isTakingDamage(): boolean {return (this._type==CardAnimation.DAMAGE());}
+	isDying(): boolean {return (this._type==CardAnimation.DIE());}
 
-	isTakingDamage() {
-		return (this._type==CardAnimation.DAMAGE());
-	}
-
-	isDying() {
-		return (this._type==CardAnimation.DIE());
-	}
-
-	static ATTACK() {
-		return "attack";
-	}
-
-	static DIE() {
-		return "die";
-	}
-
-	static DAMAGE() {
-		return "damage";
-	}
+	static ATTACK(): string {return "attack";}
+	static DIE():  string {return "die";}
+	static DAMAGE(): string {return "damage";}
 }
 export default CardAnimation;

@@ -77,7 +77,7 @@ _AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphi
         if (displayNew) {
             const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._state, currentEnemy.getMainRawCard());
+            const graphicCard = new CardGraphicComponent(this._state, currentEnemy);
             instanceContainerCard.appendChild(graphicCard);
             this._interfaceEnemyView.appendChild(instanceContainerCard);
         }

@@ -39,26 +39,26 @@ class Meadow extends AbstractWorld {
     }
 }
 _Meadow_instances = new WeakSet(), _Meadow_generateWorldLevelOne = function _Meadow_generateWorldLevelOne() {
-    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);
     return worldLevel;
 }, _Meadow_generateWorldLevelTwo = function _Meadow_generateWorldLevelTwo() {
-    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
-    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10, capacities2);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);
     worldLevel.addMonster(enemy2);
     return worldLevel;
 }, _Meadow_generateWorldLevelThree = function _Meadow_generateWorldLevelThree() {
-    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities1 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy1 = new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
-    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities2 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy2 = new Enemy(this._caracE, 2, 'Level 2 enemy', "illidan.webp", 10, capacities2);
-    const capacities3 = new Map([[UUID.generateUUID(), new PhysicalAttack(this._state)]]);
+    const capacities3 = new Map([[UUID.generateUUID(), new PhysicalAttack(this.getState())]]);
     const enemy3 = new Enemy(this._caracE, 3, 'Level 3 enemy', "illidan.webp", 15, capacities3);
     const worldLevel = new WorldLevel();
     worldLevel.addMonster(enemy1);

@@ -1,7 +1,7 @@
-import AggregateCardComputedForFight from "../../../Card/AggregateCardComputedForFight.js";
+import StackPlayCard from "../../../Card/StackPlayCard.js";
 import State from "../../../State/State.js";
 import Element from "../../Element.js";
-import Capacity from "../Capacity.js";
+import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class FireBall extends AbstractCapacity {
@@ -9,8 +9,8 @@ class FireBall extends AbstractCapacity {
         super(state, 'fire_ball');
     }
 
-    trigger(thrower: AggregateCardComputedForFight, target: AggregateCardComputedForFight) {
-		Capacity.magicAttack(this._state, "fire_ball", thrower, target, 130, Element.FIRE());
+    trigger(thrower: StackPlayCard, target: StackPlayCard) {
+		CapacityProcessor.magicAttack(this._state, this.getName(), thrower, target, 130, Element.FIRE());
     }
 }
 export default FireBall;
