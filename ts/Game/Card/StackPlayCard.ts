@@ -1,7 +1,7 @@
+import Container from '../../Container.js';
 import AbstractCapacity from '../Fight/Capacity/List/AbstractCapacity.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import Status from '../Fight/Status/Status.js';
-import State from '../State/State.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
 import CardAnimation from './CardAnimation.js';
@@ -111,14 +111,14 @@ class StackPlayCard extends AbstractPrintableCard {
 		return capacities;
 	}
 
-	playCapacity(state: State,  target: StackPlayCard) {
-		let capacity: AbstractCapacity = this.#getRandomCapacity(state);
+	playCapacity(container: Container,  target: StackPlayCard) {
+		let capacity: AbstractCapacity = this.#getRandomCapacity(container);
 		capacity.trigger(this, target);
 		this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
 		console.log(this._fightAnimation);
 	}
 
-	#getRandomCapacity(state: State): AbstractCapacity {
+	#getRandomCapacity(container: Container): AbstractCapacity {
 		let capacities = <Map<string, AbstractCapacity>> new Map();
 		this._sMap.forEach((computedCard: PlayCard) => {
 			capacities = new Map([...capacities, ...computedCard.getCapacities()]);;
@@ -126,7 +126,7 @@ class StackPlayCard extends AbstractPrintableCard {
 		let keys = Array.from(capacities.keys());
 		let capacity: AbstractCapacity = capacities.get(keys[Math.floor(Math.random() * keys.length)]);
 		
-		if (!capacity) {capacity = new PhysicalAttack(state);}
+		if (!capacity) {capacity = new PhysicalAttack(container);}
 		return capacity;
 	}
 

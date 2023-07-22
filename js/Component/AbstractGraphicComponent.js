@@ -1,8 +1,8 @@
 class AbstractGraphicComponent extends HTMLElement {
-    constructor(state) {
+    constructor(container) {
         super();
         // attributs
-        this._state = state;
+        this._container = container;
         this._shadowRoot = this.attachShadow({ mode: 'open' });
         // container for all component
         this._instanceContainer = this.buildContainer();
@@ -34,9 +34,7 @@ class AbstractGraphicComponent extends HTMLElement {
         return instanceContainer;
     }
     onClickContainer() {
-        if (this._state.getDebug()) {
-            console.debug("Click on " + this.getClassName('container'));
-        }
+        console.debug("Click on " + this.getClassName('container'));
     }
 }
 export default AbstractGraphicComponent;

@@ -1,5 +1,4 @@
 import Container from "../Container.js";
-import State from "../Game/State/State.js";
 import Store from "../Game/Store.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 
@@ -7,7 +6,7 @@ class StoreGraphicComponent extends AbstractGraphicComponent {
     private _store: Store;
     constructor(container: Container) {
         super(container);
-        this._store = container.get('Store');
+        this._store = container.get(Store.name);
 
         this._instanceContainer.style.margin = "40px";
 

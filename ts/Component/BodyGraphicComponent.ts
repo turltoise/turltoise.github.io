@@ -1,5 +1,4 @@
 import Container from "../Container.js";
-import State from "../Game/State/State.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 import ChatGraphicComponent from "./ChatGraphicComponent.js";
 import CollectionPanelGraphicComponent from "./Panel/CollectionPanelGraphicComponent.js";
@@ -14,11 +13,11 @@ class BodyGraphicComponent extends AbstractGraphicComponent {
 	constructor(container: Container) {
         super(container);
 
-        const combatPanel: CombatPanelGraphicComponent = container.get('CombatPanelGraphicComponent');
-		const collectionPanel: CollectionPanelGraphicComponent = container.get('CollectionPanelGraphicComponent');
-		const openingPanel: OpeningPanelGraphicComponent = container.get('OpeningPanelGraphicComponent');
-		const shopPanel: ShopPanelGraphicComponent = container.get('ShopPanelGraphicComponent');
-		const chatComponent: ChatGraphicComponent = container.get('ChatGraphicComponent');
+        const combatPanel: CombatPanelGraphicComponent = container.get(CombatPanelGraphicComponent.name);
+		const collectionPanel: CollectionPanelGraphicComponent = container.get(CollectionPanelGraphicComponent.name);
+		const openingPanel: OpeningPanelGraphicComponent = container.get(OpeningPanelGraphicComponent.name);
+		const shopPanel: ShopPanelGraphicComponent = container.get(ShopPanelGraphicComponent.name);
+		const chatComponent: ChatGraphicComponent = container.get(ChatGraphicComponent.name);
 
         this._instanceContainer.style.margin = "40px";
 

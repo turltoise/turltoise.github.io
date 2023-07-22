@@ -1,7 +1,7 @@
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
-    constructor(state) {
-        super(state);
+    constructor(container) {
+        super(container);
         this._instanceContainer.innerHTML = "Shop Panel";
     }
 }

@@ -7,8 +7,8 @@ var _Beach_instances, _Beach_generateWorldLevelOne, _Beach_generateWorldLevelTwo
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Beach extends AbstractWorld {
-    constructor(state, title = "Title", background = "Background") {
-        super(state, title, background);
+    constructor(container, title = "Title", background = "Background") {
+        super(container, title, background);
         _Beach_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Beach_instances, "m", _Beach_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Beach_instances, "m", _Beach_generateWorldLevelTwo).call(this));

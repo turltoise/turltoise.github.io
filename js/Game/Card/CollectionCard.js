@@ -25,7 +25,7 @@ class CollectionCard extends AbstractPrintableCard {
     getCapacities() { return this._capacities; }
     addCapacity(capacity) { this._capacities.set(UUID.generateUUID(), capacity); }
     getCapacityByUUID(uuid) { return this._capacities.get(uuid); }
-    getRandomCapacity(state) {
+    getRandomCapacity() {
         let keys = Array.from(this._capacities.keys());
         return this._capacities.get(keys[Math.floor(Math.random() * keys.length)]);
     }
@@ -57,24 +57,4 @@ _CollectionCard_instances = new WeakSet(), _CollectionCard_computeMainStat = fun
     return raw + Math.floor(this._level * raw * 4 / 10);
 };
 export default CollectionCard;
-/**
-    hit(card, state) {
-        state.addChatMessage(this._title + " hits " + card._title + " for " + this._currentStrength + ".", ChatMessage.SWORD());
-        console.debug(card._currentLife + "/" + card._life);
-        card._currentLife = parseInt(card._currentLife) - parseInt(this._currentStrength);
-        console.debug(card._currentLife + "/" + card._life);
-
-        this._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.ATTACK()));
-
-        card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DAMAGE(), "-"+this._currentStrength));
-        if (card._currentLife <= 0) {
-            state.addChatMessage(card._title + " dies!", ChatMessage.DIES());
-            card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DIE()));
-            if (card._type == Card.ENEMY_TYPE()) {
-                state._resource._gold = state._resource._gold + card._gold;
-                state.addChatMessage(card._gold + " gold earned.", ChatMessage.GOLD());
-            }
-        }
-    }
-**/ 
 //# sourceMappingURL=CollectionCard.js.map

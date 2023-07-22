@@ -1,9 +1,18 @@
+import CollectionPanelGraphicComponent from "../Component/Panel/CollectionPanelGraphicComponent.js";
+import CombatPanelGraphicComponent from "../Component/Panel/CombatPanelGraphicComponent.js";
+import OpeningPanelGraphicComponent from "../Component/Panel/OpeningPanelGraphicComponent.js";
+import ShopPanelGraphicComponent from "../Component/Panel/ShopPanelGraphicComponent.js";
 class MainScreen {
-    constructor(combatPanel, collectionPanel, openingPanel, shopPanel) {
-        this._labelCombat = 'combat';
-        this._labelCollection = 'collection';
-        this._labelOpening = 'opening';
-        this._labelShop = 'shop';
+    constructor(container) {
+        this._container = container;
+        const combatPanel = this._container.get(CombatPanelGraphicComponent.name);
+        const collectionPanel = this._container.get(CollectionPanelGraphicComponent.name);
+        const openingPanel = this._container.get(OpeningPanelGraphicComponent.name);
+        const shopPanel = this._container.get(ShopPanelGraphicComponent.name);
+        this._labelCombat = 'combat-label';
+        this._labelCollection = 'collection-label';
+        this._labelOpening = 'opening-label';
+        this._labelShop = 'shop-label';
         this._panelList = {};
         this._panelList[this._labelCombat] = combatPanel;
         this._panelList[this._labelCollection] = collectionPanel;

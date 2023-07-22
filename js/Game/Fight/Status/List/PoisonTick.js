@@ -3,7 +3,7 @@ import Element from "../../Element.js";
 import AbstractTick from "./AbstractTick.js";
 class PoisonTick extends AbstractTick {
     tick() {
-        CapacityProcessor.magicProc(this._state, "poison", this._thrower, this._target, 30, Element.PLANT());
+        CapacityProcessor.magicProc(this._container, "poison", this._thrower, this._target, 30, Element.PLANT());
     }
 }
 export default PoisonTick;

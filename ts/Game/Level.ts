@@ -1,15 +1,17 @@
 // To set the level at the beginning of the fight
-import State from "./State/State.js";
 import ChatMessage from "./Chat/ChatMessage.js";
 import Enemy from "./Card/Enemy.js";
 import StackPlayCard from "./Card/StackPlayCard.js";
 import Hero from "./Card/Hero.js";
-import AbstractCapacity from "./Fight/Capacity/List/AbstractCapacity.js";
-import CardAnimation from "./Card/CardAnimation.js";
 import WorldLevel from "./Adventure/World/WorldLevel/WorldLevel.js";
+import Container from "../Container.js";
+import Chat from "./Chat/Chat.js"
+import AbstractWorld from "./Adventure/World/AbstractWorld.js";
+import Deck from "./CardManager/Deck.js";
+import Combat from "./Combat.js";
 
 class Level {
-	private _state: State;
+	private _container: Container;
 	private _levelNumber: number;
 	private _enemyList: Map<String, StackPlayCard>;
 	private _heroListForFight: Map<String, StackPlayCard>;
@@ -17,8 +19,8 @@ class Level {
 	private _currentPositionOfHeroInList: number;
 	private _phase: string;
 
-	constructor(state: State, levelNumber: number) {
-		this._state  = state;
+	constructor(container: Container, levelNumber: number) {
+		this._container = container;
 		this._levelNumber = levelNumber;
 	
 		this._enemyList   = new Map();
@@ -30,18 +32,18 @@ class Level {
 	}
 
 	fight(): void {
+		const combat: Combat = this._container.get(Combat.name);
 		let currentHero: StackPlayCard = this.getCurrentHero();
 		let currentEnemy: StackPlayCard = this.getCurrentEnemy();
 		if (this._phase == Level.PHASE_HERO()) {
-			this._state.setCombatStatusText("Your turn !");
-			//currentHero.hit(currentEnemy, this._state);
+			combat.setCombatStatusText("Your turn !");
+	
 			this.#action(currentHero, currentEnemy);
 			this._phase = Level.PHASE_ENEMY();
-
-			this._state.getLevel().setNextHero();
+			this.setNextHero();
 		} else if (this._phase == Level.PHASE_ENEMY()) {
-			this._state.setCombatStatusText("Enemy turn !");
-			//currentEnemy.hit(currentHero, this._state);
+			combat.setCombatStatusText("Enemy turn !");
+
 			this.#action(currentEnemy, currentHero);
 			this._phase = Level.PHASE_HERO();
 		}
@@ -49,7 +51,7 @@ class Level {
 
 	#action(thrower: StackPlayCard, target: StackPlayCard) {
 		thrower.triggerStatus();
-		thrower.playCapacity(this._state, target);
+		thrower.playCapacity(this._container, target);
 		/*capacity.trigger(thrower, target);
 		thrower.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
 		target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
@@ -75,17 +77,19 @@ class Level {
 	}
 **/
 
-	prestart(): void {
+	prestart(currentWorld:AbstractWorld): void {
 		this.#generateHeroListForFight();
-		this.#generateEnemyList();
+		this.#generateEnemyList(currentWorld);
 	}
 
 	start(): void {
-		this._state.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
+		const chat: Chat = this._container.get(Chat.name);
+		chat.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
 	}
 
 	stop(): void {
-		this._state.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
+		const chat: Chat = this._container.get(Chat.name);
+		chat.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
 		this._enemyList = new Map();
 		this._heroListForFight = new Map();
 	}
@@ -108,9 +112,9 @@ class Level {
 		return this.#getNextAliveHero();
 	}
 
-	#generateEnemyList(): void {
+	#generateEnemyList(currentWorld:AbstractWorld): void {
 		let idListCard = Level.ZERO();
-		const currentLevel: WorldLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
+		const currentLevel: WorldLevel = currentWorld.getWorlLeveldByNumber(this._levelNumber);
 		currentLevel.getMonsterList().forEach((enemy: Enemy, uuid) => {
             this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
             idListCard++;
@@ -120,7 +124,8 @@ class Level {
 	// Map of cards with id from 0 to n
 	#generateHeroListForFight(): void {
 		let idListCard = Level.ZERO();
-		this._state.getCardDeckList().forEach((hero: Hero, uuid) => {
+		const deck = this._container.get(Deck.name);
+		deck.getCardList().forEach((hero: Hero, uuid) => {
             this._heroListForFight.set(idListCard.toString(), hero.getStackPlayCard());
             idListCard++;
         });

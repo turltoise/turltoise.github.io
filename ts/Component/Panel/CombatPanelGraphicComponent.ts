@@ -1,8 +1,7 @@
 import Container from "../../Container.js";
 import AbstractWorld from "../../Game/Adventure/World/AbstractWorld.js";
-import WorldLevel from "../../Game/Adventure/World/WorldLevel/WorldLevel.js";
 import WorldList from "../../Game/Adventure/WorldList.js";
-import State from "../../Game/State/State.js";
+import Combat from "../../Game/Combat.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 import CombatMenuGraphicComponent from "./Combat/CombatMenuGraphicComponent.js";
 
@@ -18,7 +17,7 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 	    constructor(container: Container) {
         super(container);
 
-        this._combatMenuGraphicComponent = container.get('CombatMenuGraphicComponent');
+        this._combatMenuGraphicComponent = container.get(CombatMenuGraphicComponent.name);
 
 		const templateContainerAdventure = this.getCurrentDocument().createElement('div');
 
@@ -79,7 +78,7 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 		this._templateTitleText.style.padding = "35px";
 		this._templateTitleText.style.width = "30%";
 
-		const worldList: WorldList = this._container.get('WorldList'); 
+		const worldList: WorldList = this._container.get(WorldList.name); 
 		worldList.getList().forEach((worldObject, id) => {
 			const instanceTitleText = <HTMLElement> this._templateTitleText.cloneNode(true);
 			instanceTitleText.innerHTML = worldObject.constructor.name;
@@ -108,10 +107,9 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 	#launchWorld(world: AbstractWorld) {
 		this._instanceListAdventure.style.display = "none";
 		this._instanceCombat.style.display = "block";
-		const state: State = this._container.get('State');
-		state.setCurrentWorld(world);
-
-		this._instanceTitleAdventure.innerHTML = state.getCurrentWorld().constructor.name;
+		const combat: Combat = this._container.get(Combat.name);
+		combat.setCurrentWorld(world);
+		this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().constructor.name;
 	}
 
 	#returnToList(){

@@ -1,6 +1,6 @@
-import Container from "../../../Container";
-import StackPlayCard from "../../Card/StackPlayCard";
-import Chat from "../../Chat/Chat";
+import Container from "../../../Container.js";
+import StackPlayCard from "../../Card/StackPlayCard.js";
+import Chat from "../../Chat/Chat.js";
 
 class CapacityMessage {
 
@@ -35,7 +35,7 @@ class CapacityMessage {
     }
 
     static #addMessage(container: Container, text: string, className: string): void {
-        const chat: Chat = container.get('Chat');
+        const chat: Chat = container.get(Chat.name);
         chat.addChatMessage(CapacityMessage.#fontWithClass(text, className), null);
     }
 

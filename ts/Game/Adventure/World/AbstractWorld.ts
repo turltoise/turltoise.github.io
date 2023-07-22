@@ -2,7 +2,7 @@ import Container from "../../../Container.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 
 class AbstractWorld {
-	private _container: Container;
+	protected _container: Container;
 	private _title: string;
 	private _background: string;
 	private _worldLevelList: Map<number, WorldLevel>;

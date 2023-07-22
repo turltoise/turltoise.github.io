@@ -1,8 +1,8 @@
 import CardAnimation from "../Game/Card/CardAnimation.js";
-import State from "../Game/State/State.js";
 import Number from "../Game/Tools/Number.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 import AbstractPrintableCard from "../Game/Card/AbstractPrintableCard.js";
+import Container from "../Container.js";
 
 class CardGraphicComponent extends AbstractGraphicComponent {
 
@@ -27,8 +27,8 @@ class CardGraphicComponent extends AbstractGraphicComponent {
     private _instanceAnimationDamage: HTMLElement;
     private _instanceAnimationDie: HTMLElement;
 
-    constructor(state: State, card: AbstractPrintableCard) {
-        super(state);
+    constructor(container: Container, card: AbstractPrintableCard) {
+        super(container);
         if (card.constructor.name != "Hero" 
             && card.constructor.name != "Enemy" && 
             card.constructor.name != "Item"

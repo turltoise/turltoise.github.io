@@ -42,7 +42,7 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     render() {
-        const collection: Collection = this._container.get('Collection');
+        const collection: Collection = this._container.get(Collection.name);
         var cardList = collection.getCardList();
         cardList.forEach((card, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
@@ -55,7 +55,7 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
             instanceContainerCard.appendChild(graphicCard);
             instanceContainerCard.appendChild(instanceBtnCollectionAction);
             this._instanceContainer.appendChild(instanceContainerCard);
-            const deck: Deck = this._container.get('Deck');
+            const deck: Deck = this._container.get(Deck.name);
             if (deck.getCardList().has(uuid)) {
                 this.#setToRemoveBtn(instanceBtnCollectionAction, card, divId);
             } else {
@@ -81,8 +81,8 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     btnActionAddToDeck(card, divId) {
-        const deck: Deck = this._container.get('Deck');
-        const chat: Chat = this._container.get('Chat');
+        const deck: Deck = this._container.get(Deck.name);
+        const chat: Chat = this._container.get(Chat.name);
         if(!deck.addCard(card)) {
             chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.ERROR());
             return;
@@ -93,8 +93,8 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     btnActionRemoveFromDeck(card, divId) {
-        const deck: Deck = this._container.get('Deck');
-        const chat: Chat = this._container.get('Chat');
+        const deck: Deck = this._container.get(Deck.name);
+        const chat: Chat = this._container.get(Chat.name);
         deck.removeCard(card);
         const btn = this._shadowRoot.getElementById(divId);
         this.#setToAddBtn(btn, card, divId);

@@ -30,20 +30,11 @@ class State extends AbstractClass {
     setCombatStatusText(combatStatusText) { return this._combatStatusText = combatStatusText; }
     getLevel() { return this._level; }
     setLevel(level) { this._level = level; }
-    getAllWorldProgress() { return this._allWorldProgress; }
-    getChat() { return this._chat; }
-    getResource() { return this._resource; }
-    getCollection() { return this._collection; }
-    getDeck() { return this._deck; }
-    getWorldList() { return this._worldList; }
     getCurrentWorld() { return this._currentWorld; }
     setCurrentWorld(currentWorld) { this._currentWorld = currentWorld; }
     getCardDeckList() { return this._deck.getCardList(); }
-    addChatMessage(text, type = null) { this._chat.addChatMessage(text, type); }
     getCurrentEnemy() { return (this._level) ? this._level.getCurrentEnemy() : null; }
-    getDebug() {
-        return this._debug;
-    }
+    getDebug() { return this._debug; }
 }
 export default State;
 //# sourceMappingURL=State.js.map

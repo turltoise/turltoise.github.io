@@ -4,13 +4,15 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _CombatMenuGraphicComponent_instances, _CombatMenuGraphicComponent_setBackgroundImage, _CombatMenuGraphicComponent_updateTextStatus, _CombatMenuGraphicComponent_updateLevelText, _CombatMenuGraphicComponent_getCurrentLevelName, _CombatMenuGraphicComponent_getMaxLevelReachName;
+import Combat from "../../../Game/Combat.js";
+import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
+import AdventureSceneGraphicComponent from "./AdventureSceneGraphicComponent.js";
 class CombatMenuGraphicComponent extends AbstractGraphicComponent {
-    constructor(state, adventureSceneGraphicComponent) {
-        super(state);
+    constructor(container) {
+        super(container);
         _CombatMenuGraphicComponent_instances.add(this);
-        this._state = state;
-        this._adventureSceneGraphicComponent = adventureSceneGraphicComponent;
+        this._adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
         this._instanceContainer.style.backgroundColor = "#C0C0C0"; //"#0C5D20";//"#145f24";
         this._instanceContainer.style.padding = "10px";
         const templateLevelText = this.getCurrentDocument().createElement('div');
@@ -67,12 +69,13 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(this._instanceStatusCombat);
         this._instanceContainer.appendChild(this._adventureSceneGraphicComponent);
     }
-    setCombatState(state) {
-        this._state.setCombatState(state);
-        if (this._state.getCombatState() == CombatMenuGraphicComponent.getStart()) {
-            this._state.setCombatCountDownLevel(3);
+    setCombatState(combatState) {
+        const combat = this._container.get(Combat.name);
+        combat.setCombatState(combatState);
+        if (combat.getCombatState() == CombatMenuGraphicComponent.getStart()) {
+            combat.setCombatCountDownLevel(3);
         }
-        console.info("Combat state set to : " + this._state.getCombatState());
+        console.info("Combat state set to : " + combat.getCombatState());
     }
     internalLoop() {
         __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_updateTextStatus).call(this);
@@ -88,26 +91,32 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     static getContinue() { return "CONTINUE"; }
 }
 _CombatMenuGraphicComponent_instances = new WeakSet(), _CombatMenuGraphicComponent_setBackgroundImage = function _CombatMenuGraphicComponent_setBackgroundImage() {
-    if (this._state.getCurrentWorld()) {
-        const url = "url(./img/world/" + this._state.getCurrentWorld().constructor.name + ".jpg)";
+    const combat = this._container.get(Combat.name);
+    if (combat.getCurrentWorld()) {
+        const url = "url(./img/world/" + combat.getCurrentWorld().constructor.name + ".jpg)";
         this._instanceContainer.style.backgroundImage = url;
         this._instanceContainer.style.backgroundPosition = "-25%, -25%";
         this._instanceContainer.style.backgroundSize = "150%";
     }
 }, _CombatMenuGraphicComponent_updateTextStatus = function _CombatMenuGraphicComponent_updateTextStatus() {
+    const combat = this._container.get(Combat.name);
     const statutCombatDiv = this._shadowRoot.querySelectorAll("#statut-combat")[0];
-    statutCombatDiv.innerHTML = this._state.getCombatStatusText();
+    statutCombatDiv.innerHTML = combat.getCombatStatusText();
 }, _CombatMenuGraphicComponent_updateLevelText = function _CombatMenuGraphicComponent_updateLevelText() {
     const levelTextDiv = this._shadowRoot.querySelectorAll("#level-text")[0];
     levelTextDiv.innerHTML = "Current Level : " + __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_getCurrentLevelName).call(this) + " | Max Level : " + __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_getMaxLevelReachName).call(this);
 }, _CombatMenuGraphicComponent_getCurrentLevelName = function _CombatMenuGraphicComponent_getCurrentLevelName() {
-    if (this._state.getCurrentWorld()) {
-        return this._state.getCurrentWorld().getName() + "_" + this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName());
+    const combat = this._container.get(Combat.name);
+    const allWorldProgress = this._container.get(AllWorldProgress.name);
+    if (combat.getCurrentWorld()) {
+        return combat.getCurrentWorld().getName() + "_" + allWorldProgress.getCurrentLevelForWorld(combat.getCurrentWorld().getName());
     }
     return "EMPTY";
 }, _CombatMenuGraphicComponent_getMaxLevelReachName = function _CombatMenuGraphicComponent_getMaxLevelReachName() {
-    if (this._state.getCurrentWorld()) {
-        return this._state.getCurrentWorld().getName() + "_" + this._state.getAllWorldProgress().getMaxLevelReachForWorld(this._state.getCurrentWorld().getName());
+    const combat = this._container.get(Combat.name);
+    const allWorldProgress = this._container.get(AllWorldProgress.name);
+    if (combat.getCurrentWorld()) {
+        return combat.getCurrentWorld().getName() + "_" + allWorldProgress.getMaxLevelReachForWorld(combat.getCurrentWorld().getName());
     }
     return "EMPTY";
 };

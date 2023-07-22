@@ -1,4 +1,3 @@
-import State from "./State/State.js";
 
 // TO DO - TO REWORK
 class Store {

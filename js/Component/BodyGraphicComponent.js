@@ -1,7 +1,17 @@
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
+import ChatGraphicComponent from "./ChatGraphicComponent.js";
+import CollectionPanelGraphicComponent from "./Panel/CollectionPanelGraphicComponent.js";
+import CombatPanelGraphicComponent from "./Panel/CombatPanelGraphicComponent.js";
+import OpeningPanelGraphicComponent from "./Panel/OpeningPanelGraphicComponent.js";
+import ShopPanelGraphicComponent from "./Panel/ShopPanelGraphicComponent.js";
 class BodyGraphicComponent extends AbstractGraphicComponent {
-    constructor(state, combatPanel, collectionPanel, openingPanel, shopPanel, chatComponent) {
-        super(state);
+    constructor(container) {
+        super(container);
+        const combatPanel = container.get(CombatPanelGraphicComponent.name);
+        const collectionPanel = container.get(CollectionPanelGraphicComponent.name);
+        const openingPanel = container.get(OpeningPanelGraphicComponent.name);
+        const shopPanel = container.get(ShopPanelGraphicComponent.name);
+        const chatComponent = container.get(ChatGraphicComponent.name);
         this._instanceContainer.style.margin = "40px";
         const templateSubContainerBody = this.getCurrentDocument().createElement('div');
         templateSubContainerBody.setAttribute('class', this.getClassName('sub-container'));

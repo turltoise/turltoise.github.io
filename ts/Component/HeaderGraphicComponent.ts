@@ -14,8 +14,8 @@ class HeaderGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.style.padding = "10px";
         this._instanceContainer.style.margin = "40px";
 
-        const goldIndicator: GoldIndicatorGraphicComponent = this._container.get('GoldIndicatorGraphicComponent');
-        const mainMenu: MainMenuGraphicComponent = this._container.get('MainMenuGraphicComponent');
+        const goldIndicator: GoldIndicatorGraphicComponent = this._container.get(GoldIndicatorGraphicComponent.name);
+        const mainMenu: MainMenuGraphicComponent = this._container.get(MainMenuGraphicComponent.name);
 
         this._instanceContainer.appendChild(goldIndicator);
         this._instanceContainer.appendChild(mainMenu);

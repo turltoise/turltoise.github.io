@@ -1,6 +1,6 @@
 class AbstractTick {
-    constructor(state, thrower, target) {
-        this._state = state;
+    constructor(container, thrower, target) {
+        this._container = container;
         this._thrower = thrower;
         this._target = target;
     }

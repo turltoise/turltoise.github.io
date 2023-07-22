@@ -1,8 +1,7 @@
 // TO DO - TO REWORK
 class Store {
-    constructor(state) {
+    constructor() {
         //super();
-        this._state = state;
     }
     save() {
         /*console.info("Saving ....");

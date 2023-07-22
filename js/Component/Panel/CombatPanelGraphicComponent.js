@@ -4,13 +4,15 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _CombatPanelGraphicComponent_instances, _CombatPanelGraphicComponent_launchWorld, _CombatPanelGraphicComponent_returnToList;
+import WorldList from "../../Game/Adventure/WorldList.js";
+import Combat from "../../Game/Combat.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
+import CombatMenuGraphicComponent from "./Combat/CombatMenuGraphicComponent.js";
 class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
-    constructor(state, adventureSceneGraphicComponent, combatMenuGraphicComponent) {
-        super(state);
+    constructor(container) {
+        super(container);
         _CombatPanelGraphicComponent_instances.add(this);
-        this._state = state;
-        this._combatMenuGraphicComponent = combatMenuGraphicComponent;
+        this._combatMenuGraphicComponent = container.get(CombatMenuGraphicComponent.name);
         const templateContainerAdventure = this.getCurrentDocument().createElement('div');
         // list of adventure
         this._instanceListAdventure = templateContainerAdventure.cloneNode(true);
@@ -57,7 +59,8 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this._templateTitleText.style.color = "black";
         this._templateTitleText.style.padding = "35px";
         this._templateTitleText.style.width = "30%";
-        this._state.getWorldList().getList().forEach((worldObject, id) => {
+        const worldList = this._container.get(WorldList.name);
+        worldList.getList().forEach((worldObject, id) => {
             const instanceTitleText = this._templateTitleText.cloneNode(true);
             instanceTitleText.innerHTML = worldObject.constructor.name;
             this._instanceWorld = templateAdventureFrameTitle.cloneNode(true);
@@ -80,8 +83,9 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 _CombatPanelGraphicComponent_instances = new WeakSet(), _CombatPanelGraphicComponent_launchWorld = function _CombatPanelGraphicComponent_launchWorld(world) {
     this._instanceListAdventure.style.display = "none";
     this._instanceCombat.style.display = "block";
-    this._state.setCurrentWorld(world);
-    this._instanceTitleAdventure.innerHTML = this._state.getCurrentWorld().constructor.name;
+    const combat = this._container.get(Combat.name);
+    combat.setCurrentWorld(world);
+    this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().constructor.name;
 }, _CombatPanelGraphicComponent_returnToList = function _CombatPanelGraphicComponent_returnToList() {
     this._instanceCombat.style.display = "none";
     this._instanceListAdventure.style.display = "block";

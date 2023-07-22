@@ -90,15 +90,15 @@ class StackPlayCard extends AbstractPrintableCard {
         });
         return capacities;
     }
-    playCapacity(state, target) {
-        let capacity = __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_getRandomCapacity).call(this, state);
+    playCapacity(container, target) {
+        let capacity = __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_getRandomCapacity).call(this, container);
         capacity.trigger(this, target);
         this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
         console.log(this._fightAnimation);
     }
     static MAIN_KEY() { return 'this'; }
 }
-_StackPlayCard_instances = new WeakSet(), _StackPlayCard_getRandomCapacity = function _StackPlayCard_getRandomCapacity(state) {
+_StackPlayCard_instances = new WeakSet(), _StackPlayCard_getRandomCapacity = function _StackPlayCard_getRandomCapacity(container) {
     let capacities = new Map();
     this._sMap.forEach((computedCard) => {
         capacities = new Map([...capacities, ...computedCard.getCapacities()]);
@@ -107,7 +107,7 @@ _StackPlayCard_instances = new WeakSet(), _StackPlayCard_getRandomCapacity = fun
     let keys = Array.from(capacities.keys());
     let capacity = capacities.get(keys[Math.floor(Math.random() * keys.length)]);
     if (!capacity) {
-        capacity = new PhysicalAttack(state);
+        capacity = new PhysicalAttack(container);
     }
     return capacity;
 }, _StackPlayCard_computeStat = function _StackPlayCard_computeStat(methodName) {

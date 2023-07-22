@@ -1,8 +1,9 @@
+import Store from "../Game/Store.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class StoreGraphicComponent extends AbstractGraphicComponent {
-    constructor(state, store) {
-        super(state);
-        this._store = store;
+    constructor(container) {
+        super(container);
+        this._store = container.get(Store.name);
         this._instanceContainer.style.margin = "40px";
         const templateStoreStateButton = this.getCurrentDocument().createElement('div');
         templateStoreStateButton.setAttribute('class', this.getClassName('btn'));

@@ -4,12 +4,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _MainMenuGraphicComponent_instances, _MainMenuGraphicComponent_displayPanel, _MainMenuGraphicComponent_getBtnFromLabel, _MainMenuGraphicComponent_setAnimationBtn;
+import MainScreen from "../Game/MainScreen.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class MainMenuGraphicComponent extends AbstractGraphicComponent {
-    constructor(state, mainScreen) {
-        super(state);
+    constructor(container) {
+        super(container);
         _MainMenuGraphicComponent_instances.add(this);
-        this._mainScreen = mainScreen;
+        this._mainScreen = this._container.get(MainScreen.name);
         let keyframes = `
         @keyframes clickMenu {
             0%   {

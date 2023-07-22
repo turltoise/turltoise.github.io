@@ -1,8 +1,9 @@
+import Resource from "../Game/Resource.js";
 import Number from "../Game/Tools/Number.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
-    constructor(state) {
-        super(state);
+    constructor(container) {
+        super(container);
         let keyframes = `
         @keyframes shinyGoldBefore {
             0%   {
@@ -63,10 +64,11 @@ class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
         let templateStyle = this.getCurrentDocument().createElement('style');
         templateStyle.innerHTML = keyframes;
         this._instanceContainer.appendChild(templateStyle);
+        const resource = this._container.get(Resource.name);
         const templateDisplay = this.getCurrentDocument().createElement('div');
         templateDisplay.setAttribute('class', this.getClassName('display'));
         const instanceDisplay = templateDisplay.cloneNode(true);
-        instanceDisplay.innerHTML = Number.displayNumber(this._state.getResource().getGold()) + " GOLD";
+        instanceDisplay.innerHTML = Number.displayNumber(resource.getGold()) + " GOLD";
         instanceDisplay.style.boxSizing = "border-box";
         instanceDisplay.style.backgroundColor = "#FDC911";
         //instanceDisplay.style.padding = "10px";
@@ -89,7 +91,8 @@ class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.style.backgroundColor = "#FDC911";
     }
     internalLoop() {
-        this._instanceDisplay.innerHTML = Number.displayNumber(this._state.getResource().getGold()) + " GOLD";
+        const resource = this._container.get(Resource.name);
+        this._instanceDisplay.innerHTML = Number.displayNumber(resource.getGold()) + " GOLD";
     }
 }
 customElements.define('gold-indicator', GoldIndicatorGraphicComponent);

@@ -7,8 +7,8 @@ var _Forest_instances, _Forest_generateWorldLevelOne, _Forest_generateWorldLevel
 import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Forest extends AbstractWorld {
-    constructor(state, title = "Title", background = "Background") {
-        super(state, title, background);
+    constructor(container, title = "Title", background = "Background") {
+        super(container, title, background);
         _Forest_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Forest_instances, "m", _Forest_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Forest_instances, "m", _Forest_generateWorldLevelTwo).call(this));

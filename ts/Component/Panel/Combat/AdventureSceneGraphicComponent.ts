@@ -1,7 +1,8 @@
 import Container from "../../../Container.js";
 import CollectionCard from "../../../Game/Card/CollectionCard.js";
 import StackPlayCard from "../../../Game/Card/StackPlayCard.js";
-import State from "../../../Game/State/State.js";
+import Deck from "../../../Game/CardManager/Deck.js";
+import Combat from "../../../Game/Combat.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 
@@ -71,13 +72,16 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     }
 
     internalLoop() {
-        this.#updateDeckCardList();  
-        this.#updateCurrentEnemy();
+        const combat = this._container.get(Combat.name);
+        if (combat.getCurrentLevel()) {
+            this.#updateDeckCardList();  
+            this.#updateCurrentEnemy();
+        }
     }
 
     #updateCurrentEnemy() {
-        const state: State = this._container.get('State');
-        const currentEnemy:StackPlayCard = state.getCurrentEnemy();
+        const combat = this._container.get(Combat.name);
+        const currentEnemy:StackPlayCard = combat.getCurrentLevel().getCurrentEnemy();
         const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_ENEMY_VIEW() +" card-card");
         if (currentEnemy) {
             let displayNew = true;
@@ -105,8 +109,8 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     }
 
     #updateDeckCardList() {
-        const state: State = this._container.get('State');
-        const cardList = new Map(state.getCardDeckList());
+        const deck = this._container.get(Deck.name)
+        const cardList = new Map(deck.getCardList());
 
         // Remove all card not in deck but displayed in panel combat
         const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_DECK_VIEW() +" card-card");

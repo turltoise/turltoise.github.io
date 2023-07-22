@@ -4,10 +4,11 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _ChatGraphicComponent_instances, _ChatGraphicComponent_refreshChat;
+import Chat from "../Game/Chat/Chat.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class ChatGraphicComponent extends AbstractGraphicComponent {
-    constructor(state) {
-        super(state);
+    constructor(container) {
+        super(container);
         _ChatGraphicComponent_instances.add(this);
         const self = this;
         setInterval(() => self.internalLoop(), 20);
@@ -98,8 +99,9 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     }
 }
 _ChatGraphicComponent_instances = new WeakSet(), _ChatGraphicComponent_refreshChat = function _ChatGraphicComponent_refreshChat() {
+    let chat = this._container.get(Chat.name);
     // Add new messages
-    this._state.getChat().getGraphicMessageToAdd().forEach((message, uuid) => {
+    chat.getGraphicMessageToAdd().forEach((message, uuid) => {
         this._instanceMessage = this._templateMessage.cloneNode(true);
         this._instanceMessage.setAttribute('id', uuid);
         this._instanceMessage.innerHTML = message.getText();
@@ -109,12 +111,12 @@ _ChatGraphicComponent_instances = new WeakSet(), _ChatGraphicComponent_refreshCh
     // Delete old messages
     const messageBoxList = this._shadowRoot.querySelectorAll(".message-box");
     messageBoxList.forEach((element) => {
-        if (this._state.getChat().getGraphicMessageToDelete().has(element.id)) {
+        if (chat.getGraphicMessageToDelete().has(element.id)) {
             element.remove();
         }
     });
-    this._state.getChat().resetGraphicMessageToAdd();
-    this._state.getChat().resetGraphicMessageToDelete();
+    chat.resetGraphicMessageToAdd();
+    chat.resetGraphicMessageToDelete();
 };
 customElements.define('chat-chat', ChatGraphicComponent);
 export default ChatGraphicComponent;

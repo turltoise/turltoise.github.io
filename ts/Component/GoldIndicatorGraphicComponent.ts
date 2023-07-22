@@ -70,7 +70,7 @@ class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
         templateStyle.innerHTML = keyframes;
         this._instanceContainer.appendChild(templateStyle);
 
-		const resource: Resource = this._container.get('Resource');
+		const resource: Resource = this._container.get(Resource.name);
 
 		const templateDisplay = this.getCurrentDocument().createElement('div');
 		templateDisplay.setAttribute('class', this.getClassName('display'));
@@ -103,7 +103,7 @@ class GoldIndicatorGraphicComponent extends AbstractGraphicComponent {
 	}
 
 	internalLoop() {
-		const resource: Resource = this._container.get('Resource');
+		const resource: Resource = this._container.get(Resource.name);
 		this._instanceDisplay.innerHTML = Number.displayNumber(resource.getGold()) + " GOLD";
 	}
 }

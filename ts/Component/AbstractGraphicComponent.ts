@@ -1,5 +1,4 @@
 import Container from "../Container.js";
-import State from "../Game/State/State.js";
 
 class AbstractGraphicComponent extends HTMLElement {
     protected _container: Container;
@@ -50,10 +49,7 @@ class AbstractGraphicComponent extends HTMLElement {
     }
 
     onClickContainer(): void {
-        const state:State = this._container.get('State');
-    	if (state.getDebug()) {
-    		console.debug("Click on " + this.getClassName('container'));
-    	}
+    	console.debug("Click on " + this.getClassName('container'));
     }
 }
 

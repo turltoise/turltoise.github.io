@@ -1,18 +1,48 @@
 import CombatMenuGraphicComponent from "../Component/Panel/Combat/CombatMenuGraphicComponent.js";
+import Container from "../Container.js";
+import AbstractWorld from "./Adventure/World/AbstractWorld.js";
+import Chat from "./Chat/Chat.js";
 import ChatMessage from "./Chat/ChatMessage.js";
 import Level from "./Level.js";
-import State from "./State/State.js";
-class Combat {
-	private _state: State;
+import AllWorldProgress from "./State/AllWorldProgress.js";
 
-	constructor(state: State) {
-		this._state = state;
+class Combat {
+	private _container: Container;
+	private _combatState: string;
+	private _combatCountDownLevel: number;
+	private _combatStatusText: string;
+	private _currentWorld: AbstractWorld;
+	private _currentLevel: Level;
+
+	constructor(container: Container) {
+		this._container = container;
+		this._combatState = CombatMenuGraphicComponent.getStop();
+		this._combatCountDownLevel = 0;
+		this._combatStatusText = "";
+
+		this._currentWorld = null; // TODO problem with this
+		this._currentLevel = null
+		
 		const self = this;
 		setInterval(() => self.internalLoop(), 1000);
 	}
 
+	getCombatState(): string {return this._combatState;}
+	getCombatStatusText(): string {return this._combatStatusText;}
+	getCombatCountDownLevel(): number {return this._combatCountDownLevel;}
+
+	getCurrentLevel(): Level {return this._currentLevel;}
+
+	setCombatState(combatState: string) {this._combatState = combatState;}
+	setCombatStatusText(combatStatusText: string) {this._combatStatusText = combatStatusText;}
+	setCombatCountDownLevel(combatCountDownLevel: number) {this._combatCountDownLevel = combatCountDownLevel;}
+	
+
+	setCurrentWorld(currentWorld: AbstractWorld) {this._currentWorld = currentWorld;}
+	getCurrentWorld(): AbstractWorld {return this._currentWorld;}
+
 	internalLoop() {
-		const combatState = this._state.getCombatState();
+		const combatState = this._combatState;
 		switch (combatState) {
 		  case CombatMenuGraphicComponent.getContinue():
 		    this.continue();
@@ -38,93 +68,103 @@ class Combat {
 	}
 
 	preStart() {
-		this._state.setLevel(new Level(
-			this._state,
-			this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName())
-		));
-		this._state.getLevel().prestart();
-		this._state.setCombatCountDownLevel(2);
-		this._state.setCombatState(CombatMenuGraphicComponent.getStarting());
-		const text = "Level " + this.#getCurrentLevelName() + " starts in "+this._state.getCombatCountDownLevel() + ".";
-		this._state.setCombatStatusText(text);
-		this._state.addChatMessage(text, ChatMessage.COUNT_DOWN());
-		this._state.setCombatCountDownLevel(this._state.getCombatCountDownLevel() -1);
+		const allWorldProgress: AllWorldProgress = this._container.get(AllWorldProgress.name);
+		const chat: Chat = this._container.get(Chat.name);
+		this._currentLevel = new Level(
+			this._container,
+			allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName())
+		);
+		this._currentLevel.prestart(this._currentWorld);
+		this._combatCountDownLevel = 2;
+		this._combatState = CombatMenuGraphicComponent.getStarting();
+		const text = "Level " + this.#getCurrentLevelName() + " starts in " + this._combatCountDownLevel + ".";
+		this._combatStatusText = text;
+		chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+		this._combatCountDownLevel -= 1;
 	}
 
 	nextLevel() {
-		if (this._state.getAllWorldProgress().getMaxLevelReachForWorld(this._state.getCurrentWorld().getName()) + 1 > this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName())) {
-			this._state.getAllWorldProgress().incrementCurrentLevelForWorld(this._state.getCurrentWorld().getName());
-			this._state.setCombatState(CombatMenuGraphicComponent.getStart());
+		const allWorldProgress: AllWorldProgress = this._container.get(AllWorldProgress.name);
+		const chat: Chat = this._container.get(Chat.name);
+		if (allWorldProgress.getMaxLevelReachForWorld(this._currentWorld.getName()) + 1 > allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName())) {
+			allWorldProgress.incrementCurrentLevelForWorld(this._currentWorld.getName());
+			this._combatState = CombatMenuGraphicComponent.getStart();
 		} else {
-			this._state.addChatMessage(
-				"Can't increase above level " + this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName()) + ". You need to win current level first.",
+			chat.addChatMessage(
+				"Can't increase above level " + allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()) + ". You need to win current level first.",
 				ChatMessage.ERROR()
 			);
-			this._state.setCombatState(CombatMenuGraphicComponent.getStop());
+			this._combatState = CombatMenuGraphicComponent.getStop();
 		}
 	}
 
 	previousLevel() {
+		const allWorldProgress: AllWorldProgress = this._container.get(AllWorldProgress.name);
+		const chat: Chat = this._container.get(Chat.name);
 		// if possible
-		if (this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName()) > 1) { // 1 = first level
+		if (allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()) > 1) { // 1 = first level
 			// reduce level
-			this._state.getAllWorldProgress().reduceCurrentLevelForWorld(this._state.getCurrentWorld().getName());
+			allWorldProgress.reduceCurrentLevelForWorld(this._currentWorld.getName());
 			console.debug("Reduce to level " + this.#getCurrentLevelName());
 			// start the new level
-			this._state.setCombatState(CombatMenuGraphicComponent.getStart());
+			this._combatState = CombatMenuGraphicComponent.getStart();
 		} else {
-			this._state.addChatMessage("Level can't be reduce", ChatMessage.ERROR());
-			this._state.setCombatState(CombatMenuGraphicComponent.getStop());
+			chat.addChatMessage("Level can't be reduce", ChatMessage.ERROR());
+			this._combatState = CombatMenuGraphicComponent.getStop();
 		}
 	}
 
 	starting() {
-		const text = "Level " + this.#getCurrentLevelName() + " starts in "+this._state.getCombatCountDownLevel()+".";
-		this._state.setCombatStatusText(text);
-		this._state.addChatMessage(text, ChatMessage.COUNT_DOWN());
-		if (this._state.getCombatCountDownLevel() == 0) {
-			this._state.getLevel().start();
+		const chat: Chat = this._container.get(Chat.name);
+		const text = "Level " + this.#getCurrentLevelName() + " starts in " + this._combatCountDownLevel + ".";
+		this._combatStatusText = text;
+		chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+		if (this._combatCountDownLevel == 0) {
+			this._currentLevel.start();
 			// then continue
 			this.continue();
 		} else {
-			this._state.setCombatCountDownLevel(this._state.getCombatCountDownLevel() -1);
+			this._combatCountDownLevel -= 1;
 		}
 	}
 
 	stop() {
-		if (this._state.getLevel()) {
-			this._state.getLevel().stop();
-			this._state.setCombatState(null);
+		if (this._currentLevel) {
+			this._currentLevel.stop();
+			this._combatState = null;
 		}
 	}
 
 	continue() {
+		const allWorldProgress: AllWorldProgress = this._container.get(AllWorldProgress.name);
+		const chat: Chat = this._container.get(Chat.name);
 		// force continue state
-		this._state.setCombatState(CombatMenuGraphicComponent.getContinue());
-		let currentEnemy = this._state.getLevel().getCurrentEnemy();
-		let currentHero = this._state.getLevel().getCurrentHero();
+		this._combatState = CombatMenuGraphicComponent.getContinue();
+		let currentEnemy = this._currentLevel.getCurrentEnemy();
+		let currentHero = this._currentLevel.getCurrentHero();
 
 		if (currentEnemy == null) {
-			this._state.addChatMessage("You win !  Level " + this.#getCurrentLevelName() + " completed !", ChatMessage.SUCCES());
-			this._state.setCombatState(CombatMenuGraphicComponent.getStop());
-			this._state.getAllWorldProgress().setMaxLevelReachForWorld(
-				this._state.getCurrentWorld().getName(),
-				this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName())
+			chat.addChatMessage("You win !  Level " + this.#getCurrentLevelName() + " completed !", ChatMessage.SUCCES());
+			this._combatState = CombatMenuGraphicComponent.getStop();
+			allWorldProgress.setMaxLevelReachForWorld(
+				this._currentWorld.getName(),
+				allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName())
 			);
-			this._state.setLevel(null);
+			this._currentLevel = null;
 			return;
 		}
 		if (currentHero == null) {
-			this._state.addChatMessage("You loose !  Level " + this.#getCurrentLevelName() + ".", ChatMessage.FAILURE());
-			this._state.setCombatState(null);
-			this._state.setLevel(null);
+			chat.addChatMessage("You loose !  Level " + this.#getCurrentLevelName() + ".", ChatMessage.FAILURE());
+			this._combatState = null;
+			this._currentLevel = null;
 			return;
 		}
-		this._state.getLevel().fight();	
+		this._currentLevel.fight();	
 	}
 
 	#getCurrentLevelName() {
-		return this._state.getCurrentWorld().getName() + "_" + this._state.getAllWorldProgress().getCurrentLevelForWorld(this._state.getCurrentWorld().getName());
+		const allWorldProgress: AllWorldProgress = this._container.get(AllWorldProgress.name);
+		return this._currentWorld.getName() + "_" + allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName());
 	}
 }
 

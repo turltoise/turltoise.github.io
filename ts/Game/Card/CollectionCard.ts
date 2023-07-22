@@ -4,7 +4,6 @@ import RawCarac from "./RawCarac.js";
 import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import PlayCard from "./PlayCard.js";
 import AbstractPrintableCard from "./AbstractPrintableCard.js";
-import State from "../State/State.js";
 
 /**
  * Use in collection and shop : to display raw carac of leveled card 
@@ -35,7 +34,7 @@ class CollectionCard extends AbstractPrintableCard {
 	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;}
 	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}
 	getCapacityByUUID(uuid: string) : AbstractCapacity {return this._capacities.get(uuid);}
-	getRandomCapacity(state: State): AbstractCapacity {
+	getRandomCapacity(): AbstractCapacity {
 		let keys = Array.from(this._capacities.keys());
 		return this._capacities.get(keys[Math.floor(Math.random() * keys.length)])
 	}
@@ -79,24 +78,3 @@ class CollectionCard extends AbstractPrintableCard {
 }
 
 export default CollectionCard;
-
-/**
-	hit(card, state) {
-		state.addChatMessage(this._title + " hits " + card._title + " for " + this._currentStrength + ".", ChatMessage.SWORD());
-		console.debug(card._currentLife + "/" + card._life);
-		card._currentLife = parseInt(card._currentLife) - parseInt(this._currentStrength);
-		console.debug(card._currentLife + "/" + card._life);
-
-		this._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.ATTACK()));
-
-		card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DAMAGE(), "-"+this._currentStrength));
-		if (card._currentLife <= 0) {
-			state.addChatMessage(card._title + " dies!", ChatMessage.DIES());
-			card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DIE()));
-			if (card._type == Card.ENEMY_TYPE()) {
-				state._resource._gold = state._resource._gold + card._gold;
-				state.addChatMessage(card._gold + " gold earned.", ChatMessage.GOLD());
-			}
-		}
-	}
-**/

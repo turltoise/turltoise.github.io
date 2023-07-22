@@ -8,8 +8,8 @@ import CardAnimation from "../Game/Card/CardAnimation.js";
 import Number from "../Game/Tools/Number.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class CardGraphicComponent extends AbstractGraphicComponent {
-    constructor(state, card) {
-        super(state);
+    constructor(container, card) {
+        super(container);
         _CardGraphicComponent_instances.add(this);
         if (card.constructor.name != "Hero"
             && card.constructor.name != "Enemy" &&

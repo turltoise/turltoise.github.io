@@ -8,19 +8,18 @@ import Meadow from "./World/Meadow.js";
 import Mountain from "./World/Mountain.js";
 import Ocean from "./World/Ocean.js";
 class WorldList {
-    constructor() {
-    }
-    generateWorldList(state) {
+    constructor(container) {
+        this._container = container;
         this._list = new Map();
-        this._list.set(1, new Meadow(state));
-        this._list.set(2, new Forest(state));
-        this._list.set(3, new Desert(state));
-        this._list.set(4, new Mountain(state));
-        this._list.set(5, new Beach(state));
-        this._list.set(6, new Ocean(state));
-        this._list.set(7, new Cave(state));
-        this._list.set(8, new Hell(state));
-        this._list.set(9, new Heaven(state));
+        this._list.set(1, new Meadow(this._container));
+        this._list.set(2, new Forest(this._container));
+        this._list.set(3, new Desert(this._container));
+        this._list.set(4, new Mountain(this._container));
+        this._list.set(5, new Beach(this._container));
+        this._list.set(6, new Ocean(this._container));
+        this._list.set(7, new Cave(this._container));
+        this._list.set(8, new Hell(this._container));
+        this._list.set(9, new Heaven(this._container));
     }
     getList() {
         return this._list;

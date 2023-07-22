@@ -12,7 +12,7 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
 	constructor(container: Container) {
 		super(container);
 
-        this._mainScreen = this._container.get('MainScreen');
+        this._mainScreen = this._container.get(MainScreen.name);
     
         let keyframes = `
         @keyframes clickMenu {

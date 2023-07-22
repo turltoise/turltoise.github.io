@@ -118,7 +118,7 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     }
 
     #refreshChat() {
-      let chat:Chat = this._container.get('Chat');
+      let chat:Chat = this._container.get(Chat.name);
     	// Add new messages
     	chat.getGraphicMessageToAdd().forEach((message: ChatMessage, uuid: string) => {
     		this._instanceMessage = <HTMLElement> this._templateMessage.cloneNode(true);

@@ -4,14 +4,16 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _CollectionPanelGraphicComponent_instances, _CollectionPanelGraphicComponent_setToAddBtn, _CollectionPanelGraphicComponent_setToRemoveBtn;
+import Collection from "../../Game/CardManager/Collection.js";
+import Deck from "../../Game/CardManager/Deck.js";
+import Chat from "../../Game/Chat/Chat.js";
 import ChatMessage from "../../Game/Chat/ChatMessage.js";
 import CardGraphicComponent from "../CardGraphicComponent.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
-    constructor(state) {
-        super(state);
+    constructor(container) {
+        super(container);
         _CollectionPanelGraphicComponent_instances.add(this);
-        this._state = state;
         this._instanceContainer.style.backgroundColor = "#C0C0C0"; //"#0C5D20";//"#145f24";
         this._instanceContainer.style.backgroundImage = "url(./img/play-table.png)";
         this._instanceContainer.style.backgroundImage = "url(./img/arches.png)";
@@ -35,17 +37,19 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this.render();
     }
     render() {
-        var cardList = this._state.getCollection().getCardList();
+        const collection = this._container.get(Collection.name);
+        var cardList = collection.getCardList();
         cardList.forEach((card, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._state, card);
+            const graphicCard = new CardGraphicComponent(this._container, card);
             const instanceBtnCollectionAction = this._templateBtnCollectionAction.cloneNode(true);
             const divId = "btn-action-collection-" + uuid;
             instanceBtnCollectionAction.setAttribute("id", divId);
             instanceContainerCard.appendChild(graphicCard);
             instanceContainerCard.appendChild(instanceBtnCollectionAction);
             this._instanceContainer.appendChild(instanceContainerCard);
-            if (this._state.getDeck().getCardList().has(uuid)) {
+            const deck = this._container.get(Deck.name);
+            if (deck.getCardList().has(uuid)) {
                 __classPrivateFieldGet(this, _CollectionPanelGraphicComponent_instances, "m", _CollectionPanelGraphicComponent_setToRemoveBtn).call(this, instanceBtnCollectionAction, card, divId);
             }
             else {
@@ -54,19 +58,23 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         });
     }
     btnActionAddToDeck(card, divId) {
-        if (!this._state.getDeck().addCard(card)) {
-            this._state.addChatMessage("Max card in deck reached. Max is set to : " + this._state.getDeck().getMaxCard(), ChatMessage.ERROR());
+        const deck = this._container.get(Deck.name);
+        const chat = this._container.get(Chat.name);
+        if (!deck.addCard(card)) {
+            chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.ERROR());
             return;
         }
         const btn = this._shadowRoot.getElementById(divId);
         __classPrivateFieldGet(this, _CollectionPanelGraphicComponent_instances, "m", _CollectionPanelGraphicComponent_setToRemoveBtn).call(this, btn, card, divId);
-        this._state.addChatMessage("Card " + card._title + " add to deck.", ChatMessage.ADD());
+        chat.addChatMessage("Card " + card._title + " add to deck.", ChatMessage.ADD());
     }
     btnActionRemoveFromDeck(card, divId) {
-        this._state.getDeck().removeCard(card);
+        const deck = this._container.get(Deck.name);
+        const chat = this._container.get(Chat.name);
+        deck.removeCard(card);
         const btn = this._shadowRoot.getElementById(divId);
         __classPrivateFieldGet(this, _CollectionPanelGraphicComponent_instances, "m", _CollectionPanelGraphicComponent_setToAddBtn).call(this, btn, card, divId);
-        this._state.addChatMessage("Card " + card._title + " remove from deck.", ChatMessage.REMOVE());
+        chat.addChatMessage("Card " + card._title + " remove from deck.", ChatMessage.REMOVE());
     }
 }
 _CollectionPanelGraphicComponent_instances = new WeakSet(), _CollectionPanelGraphicComponent_setToAddBtn = function _CollectionPanelGraphicComponent_setToAddBtn(e, card, divId) {

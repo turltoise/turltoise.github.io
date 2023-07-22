@@ -11,21 +11,20 @@ import Mountain from "./World/Mountain.js";
 import Ocean from "./World/Ocean.js";
 
 class WorldList {
+	private _container: Container;
 	private _list: Map<number, AbstractWorld>;
-	constructor() {
-	}
-
-	generateWorldList(container: Container) {
+	constructor(container: Container) {
+		this._container = container;
 		this._list = new Map();
-		this._list.set(1, new Meadow(container));
-		this._list.set(2, new Forest(container));
-		this._list.set(3, new Desert(container));
-		this._list.set(4, new Mountain(container));
-		this._list.set(5, new Beach(container));
-		this._list.set(6, new Ocean(container));
-		this._list.set(7, new Cave(container));
-		this._list.set(8, new Hell(container));
-		this._list.set(9, new Heaven(container));
+		this._list.set(1, new Meadow(this._container));
+		this._list.set(2, new Forest(this._container));
+		this._list.set(3, new Desert(this._container));
+		this._list.set(4, new Mountain(this._container));
+		this._list.set(5, new Beach(this._container));
+		this._list.set(6, new Ocean(this._container));
+		this._list.set(7, new Cave(this._container));
+		this._list.set(8, new Hell(this._container));
+		this._list.set(9, new Heaven(this._container));
 	}
 
 	getList(): Map<number, AbstractWorld> {

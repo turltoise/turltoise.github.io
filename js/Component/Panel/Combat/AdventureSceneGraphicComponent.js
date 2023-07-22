@@ -4,11 +4,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _AdventureSceneGraphicComponent_instances, _AdventureSceneGraphicComponent_updateCurrentEnemy, _AdventureSceneGraphicComponent_updateDeckCardList;
+import Deck from "../../../Game/CardManager/Deck.js";
+import Combat from "../../../Game/Combat.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
-    constructor(state) {
-        super(state);
+    constructor(container) {
+        super(container);
         _AdventureSceneGraphicComponent_instances.add(this);
         const templateContainerCard = this.getCurrentDocument().createElement('div');
         templateContainerCard.setAttribute('class', this.getClassName('container-card'));
@@ -54,14 +56,18 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(this._interfaceDeckView);
     }
     internalLoop() {
-        //this.#updateDeckCardList();  
-        __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateCurrentEnemy).call(this);
+        const combat = this._container.get(Combat.name);
+        if (combat.getCurrentLevel()) {
+            __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateDeckCardList).call(this);
+            __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateCurrentEnemy).call(this);
+        }
     }
     static ID_DECK_VIEW() { return "id-deck-view"; }
     static ID_ENEMY_VIEW() { return "id-enemy-view"; }
 }
 _AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphicComponent_updateCurrentEnemy = function _AdventureSceneGraphicComponent_updateCurrentEnemy() {
-    const currentEnemy = this._state.getCurrentEnemy();
+    const combat = this._container.get(Combat.name);
+    const currentEnemy = combat.getCurrentLevel().getCurrentEnemy();
     const graphicCardList = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW() + " card-card");
     if (currentEnemy) {
         let displayNew = true;
@@ -77,7 +83,7 @@ _AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphi
         if (displayNew) {
             const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._state, currentEnemy);
+            const graphicCard = new CardGraphicComponent(this._container, currentEnemy);
             instanceContainerCard.appendChild(graphicCard);
             this._interfaceEnemyView.appendChild(instanceContainerCard);
         }
@@ -88,7 +94,8 @@ _AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphi
         });
     }
 }, _AdventureSceneGraphicComponent_updateDeckCardList = function _AdventureSceneGraphicComponent_updateDeckCardList() {
-    const cardList = new Map(this._state.getCardDeckList());
+    const deck = this._container.get(Deck.name);
+    const cardList = new Map(deck.getCardList());
     // Remove all card not in deck but displayed in panel combat
     const graphicCardList = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW() + " card-card");
     // loop on graphic card
@@ -106,7 +113,7 @@ _AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphi
     // loop on non graphic card
     cardList.forEach((card, uuid) => {
         const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-        const graphicCard = new CardGraphicComponent(this._state, card);
+        const graphicCard = new CardGraphicComponent(this._container, card);
         instanceContainerCard.appendChild(graphicCard);
         this._interfaceDeckView.appendChild(instanceContainerCard);
     });

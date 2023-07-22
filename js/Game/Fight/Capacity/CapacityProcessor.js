@@ -7,74 +7,74 @@ var _a, _CapacityProcessor_magicalStrikeDmgGiven, _CapacityProcessor_physicalDef
 import Element from "../Element.js";
 import CapacityMessage from "./CapacityMessage.js";
 class CapacityProcessor {
-    static putStatus(state, attackName, thrower, target, status) {
+    static putStatus(container, attackName, thrower, target, status) {
         if (__classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_touched).call(CapacityProcessor, thrower, target)) {
             target.addStatus(status);
-            CapacityMessage.putStatus(state, attackName, target);
+            CapacityMessage.putStatus(container, attackName, target);
         }
         else {
-            CapacityMessage.failed(state, attackName);
+            CapacityMessage.failed(container, attackName);
         }
     }
-    static annoucementCapacityWithFocus(state, attackName, thrower, target) {
-        CapacityMessage.capacityWithFocus(state, attackName, thrower, target);
+    static annoucementCapacityWithFocus(container, attackName, thrower, target) {
+        CapacityMessage.capacityWithFocus(container, attackName, thrower, target);
     }
-    static heal(state, thrower, target, power, heal) {
+    static heal(container, thrower, target, power, heal) {
         if (heal === null) {
             heal = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicalStrikeDmgGiven).call(CapacityProcessor, thrower);
         }
         heal = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, heal, power);
         target.heal(heal);
-        CapacityMessage.heal(state, target, heal);
+        CapacityMessage.heal(container, target, heal);
         return heal;
     }
-    static shield(state, thrower, target, power, shield) {
+    static shield(container, thrower, target, power, shield) {
         if (shield === null) {
             shield = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicalStrikeDmgGiven).call(CapacityProcessor, thrower);
         }
         shield = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, shield, power);
         target.shield(shield);
-        CapacityMessage.shield(state, target, shield);
+        CapacityMessage.shield(container, target, shield);
         return shield;
     }
-    static magicProc(state, attackName, thrower, target, power, element) {
+    static magicProc(container, attackName, thrower, target, power, element) {
         let dmgTaken = 0;
         let dmgGiven = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicalStrikeDmgGiven).call(CapacityProcessor, thrower);
         dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven, element);
         dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
         target.dmg(dmgTaken);
-        CapacityMessage.damage(state, attackName, dmgTaken);
+        CapacityMessage.damage(container, attackName, dmgTaken);
         return dmgTaken;
     }
-    static magicAttack(state, attackName, thrower, target, power, element) {
+    static magicAttack(container, attackName, thrower, target, power, element) {
         let dmgTaken = 0;
         if (__classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_touched).call(CapacityProcessor, thrower, target)) {
             let dmgGiven = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicalStrikeDmgGiven).call(CapacityProcessor, thrower);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_magicDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven, element);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
             target.dmg(dmgTaken);
-            CapacityMessage.damage(state, attackName, dmgTaken);
+            CapacityMessage.damage(container, attackName, dmgTaken);
         }
         else {
-            CapacityMessage.failed(state, attackName);
+            CapacityMessage.failed(container, attackName);
         }
         return dmgTaken;
     }
-    static physicalAttack(state, attackName, thrower, target, power) {
+    static physicalAttack(container, attackName, thrower, target, power) {
         let dmgTaken = 0;
         if (__classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_touched).call(CapacityProcessor, thrower, target)) {
-            let dmgGiven = CapacityProcessor.physicalStrikeDmgGiven(state, thrower);
+            let dmgGiven = CapacityProcessor.physicalStrikeDmgGiven(container, thrower);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_physicalDefenseDmgTaken).call(CapacityProcessor, target, dmgGiven);
             dmgTaken = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_multiplicator).call(CapacityProcessor, dmgTaken, power);
             target.dmg(dmgTaken);
-            CapacityMessage.damage(state, attackName, dmgTaken);
+            CapacityMessage.damage(container, attackName, dmgTaken);
         }
         else {
-            CapacityMessage.failed(state, attackName);
+            CapacityMessage.failed(container, attackName);
         }
         return dmgTaken;
     }
-    static physicalStrikeDmgGiven(state, thrower) {
+    static physicalStrikeDmgGiven(container, thrower) {
         let dmg = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_computeNormalDamage).call(CapacityProcessor, thrower.getPhysicalDamage());
         if (__classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_isCriticalDamage).call(CapacityProcessor, thrower.getPhysicalCriticalRate())) {
             dmg = __classPrivateFieldGet(CapacityProcessor, _a, "m", _CapacityProcessor_computeCriticalDamage).call(CapacityProcessor, thrower.getPhysicalDamage(), thrower.getPhysicalCriticalNumber());

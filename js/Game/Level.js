@@ -4,11 +4,15 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Level_instances, _Level_action, _Level_generateEnemyList, _Level_generateHeroListForFight, _Level_getNextEnemy, _Level_setNextEnemy, _Level_isLastEnemyAlreadyDefeated, _Level_getNextAliveHero, _Level_isLastHero, _Level_resetIdHero, _Level_incrementIdHero;
+// To set the level at the beginning of the fight
 import ChatMessage from "./Chat/ChatMessage.js";
+import Chat from "./Chat/Chat.js";
+import Deck from "./CardManager/Deck.js";
+import Combat from "./Combat.js";
 class Level {
-    constructor(state, levelNumber) {
+    constructor(container, levelNumber) {
         _Level_instances.add(this);
-        this._state = state;
+        this._container = container;
         this._levelNumber = levelNumber;
         this._enemyList = new Map();
         this._heroListForFight = new Map();
@@ -17,18 +21,17 @@ class Level {
         this._phase = Level.PHASE_HERO();
     }
     fight() {
+        const combat = this._container.get(Combat.name);
         let currentHero = this.getCurrentHero();
         let currentEnemy = this.getCurrentEnemy();
         if (this._phase == Level.PHASE_HERO()) {
-            this._state.setCombatStatusText("Your turn !");
-            //currentHero.hit(currentEnemy, this._state);
+            combat.setCombatStatusText("Your turn !");
             __classPrivateFieldGet(this, _Level_instances, "m", _Level_action).call(this, currentHero, currentEnemy);
             this._phase = Level.PHASE_ENEMY();
-            this._state.getLevel().setNextHero();
+            this.setNextHero();
         }
         else if (this._phase == Level.PHASE_ENEMY()) {
-            this._state.setCombatStatusText("Enemy turn !");
-            //currentEnemy.hit(currentHero, this._state);
+            combat.setCombatStatusText("Enemy turn !");
             __classPrivateFieldGet(this, _Level_instances, "m", _Level_action).call(this, currentEnemy, currentHero);
             this._phase = Level.PHASE_HERO();
         }
@@ -53,15 +56,17 @@ class Level {
         }
     }
 **/
-    prestart() {
+    prestart(currentWorld) {
         __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateHeroListForFight).call(this);
-        __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateEnemyList).call(this);
+        __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateEnemyList).call(this, currentWorld);
     }
     start() {
-        this._state.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
+        const chat = this._container.get(Chat.name);
+        chat.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
     }
     stop() {
-        this._state.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
+        const chat = this._container.get(Chat.name);
+        chat.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
         this._enemyList = new Map();
         this._heroListForFight = new Map();
     }
@@ -93,20 +98,21 @@ class Level {
 }
 _Level_instances = new WeakSet(), _Level_action = function _Level_action(thrower, target) {
     thrower.triggerStatus();
-    thrower.playCapacity(this._state, target);
+    thrower.playCapacity(this._container, target);
     /*capacity.trigger(thrower, target);
     thrower.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
     target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
-}, _Level_generateEnemyList = function _Level_generateEnemyList() {
+}, _Level_generateEnemyList = function _Level_generateEnemyList(currentWorld) {
     let idListCard = Level.ZERO();
-    const currentLevel = this._state.getCurrentWorld().getWorlLeveldByNumber(this._levelNumber);
+    const currentLevel = currentWorld.getWorlLeveldByNumber(this._levelNumber);
     currentLevel.getMonsterList().forEach((enemy, uuid) => {
         this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
         idListCard++;
     });
 }, _Level_generateHeroListForFight = function _Level_generateHeroListForFight() {
     let idListCard = Level.ZERO();
-    this._state.getCardDeckList().forEach((hero, uuid) => {
+    const deck = this._container.get(Deck.name);
+    deck.getCardList().forEach((hero, uuid) => {
         this._heroListForFight.set(idListCard.toString(), hero.getStackPlayCard());
         idListCard++;
     });
