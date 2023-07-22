@@ -2,8 +2,8 @@ class Container {
     constructor() {
         this._c = new Map();
     }
-    add(object) {
-        this._c.set(object.constructor.name, object);
+    add(object, key = object.constructor.name) {
+        this._c.set(key, object);
     }
     get(key) {
         if (this._c.has(key)) {

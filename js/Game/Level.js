@@ -20,6 +20,8 @@ class Level {
         this._currentPositionOfHeroInList = Level.ZERO();
         this._phase = Level.PHASE_HERO();
     }
+    getHeroListForFight() { return this._heroListForFight; }
+    getEnemyList() { return this._enemyList; }
     fight() {
         const combat = this._container.get(Combat.name);
         let currentHero = this.getCurrentHero();

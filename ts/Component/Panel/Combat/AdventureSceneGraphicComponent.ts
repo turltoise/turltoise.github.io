@@ -1,8 +1,5 @@
 import Container from "../../../Container.js";
-import CollectionCard from "../../../Game/Card/CollectionCard.js";
 import StackPlayCard from "../../../Game/Card/StackPlayCard.js";
-import Deck from "../../../Game/CardManager/Deck.js";
-import Combat from "../../../Game/Combat.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 
@@ -71,66 +68,28 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(this._interfaceDeckView);
     }
 
-    internalLoop() {
-        const combat = this._container.get(Combat.name);
-        if (combat.getCurrentLevel()) {
-            this.#updateDeckCardList();  
-            this.#updateCurrentEnemy();
-        }
+    cleanHeroCards() {
+        this._interfaceDeckView.innerHTML = "";
     }
 
-    #updateCurrentEnemy() {
-        const combat = this._container.get(Combat.name);
-        const currentEnemy:StackPlayCard = combat.getCurrentLevel().getCurrentEnemy();
-        const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_ENEMY_VIEW() +" card-card");
-        if (currentEnemy) {
-            let displayNew = true;
-            
-            graphicCardList.forEach((gCard: CardGraphicComponent) => {
-                if (currentEnemy.getUUID() != gCard.getCardUUID()) {
-                    gCard.parentElement.remove();
-                    displayNew = true;
-                } else {
-                    displayNew = false;
-                }
-            });
-            if (displayNew) {
-                const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
-                const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-                const graphicCard = new CardGraphicComponent(this._container, currentEnemy);
-                instanceContainerCard.appendChild(graphicCard);
-                this._interfaceEnemyView.appendChild(instanceContainerCard);
-            }
-        } else {
-            graphicCardList.forEach((gCard: CardGraphicComponent) => {
-                gCard.parentElement.remove();
-            });
-        }
+    cleanEnemyCards() {
+        this._interfaceEnemyView.innerHTML = "";
     }
 
-    #updateDeckCardList() {
-        const deck = this._container.get(Deck.name)
-        const cardList = new Map(deck.getCardList());
+    displayHeroCards(heroList: Map<string, StackPlayCard>) {
+        this.#displayCard(heroList, this._interfaceDeckView);
+    }
 
-        // Remove all card not in deck but displayed in panel combat
-        const graphicCardList = this._shadowRoot.querySelectorAll("#"+ AdventureSceneGraphicComponent.ID_DECK_VIEW() +" card-card");
-        // loop on graphic card
-        graphicCardList.forEach((gCard: CardGraphicComponent) => {
-            if (!cardList.has(gCard.getCardUUID())) {
-                gCard.parentElement.remove();
-            } else {
-                // already here we will not delete to recreate after
-                cardList.delete(gCard.getCardUUID());
-            }
-        });
-        // Add all card in deck but not in panel combat
-        const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW())[0];
-        // loop on non graphic card
-        cardList.forEach((card: CollectionCard, uuid) => {
+    displayEnemyCards(enemyList: Map<string, StackPlayCard>) {
+        this.#displayCard(enemyList, this._interfaceEnemyView);
+    }
+
+    #displayCard(cardList: Map<string, StackPlayCard>, interfaceView: HTMLElement) {
+        const self = this;
+        cardList.forEach((card: StackPlayCard) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._container, card);
-            instanceContainerCard.appendChild(graphicCard);
-            this._interfaceDeckView.appendChild(instanceContainerCard);
+            instanceContainerCard.appendChild(new CardGraphicComponent(self._container, card));
+            interfaceView.appendChild(instanceContainerCard);
         });
     }
 

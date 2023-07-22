@@ -1,3 +1,4 @@
+import AdventureSceneGraphicComponent from "../Component/Panel/Combat/AdventureSceneGraphicComponent.js";
 import CombatMenuGraphicComponent from "../Component/Panel/Combat/CombatMenuGraphicComponent.js";
 import Container from "../Container.js";
 import AbstractWorld from "./Adventure/World/AbstractWorld.js";
@@ -20,7 +21,7 @@ class Combat {
 		this._combatCountDownLevel = 0;
 		this._combatStatusText = "";
 
-		this._currentWorld = null; // TODO problem with this
+		this._currentWorld = null;
 		this._currentLevel = null
 		
 		const self = this;
@@ -81,6 +82,12 @@ class Combat {
 		this._combatStatusText = text;
 		chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
 		this._combatCountDownLevel -= 1;
+		
+		const adventureSceneGraphicComponent:AdventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
+		adventureSceneGraphicComponent.cleanHeroCards();
+		adventureSceneGraphicComponent.cleanEnemyCards();
+		adventureSceneGraphicComponent.displayHeroCards(this._currentLevel.getHeroListForFight());
+		adventureSceneGraphicComponent.displayEnemyCards(this._currentLevel.getEnemyList());
 	}
 
 	nextLevel() {

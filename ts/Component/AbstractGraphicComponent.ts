@@ -24,7 +24,7 @@ class AbstractGraphicComponent extends HTMLElement {
         return 20;
     }
 
-    getCurrentDocument() : Document{
+    getCurrentDocument(): Document {
         return document;
     }
 

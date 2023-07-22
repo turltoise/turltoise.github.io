@@ -115,7 +115,6 @@ class StackPlayCard extends AbstractPrintableCard {
 		let capacity: AbstractCapacity = this.#getRandomCapacity(container);
 		capacity.trigger(this, target);
 		this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
-		console.log(this._fightAnimation);
 	}
 
 	#getRandomCapacity(container: Container): AbstractCapacity {

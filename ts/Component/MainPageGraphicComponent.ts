@@ -1,5 +1,8 @@
 import Container from "../Container.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
+import BodyGraphicComponent from "./BodyGraphicComponent.js";
+import HeaderGraphicComponent from "./HeaderGraphicComponent.js";
+import StoreGraphicComponent from "./StoreGraphicComponent.js";
 
 class MainPageGraphicComponent extends AbstractGraphicComponent {
 
@@ -34,6 +37,16 @@ class MainPageGraphicComponent extends AbstractGraphicComponent {
 
         instanceContainerBody.style.boxSizing = "border-box";
         containerImg.appendChild(imgBg);
+
+        
+        this._instanceContainer.appendChild(instanceContainerBody);
+        this._instanceContainer.appendChild(containerImg);
+
+        this._instanceContainer.appendChild(this._container.get(HeaderGraphicComponent.name));
+        this._instanceContainer.appendChild(this._container.get(BodyGraphicComponent.name));
+        this._instanceContainer.appendChild(this._container.get(StoreGraphicComponent.name));
+
+
     }
 }
 customElements.define('main-page', MainPageGraphicComponent);

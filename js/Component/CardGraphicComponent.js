@@ -14,7 +14,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         if (card.constructor.name != "Hero"
             && card.constructor.name != "Enemy" &&
             card.constructor.name != "Item") {
-            console.warn("Card not of type Hero, Enemy or Item: " + card.constructor.name);
+            console.warn("Card not of type Hero, Enemy or Item: " + card.constructor.name + " " + card.getTitle());
         }
         this._card = card;
         this._title = card.getTitle();
@@ -207,7 +207,7 @@ _CardGraphicComponent_instances = new WeakSet(), _CardGraphicComponent_lifeUpdat
         this._instanceContainer.style.animation = null;
         this._instanceContainer.style.animationDuration = "0.5s";
         this._instanceContainer.style.animationTimingFunction = "linear";
-        if (this._card.constructor.name == "Hero") {
+        if (this._card.isYours()) {
             this._instanceContainer.style.animationName = "attackCardHero";
         }
         else {

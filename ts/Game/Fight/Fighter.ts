@@ -1,5 +1,5 @@
 // TO DELETE ?
-class Fighter {
+/*class Fighter {
 	private _currentStatusList: Map<string, string>;
 	private _capacityList: Map<string, string>;
 	
@@ -9,4 +9,4 @@ class Fighter {
 	}
 }
 
-export default Fighter;
+export default Fighter;*/

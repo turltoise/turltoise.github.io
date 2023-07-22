@@ -4,6 +4,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Combat_instances, _Combat_getCurrentLevelName;
+import AdventureSceneGraphicComponent from "../Component/Panel/Combat/AdventureSceneGraphicComponent.js";
 import CombatMenuGraphicComponent from "../Component/Panel/Combat/CombatMenuGraphicComponent.js";
 import Chat from "./Chat/Chat.js";
 import ChatMessage from "./Chat/ChatMessage.js";
@@ -16,7 +17,7 @@ class Combat {
         this._combatState = CombatMenuGraphicComponent.getStop();
         this._combatCountDownLevel = 0;
         this._combatStatusText = "";
-        this._currentWorld = null; // TODO problem with this
+        this._currentWorld = null;
         this._currentLevel = null;
         const self = this;
         setInterval(() => self.internalLoop(), 1000);
@@ -66,6 +67,11 @@ class Combat {
         this._combatStatusText = text;
         chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
         this._combatCountDownLevel -= 1;
+        const adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
+        adventureSceneGraphicComponent.cleanHeroCards();
+        adventureSceneGraphicComponent.cleanEnemyCards();
+        adventureSceneGraphicComponent.displayHeroCards(this._currentLevel.getHeroListForFight());
+        adventureSceneGraphicComponent.displayEnemyCards(this._currentLevel.getEnemyList());
     }
     nextLevel() {
         const allWorldProgress = this._container.get(AllWorldProgress.name);

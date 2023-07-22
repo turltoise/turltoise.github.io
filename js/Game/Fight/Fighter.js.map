@@ -1,1 +1,1 @@
-{"version":3,"file":"Fighter.js","sourceRoot":"","sources":["../../../ts/Game/Fight/Fighter.ts"],"names":[],"mappings":"AAAA,cAAc;AACd,MAAM,OAAO;IAIZ;QACC,IAAI,CAAC,kBAAkB,GAAG,IAAI,GAAG,EAAE,CAAC;QACpC,IAAI,CAAC,aAAa,GAAG,IAAI,GAAG,EAAE,CAAC;IAChC,CAAC;CACD;AAED,eAAe,OAAO,CAAC"}
+{"version":3,"file":"Fighter.js","sourceRoot":"","sources":["../../../ts/Game/Fight/Fighter.ts"],"names":[],"mappings":"AAAA,cAAc;AACd;;;;;;;;;;yBAUyB"}

@@ -1,4 +1,4 @@
-class Fight {
+/*class Fight {
 	private _orderPlay: Map<string, string>;
 	_currentPlay: string;
 	constructor() {
@@ -38,4 +38,4 @@ class Fight {
 	}
 }
 
-export default Fight;
+export default Fight;*/

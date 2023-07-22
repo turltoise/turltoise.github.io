@@ -3,9 +3,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _AdventureSceneGraphicComponent_instances, _AdventureSceneGraphicComponent_updateCurrentEnemy, _AdventureSceneGraphicComponent_updateDeckCardList;
-import Deck from "../../../Game/CardManager/Deck.js";
-import Combat from "../../../Game/Combat.js";
+var _AdventureSceneGraphicComponent_instances, _AdventureSceneGraphicComponent_displayCard;
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CardGraphicComponent from "../../CardGraphicComponent.js";
 class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
@@ -55,67 +53,27 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(this._interfaceEnemyView);
         this._instanceContainer.appendChild(this._interfaceDeckView);
     }
-    internalLoop() {
-        const combat = this._container.get(Combat.name);
-        if (combat.getCurrentLevel()) {
-            __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateDeckCardList).call(this);
-            __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_updateCurrentEnemy).call(this);
-        }
+    cleanHeroCards() {
+        this._interfaceDeckView.innerHTML = "";
+    }
+    cleanEnemyCards() {
+        this._interfaceEnemyView.innerHTML = "";
+    }
+    displayHeroCards(heroList) {
+        __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_displayCard).call(this, heroList, this._interfaceDeckView);
+    }
+    displayEnemyCards(enemyList) {
+        __classPrivateFieldGet(this, _AdventureSceneGraphicComponent_instances, "m", _AdventureSceneGraphicComponent_displayCard).call(this, enemyList, this._interfaceEnemyView);
     }
     static ID_DECK_VIEW() { return "id-deck-view"; }
     static ID_ENEMY_VIEW() { return "id-enemy-view"; }
 }
-_AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphicComponent_updateCurrentEnemy = function _AdventureSceneGraphicComponent_updateCurrentEnemy() {
-    const combat = this._container.get(Combat.name);
-    const currentEnemy = combat.getCurrentLevel().getCurrentEnemy();
-    const graphicCardList = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW() + " card-card");
-    if (currentEnemy) {
-        let displayNew = true;
-        graphicCardList.forEach((gCard) => {
-            if (currentEnemy.getUUID() != gCard.getCardUUID()) {
-                gCard.parentElement.remove();
-                displayNew = true;
-            }
-            else {
-                displayNew = false;
-            }
-        });
-        if (displayNew) {
-            const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_ENEMY_VIEW())[0];
-            const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._container, currentEnemy);
-            instanceContainerCard.appendChild(graphicCard);
-            this._interfaceEnemyView.appendChild(instanceContainerCard);
-        }
-    }
-    else {
-        graphicCardList.forEach((gCard) => {
-            gCard.parentElement.remove();
-        });
-    }
-}, _AdventureSceneGraphicComponent_updateDeckCardList = function _AdventureSceneGraphicComponent_updateDeckCardList() {
-    const deck = this._container.get(Deck.name);
-    const cardList = new Map(deck.getCardList());
-    // Remove all card not in deck but displayed in panel combat
-    const graphicCardList = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW() + " card-card");
-    // loop on graphic card
-    graphicCardList.forEach((gCard) => {
-        if (!cardList.has(gCard.getCardUUID())) {
-            gCard.parentElement.remove();
-        }
-        else {
-            // already here we will not delete to recreate after
-            cardList.delete(gCard.getCardUUID());
-        }
-    });
-    // Add all card in deck but not in panel combat
-    const instanceCombatPanel = this._shadowRoot.querySelectorAll("#" + AdventureSceneGraphicComponent.ID_DECK_VIEW())[0];
-    // loop on non graphic card
-    cardList.forEach((card, uuid) => {
+_AdventureSceneGraphicComponent_instances = new WeakSet(), _AdventureSceneGraphicComponent_displayCard = function _AdventureSceneGraphicComponent_displayCard(cardList, interfaceView) {
+    const self = this;
+    cardList.forEach((card) => {
         const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-        const graphicCard = new CardGraphicComponent(this._container, card);
-        instanceContainerCard.appendChild(graphicCard);
-        this._interfaceDeckView.appendChild(instanceContainerCard);
+        instanceContainerCard.appendChild(new CardGraphicComponent(self._container, card));
+        interfaceView.appendChild(instanceContainerCard);
     });
 };
 customElements.define('adventure-adventure', AdventureSceneGraphicComponent);

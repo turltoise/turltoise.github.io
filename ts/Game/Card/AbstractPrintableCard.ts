@@ -17,6 +17,7 @@ class AbstractPrintableCard {
     getTitle() : string {return this._title;}
     getUUID() : string {return this._uuid;}
     getDisplayableLife(): number {return 0;}
+    isYours(): boolean {return null;}
 
     getFightAnimationMap() : Map<string, CardAnimation> {return this._fightAnimation;}
 	addFightAnimation(animation: CardAnimation, uuid: string = UUID.generateUUID()) {this._fightAnimation.set(uuid, animation);}

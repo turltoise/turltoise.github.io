@@ -94,7 +94,6 @@ class StackPlayCard extends AbstractPrintableCard {
         let capacity = __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_getRandomCapacity).call(this, container);
         capacity.trigger(this, target);
         this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
-        console.log(this._fightAnimation);
     }
     static MAIN_KEY() { return 'this'; }
 }

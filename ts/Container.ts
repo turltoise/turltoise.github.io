@@ -5,8 +5,8 @@ class Container {
         this._c = new Map();
     }
 
-    add(object :any) {
-        this._c.set(object.constructor.name, object);
+    add(object :any, key=object.constructor.name) {
+        this._c.set(key, object);
     }
 
     get(key: string) {

@@ -13,8 +13,8 @@ import Combat from "./Combat.js";
 class Level {
 	private _container: Container;
 	private _levelNumber: number;
-	private _enemyList: Map<String, StackPlayCard>;
-	private _heroListForFight: Map<String, StackPlayCard>;
+	private _enemyList: Map<string, StackPlayCard>;
+	private _heroListForFight: Map<string, StackPlayCard>;
 	private _currentPositionOfEnemyInList: number;
 	private _currentPositionOfHeroInList: number;
 	private _phase: string;
@@ -30,6 +30,9 @@ class Level {
 
 		this._phase = Level.PHASE_HERO();
 	}
+
+	getHeroListForFight(): Map<string, StackPlayCard> {return this._heroListForFight;}
+	getEnemyList(): Map<string, StackPlayCard> {return this._enemyList;}
 
 	fight(): void {
 		const combat: Combat = this._container.get(Combat.name);

@@ -27,35 +27,11 @@ import Store from "./Game/Store.js";
 import UUID from "./Game/Tools/UUID.js";
 
 const  mainContainer = new Container();
+
 mainContainer.add(new Chat());
 mainContainer.add(new AllWorldProgress());
 mainContainer.add(new Collection());
 mainContainer.add(new Deck());
-
-mainContainer.add(new WorldList(mainContainer));
-
-mainContainer.add(new Store());
-mainContainer.add(new StoreGraphicComponent(mainContainer));
-mainContainer.add(new Combat(mainContainer));
-
-mainContainer.add(new Resource());
-mainContainer.add(new GoldIndicatorGraphicComponent(mainContainer));
-
-mainContainer.add(new MainPageGraphicComponent(mainContainer));
-mainContainer.add(new AdventureSceneGraphicComponent(mainContainer));
-mainContainer.add(new CombatMenuGraphicComponent(mainContainer));
-
-mainContainer.add(new CombatPanelGraphicComponent(mainContainer));
-mainContainer.add(new CollectionPanelGraphicComponent(mainContainer));
-mainContainer.add(new OpeningPanelGraphicComponent(mainContainer));
-mainContainer.add(new ShopPanelGraphicComponent(mainContainer));
-mainContainer.add(new MainScreen(mainContainer));
-mainContainer.add(new MainMenuGraphicComponent(mainContainer));
-mainContainer.add(new ChatGraphicComponent(mainContainer));
-
-mainContainer.add(new HeaderGraphicComponent(mainContainer));
-mainContainer.add(new BodyGraphicComponent(mainContainer));
-
 
 
 
@@ -115,13 +91,38 @@ myDeck.addCard(cardA);
 
 /* END -------------  FOR TESTS */
 
-const  mainPage = mainContainer.get(MainPageGraphicComponent.name);
-mainPage.appendChild(mainContainer.get(HeaderGraphicComponent.name));
-mainPage.appendChild(mainContainer.get(BodyGraphicComponent.name));
-mainPage.appendChild(mainContainer.get(StoreGraphicComponent.name));
 
-const body = document.body;
+
+
+
+mainContainer.add(new WorldList(mainContainer));
+
+mainContainer.add(new Store());
+mainContainer.add(new StoreGraphicComponent(mainContainer));
+mainContainer.add(new Combat(mainContainer));
+
+mainContainer.add(new Resource());
+mainContainer.add(new GoldIndicatorGraphicComponent(mainContainer));
+mainContainer.add(new AdventureSceneGraphicComponent(mainContainer));
+mainContainer.add(new CombatMenuGraphicComponent(mainContainer));
+
+mainContainer.add(new CombatPanelGraphicComponent(mainContainer));
+mainContainer.add(new CollectionPanelGraphicComponent(mainContainer));
+mainContainer.add(new OpeningPanelGraphicComponent(mainContainer));
+mainContainer.add(new ShopPanelGraphicComponent(mainContainer));
+mainContainer.add(new MainScreen(mainContainer));
+mainContainer.add(new MainMenuGraphicComponent(mainContainer));
+mainContainer.add(new ChatGraphicComponent(mainContainer));
+
+mainContainer.add(new HeaderGraphicComponent(mainContainer));
+mainContainer.add(new BodyGraphicComponent(mainContainer));
+
+const  mainPage: MainPageGraphicComponent = new MainPageGraphicComponent(mainContainer);
+mainContainer.add(mainPage);
+
+let body = document.body;
 body.style.margin = "0";
 body.style.padding = "0";
 body.style.overflowY = "scroll";
+
 body.appendChild(mainPage);

@@ -10,6 +10,7 @@ class AbstractPrintableCard {
     getTitle() { return this._title; }
     getUUID() { return this._uuid; }
     getDisplayableLife() { return 0; }
+    isYours() { return null; }
     getFightAnimationMap() { return this._fightAnimation; }
     addFightAnimation(animation, uuid = UUID.generateUUID()) { this._fightAnimation.set(uuid, animation); }
     resetFigthAnimationMap() { this._fightAnimation = new Map(); }
