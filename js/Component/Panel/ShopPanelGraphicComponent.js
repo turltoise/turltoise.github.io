@@ -4,7 +4,6 @@ import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
     constructor(container) {
         super(container);
-        this._instanceContainer.innerHTML = "Shop Panel";
         this._instanceContainer.style.backgroundColor = "#F2D090";
         let worldList = container.get(WorldList.name);
         let templateContainerExtension = this.getCurrentDocument().createElement('div');
