@@ -1,4 +1,5 @@
 import BodyGraphicComponent from "./Component/BodyGraphicComponent.js";
+import BoosterCard from "./Component/Card/BoosterCard.js";
 import ChatGraphicComponent from "./Component/ChatGraphicComponent.js";
 import GoldIndicatorGraphicComponent from "./Component/GoldIndicatorGraphicComponent.js";
 import HeaderGraphicComponent from "./Component/HeaderGraphicComponent.js";
