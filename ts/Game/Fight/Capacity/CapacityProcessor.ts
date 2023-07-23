@@ -5,7 +5,7 @@ import Status from "../Status/Status.js";
 import CapacityMessage from "./CapacityMessage.js";
 
 
-class CapacityProcessor {
+/*class CapacityProcessor {
 
 	static putStatus(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard, status: Status) {
 		if (CapacityProcessor.#touched(thrower, target)) {
@@ -65,7 +65,7 @@ class CapacityProcessor {
 		}
 		return dmgTaken;
 	}
-
+// TO DO get the element, if it is criticial and all the details
 	static physicalAttack(container: Container, attackName: string, thrower: StackPlayCard, target:StackPlayCard, power:number):  number {
 		let dmgTaken = 0;
 		if (CapacityProcessor.#touched(thrower, target)) {
@@ -84,7 +84,7 @@ class CapacityProcessor {
 	static physicalStrikeDmgGiven(container: Container, thrower: StackPlayCard):  number {
 		let dmg = CapacityProcessor.#computeNormalDamage(thrower.getPhysicalDamage());
 		if (CapacityProcessor.#isCriticalDamage(thrower.getPhysicalCriticalRate())) {
-			dmg = CapacityProcessor.#computeCriticalDamage(thrower.getPhysicalDamage(), thrower.getPhysicalCriticalNumber()
+				dmg = CapacityProcessor.#computeCriticalDamage(thrower.getPhysicalDamage(), thrower.getPhysicalCriticalNumber()
 			);
 		}
 		return dmg;
@@ -93,7 +93,7 @@ class CapacityProcessor {
 	static #magicalStrikeDmgGiven(thrower: StackPlayCard):  number {
 		let dmg = CapacityProcessor.#computeNormalDamage(thrower.getMagicDamage());
 		if (CapacityProcessor.#isCriticalDamage(thrower.getMagicCriticalRate())) {
-			dmg = CapacityProcessor.#computeCriticalDamage(thrower.getMagicDamage(), thrower.getMagicCriticalNumber()
+				dmg = CapacityProcessor.#computeCriticalDamage(thrower.getMagicDamage(), thrower.getMagicCriticalNumber()
 			);
 		}
 		return dmg;
@@ -150,3 +150,4 @@ class CapacityProcessor {
 	}
 }
 export default CapacityProcessor;
+*/

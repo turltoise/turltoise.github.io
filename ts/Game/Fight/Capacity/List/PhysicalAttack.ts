@@ -1,6 +1,5 @@
 import Container from "../../../../Container.js";
 import StackPlayCard from "../../../Card/StackPlayCard.js";
-import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class PhysicalAttack extends AbstractCapacity {
@@ -10,7 +9,7 @@ class PhysicalAttack extends AbstractCapacity {
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
         super.trigger(thrower, target);
-		CapacityProcessor.physicalAttack(this._container, this.getName(), thrower, target, 100);
+		this.physicalAttack(this.getName(), thrower, target, 100);
     }
 }
 export default PhysicalAttack;

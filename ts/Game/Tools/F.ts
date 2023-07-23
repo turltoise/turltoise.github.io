@@ -11,6 +11,11 @@ class F {
 		}
 		return variable;
 	}
+
+	static sprintf(format, ...args) {
+		let i = 0;
+		return format.replace(/%s/g, () => args[i++]);
+	}
 }
 
 export default F;

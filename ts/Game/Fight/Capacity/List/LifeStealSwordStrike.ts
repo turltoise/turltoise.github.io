@@ -1,6 +1,5 @@
 import Container from "../../../../Container.js";
 import StackPlayCard from "../../../Card/StackPlayCard.js";
-import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class LifeStealSwordStrike extends AbstractCapacity {
@@ -10,9 +9,9 @@ class LifeStealSwordStrike extends AbstractCapacity {
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
         super.trigger(thrower, target);
-        let dmgTaken = CapacityProcessor.physicalAttack(this._container, this.getName(), thrower, target, 80);
+        let dmgTaken = this.physicalAttack(this.getName(), thrower, target, 80);
         if (dmgTaken > 0) {
-            CapacityProcessor.heal(this._container, thrower, target, 20, dmgTaken);
+            this.heal(thrower, target, 20, dmgTaken);
         }
     }
 }

@@ -38,14 +38,14 @@ mainContainer.add(new Deck());
 /* BEGIN -------------  FOR TESTS */
 
 const myCarac = new RawCarac(
-	1,//strength=null,
-	1,//dexterity=null,
-	1,//intelligence=null,
-	1,//luck=null,
+	3,//strength=null,
+	3,//dexterity=null,
+	3,//intelligence=null,
+	3,//luck=null,
 
-	1,//physicalDamage=null,
-	1,//physicalCriticalRate=null,
-	1,//physicalCriticalNumber=null,
+	10,//physicalDamage=null,
+	5,//physicalCriticalRate=null,
+	5,//physicalCriticalNumber=null,
 
 	1,//magicDamage=null,
 	1,//magicCriticalRate=null,

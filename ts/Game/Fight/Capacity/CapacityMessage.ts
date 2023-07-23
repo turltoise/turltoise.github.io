@@ -1,36 +1,69 @@
 import Container from "../../../Container.js";
 import StackPlayCard from "../../Card/StackPlayCard.js";
 import Chat from "../../Chat/Chat.js";
+import F from "../../Tools/F.js";
 
 class CapacityMessage {
 
     static failed(container: Container, attackName: string): void {
-        let text = CapacityMessage.#fontForSkillCombat(attackName) + " failed.";
+        let text = F.sprintf(
+            '%s failed.',
+            CapacityMessage.#fontForSkillCombat(attackName)
+        );
         CapacityMessage.#addMessage(container, text, CapacityMessage.SECONDARY_CLASS());
     }
 
     static putStatus(container: Container, attackName: string, target: StackPlayCard): void {
-        let text = CapacityMessage.#fontForSkillCombat(attackName) + " put on " + CapacityMessage.#fontForStackPlayCard(target);
+        let text = F.sprintf(
+            '%s put on %s',
+            CapacityMessage.#fontForSkillCombat(attackName),
+            CapacityMessage.#fontForStackPlayCard(target)
+        );
         CapacityMessage.#addMessage(container, text, CapacityMessage.SECONDARY_CLASS());
     }
 
     static capacityWithFocus(container: Container, attackName: string, thrower: StackPlayCard, target: StackPlayCard) {
-        let text = CapacityMessage.#fontForStackPlayCard(thrower) + " use " + CapacityMessage.#fontForSkillCombat(attackName) + " on " + CapacityMessage.#fontForStackPlayCard(target) + ".";
+        let text = F.sprintf(
+            '%s use %s on %s.',
+            CapacityMessage.#fontForStackPlayCard(thrower), 
+            CapacityMessage.#fontForSkillCombat(attackName),
+            CapacityMessage.#fontForStackPlayCard(target)
+        );
         CapacityMessage.#addMessage(container, text, CapacityMessage.PRIMARY_CLASS());
     }
 
     static heal(container: Container, target: StackPlayCard, heal: number) {
-        let text = CapacityMessage.#fontForStackPlayCard(target) + " received " + heal + " of heal.";
+        let text = F.sprintf(
+            '%s received %s of heal.',
+            CapacityMessage.#fontForStackPlayCard(target),
+            heal
+        );
         CapacityMessage.#addMessage(container, text, CapacityMessage.SECONDARY_CLASS());
     }
 
     static shield(container: Container, target: StackPlayCard, shield: number) {
-        let text = CapacityMessage.#fontForStackPlayCard(target) + " received " + shield + " of shield.";
+        let text = F.sprintf(
+            '%s received %s of shield.',
+            CapacityMessage.#fontForStackPlayCard(target),
+            shield
+        );
         CapacityMessage.#addMessage(container, text, CapacityMessage.SECONDARY_CLASS());
     }
 
-    static damage(container: Container, attackName: string, dmgTaken: number) {
-        let text = CapacityMessage.#fontForSkillCombat(attackName) + " gave " + dmgTaken + " damage.";
+    static damage(container: Container, attackName: string, dmgTaken: number, criticalBonus: number, element: string) {
+        let text = F.sprintf(
+            '%s gave %s damage %s.',
+            CapacityMessage.#fontForSkillCombat(attackName),
+            dmgTaken,
+            element ?? ''
+        );
+
+        if (criticalBonus > 0) {
+            text += F.sprintf(
+                ' (Critical bonus: %s)',
+                criticalBonus
+            );
+        }
         CapacityMessage.#addMessage(container, text, CapacityMessage.SECONDARY_CLASS());
     }
 

@@ -5,29 +5,33 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _a, _CapacityMessage_addMessage, _CapacityMessage_fontForStackPlayCard, _CapacityMessage_fontForSkillCombat, _CapacityMessage_classForStackPlayCard, _CapacityMessage_fontWithClass;
 import Chat from "../../Chat/Chat.js";
+import F from "../../Tools/F.js";
 class CapacityMessage {
     static failed(container, attackName) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName) + " failed.";
+        let text = F.sprintf('%s failed.', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName));
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.SECONDARY_CLASS());
     }
     static putStatus(container, attackName, target) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName) + " put on " + __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target);
+        let text = F.sprintf('%s put on %s', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName), __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target));
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.SECONDARY_CLASS());
     }
     static capacityWithFocus(container, attackName, thrower, target) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, thrower) + " use " + __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName) + " on " + __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target) + ".";
+        let text = F.sprintf('%s use %s on %s.', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, thrower), __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName), __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target));
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.PRIMARY_CLASS());
     }
     static heal(container, target, heal) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target) + " received " + heal + " of heal.";
+        let text = F.sprintf('%s received %s of heal.', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target), heal);
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.SECONDARY_CLASS());
     }
     static shield(container, target, shield) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target) + " received " + shield + " of shield.";
+        let text = F.sprintf('%s received %s of shield.', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForStackPlayCard).call(CapacityMessage, target), shield);
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.SECONDARY_CLASS());
     }
-    static damage(container, attackName, dmgTaken) {
-        let text = __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName) + " gave " + dmgTaken + " damage.";
+    static damage(container, attackName, dmgTaken, criticalBonus, element) {
+        let text = F.sprintf('%s gave %s damage %s.', __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontForSkillCombat).call(CapacityMessage, attackName), dmgTaken, element !== null && element !== void 0 ? element : '');
+        if (criticalBonus > 0) {
+            text += F.sprintf(' (Critical bonus: %s)', criticalBonus);
+        }
         __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_addMessage).call(CapacityMessage, container, text, CapacityMessage.SECONDARY_CLASS());
     }
     static PRIMARY_CLASS() { return 'message-combat-primary'; }

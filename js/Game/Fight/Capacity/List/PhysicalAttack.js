@@ -1,4 +1,3 @@
-import CapacityProcessor from "../CapacityProcessor.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 class PhysicalAttack extends AbstractCapacity {
     constructor(container) {
@@ -6,7 +5,7 @@ class PhysicalAttack extends AbstractCapacity {
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);
-        CapacityProcessor.physicalAttack(this._container, this.getName(), thrower, target, 100);
+        this.physicalAttack(this.getName(), thrower, target, 100);
     }
 }
 export default PhysicalAttack;

@@ -1,11 +1,11 @@
-import CapacityProcessor from "../CapacityProcessor.js";
-class AbstractCapacity {
+import CoreCapacity from "./CoreCapacity.js";
+class AbstractCapacity extends CoreCapacity {
     constructor(container, name) {
-        this._container = container;
+        super(container);
         this._name = name;
     }
     trigger(thrower, target) {
-        CapacityProcessor.annoucementCapacityWithFocus(this._container, this.getName(), thrower, target);
+        this.annoucementCapacityWithFocus(this.getName(), thrower, target);
     }
     getName() {
         return this._name;

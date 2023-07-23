@@ -1,18 +1,19 @@
 import Container from "../../../../Container.js";
 import StackPlayCard from "../../../Card/StackPlayCard.js";
-import CapacityProcessor from "../CapacityProcessor.js";
+import CoreCapacity from "./CoreCapacity.js";
 
-class AbstractCapacity {
-    protected _container: Container;
+class AbstractCapacity extends CoreCapacity {
+    
     protected _name: string;
 
     constructor(container: Container, name: string) {
-        this._container = container;
+        super(container);
+        
         this._name = name;
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard): void {
-        CapacityProcessor.annoucementCapacityWithFocus(this._container, this.getName(), thrower, target);
+        this.annoucementCapacityWithFocus(this.getName(), thrower, target);
     }
 
     getName(): string {

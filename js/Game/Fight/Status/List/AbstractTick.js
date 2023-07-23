@@ -1,6 +1,7 @@
-class AbstractTick {
+import CoreCapacity from "../../Capacity/List/CoreCapacity.js";
+class AbstractTick extends CoreCapacity {
     constructor(container, thrower, target) {
-        this._container = container;
+        super(container);
         this._thrower = thrower;
         this._target = target;
     }
