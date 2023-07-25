@@ -1,4 +1,5 @@
 import Container from "../Container.js";
+import Booster from "../Game/Booster/Booster.js";
 import MainScreen from "../Game/MainScreen.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 
@@ -80,6 +81,10 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
         this.#displayPanel(this._mainScreen.getLabelCombat());
 	}
 
+    internalLoop(): void {
+        this.refreshOpeningTitle();
+    }
+
     #displayPanel(name: string) {
         for (var panelKey in this._mainScreen.getPanelList()) {
             var currentPanel = this._mainScreen.getPanelList()[panelKey];
@@ -143,6 +148,15 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
         e.style.animationTimeline = "auto";
         e.style.webkitAnimationFillMode = "forwards";
         (reverse) ? e.style.animationDirection = "reverse" : e.style.animationDirection = "normal";
+    }
+
+    refreshOpeningTitle() {
+        let booster = this._container.get(Booster.name);
+        let text = "Opening";
+        if (booster.getTotalNumberBoosterOwned() > 0) {
+            text += " (" + booster.getTotalNumberBoosterOwned() + ")";
+        }
+        this._instanceMenuOpening.innerHTML = text;
     }
 
     // background color

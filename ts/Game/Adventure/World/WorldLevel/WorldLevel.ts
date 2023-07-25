@@ -2,6 +2,7 @@ import Enemy from "../../../Card/Enemy.js";
 
 class WorldLevel {
 	private _monsterList: Map<number, Enemy>;
+
 	constructor() {
 		this._monsterList = new Map();
 	}

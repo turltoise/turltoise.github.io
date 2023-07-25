@@ -48,7 +48,7 @@ class BoosterCard extends AbstractGraphicComponent {
         const templateContainerTitle = this.getCurrentDocument().createElement('div');
         templateContainerTitle.style.height = "50px";
         templateContainerTitle.style.padding = "5px";
-        templateContainerTitle.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
+        templateContainerTitle.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
         const instanceContainerTitle = templateContainerTitle.cloneNode(true);
         const templateTitle = this.getCurrentDocument().createElement('div');
         templateTitle.style.height = "40px";

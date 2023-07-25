@@ -12,7 +12,7 @@ import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Meadow extends AbstractWorld {
     constructor(container, title, background) {
-        super(container, title, background);
+        super(container, title, background, 4);
         _Meadow_instances.add(this);
         this._caracE = new RawCarac(3, //strength=null,
         3, //dexterity=null,

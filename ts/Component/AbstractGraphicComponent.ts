@@ -21,7 +21,7 @@ class AbstractGraphicComponent extends HTMLElement {
     }
 
     static MS_LOOP(): number {
-        return 20;
+        return 100;
     }
 
     getCurrentDocument(): Document {

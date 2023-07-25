@@ -1,5 +1,4 @@
 import BodyGraphicComponent from "./Component/BodyGraphicComponent.js";
-import BoosterCard from "./Component/Card/BoosterCard.js";
 import ChatGraphicComponent from "./Component/ChatGraphicComponent.js";
 import GoldIndicatorGraphicComponent from "./Component/GoldIndicatorGraphicComponent.js";
 import HeaderGraphicComponent from "./Component/HeaderGraphicComponent.js";
@@ -14,6 +13,7 @@ import ShopPanelGraphicComponent from "./Component/Panel/ShopPanelGraphicCompone
 import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
 import Container from "./Container.js";
 import WorldList from "./Game/Adventure/WorldList.js";
+import Booster from "./Game/Booster/Booster.js";
 import Hero from "./Game/Card/Hero.js";
 import RawCarac from "./Game/Card/RawCarac.js";
 import Collection from "./Game/CardManager/Collection.js";
@@ -97,6 +97,7 @@ myDeck.addCard(cardA);
 
 
 mainContainer.add(new WorldList(mainContainer));
+mainContainer.add(new Booster(mainContainer));
 
 mainContainer.add(new Store());
 mainContainer.add(new StoreGraphicComponent(mainContainer));

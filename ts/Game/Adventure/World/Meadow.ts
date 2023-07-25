@@ -9,7 +9,7 @@ import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Meadow extends AbstractWorld {
 	private _caracE: RawCarac;
 	constructor(container: Container, title?: string, background?: string) {
-		super(container, title, background);
+		super(container, title, background, 4);
 
 		this._caracE = new RawCarac(
 			3,//strength=null,

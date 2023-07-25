@@ -8,7 +8,7 @@ import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Heaven extends AbstractWorld {
     constructor(container, title = "Title", background = "Background") {
-        super(container, title, background);
+        super(container, title, background, 320000000);
         _Heaven_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Heaven_instances, "m", _Heaven_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Heaven_instances, "m", _Heaven_generateWorldLevelTwo).call(this));

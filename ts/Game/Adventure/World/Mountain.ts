@@ -8,7 +8,7 @@ class Mountain extends AbstractWorld {
 		title="Title",
 		background="Background"
 		) {
-		super(container, title, background);
+		super(container, title, background, 3000);
 		this.addWorldLevel(this.#generateWorldLevelOne());
 		this.addWorldLevel(this.#generateWorldLevelTwo());
 		this.addWorldLevel(this.#generateWorldLevelThree());

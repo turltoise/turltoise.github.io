@@ -11,7 +11,7 @@ class AbstractGraphicComponent extends HTMLElement {
         setInterval(() => self.internalLoop(), AbstractGraphicComponent.MS_LOOP());
     }
     static MS_LOOP() {
-        return 20;
+        return 100;
     }
     getCurrentDocument() {
         return document;

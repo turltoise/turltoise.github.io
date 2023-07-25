@@ -8,7 +8,7 @@ import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Mountain extends AbstractWorld {
     constructor(container, title = "Title", background = "Background") {
-        super(container, title, background);
+        super(container, title, background, 3000);
         _Mountain_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Mountain_instances, "m", _Mountain_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Mountain_instances, "m", _Mountain_generateWorldLevelTwo).call(this));

@@ -8,7 +8,7 @@ import AbstractWorld from "./AbstractWorld.js";
 import WorldLevel from "./WorldLevel/WorldLevel.js";
 class Cave extends AbstractWorld {
     constructor(container, title = "Title", background = "Background") {
-        super(container, title, background);
+        super(container, title, background, 1800000);
         _Cave_instances.add(this);
         this.addWorldLevel(__classPrivateFieldGet(this, _Cave_instances, "m", _Cave_generateWorldLevelOne).call(this));
         this.addWorldLevel(__classPrivateFieldGet(this, _Cave_instances, "m", _Cave_generateWorldLevelTwo).call(this));

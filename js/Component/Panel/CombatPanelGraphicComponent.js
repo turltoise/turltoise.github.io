@@ -12,6 +12,7 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
     constructor(container) {
         super(container);
         _CombatPanelGraphicComponent_instances.add(this);
+        this._instanceContainer.innerHTML = "TO DO ADD COMPLETION";
         this._combatMenuGraphicComponent = container.get(CombatMenuGraphicComponent.name);
         const templateContainerAdventure = this.getCurrentDocument().createElement('div');
         // list of adventure

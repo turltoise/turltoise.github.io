@@ -1,8 +1,66 @@
+import WorldList from "../../Game/Adventure/WorldList.js";
+import Booster from "../../Game/Booster/Booster.js";
+import Number from "../../Game/Tools/Number.js";
+import BoosterCard from "../Card/BoosterCard.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
     constructor(container) {
         super(container);
-        this._instanceContainer.innerHTML = "Opening Panel";
+        this._listDisplayNumberBoosterOwned = new Map();
+        this._instanceContainer.style.backgroundColor = "#A5ABDB";
+        let worldList = container.get(WorldList.name);
+        let templateContainerExtension = this.getCurrentDocument().createElement('div');
+        let templateLeftContainer = this.getCurrentDocument().createElement('div');
+        templateLeftContainer.style.display = "inline-block";
+        templateLeftContainer.style.width = "30%";
+        templateLeftContainer.style.boxSizing = "border-box";
+        templateLeftContainer.style.height = "200px";
+        templateLeftContainer.style.padding = "25px";
+        templateLeftContainer.style.textAlign = "center";
+        templateLeftContainer.style.verticalAlign = "top";
+        let templateRightContainer = this.getCurrentDocument().createElement('div');
+        templateRightContainer.style.display = "inline-block";
+        templateRightContainer.style.width = "70%";
+        templateRightContainer.style.boxSizing = "border-box";
+        templateRightContainer.style.height = "200px";
+        templateRightContainer.style.verticalAlign = "top";
+        let templateBtnOpen = this.getCurrentDocument().createElement('div');
+        templateBtnOpen.style.display = "inline-block";
+        templateBtnOpen.style.boxShadow = "2px 4px #222";
+        templateBtnOpen.style.backgroundColor = "#FDC911";
+        templateBtnOpen.style.height = "30px";
+        templateBtnOpen.style.lineHeight = "30px";
+        templateBtnOpen.style.padding = "5px";
+        templateBtnOpen.style.marginTop = "85px";
+        templateBtnOpen.style.borderRadius = "2px";
+        templateBtnOpen.style.cursor = "pointer";
+        templateBtnOpen.style.userSelect = "none";
+        templateBtnOpen.style.caretColor = "transparent";
+        let self = this;
+        worldList.getList().forEach(((world, position) => {
+            const booster = this._container.get(Booster.name);
+            let instanceContainerExtension = templateContainerExtension.cloneNode(true);
+            let instanceLeftContainer = templateLeftContainer.cloneNode(true);
+            let instanceRightContainer = templateRightContainer.cloneNode(true);
+            let instanceBtnOpen = templateBtnOpen.cloneNode(true);
+            instanceBtnOpen.onclick = () => alert(open);
+            instanceBtnOpen.innerHTML = "Open booster (" + Number.displayNumber(booster.getNumberBoosterOwnedForWorld(world)) + " owned)";
+            this._listDisplayNumberBoosterOwned.set(world, instanceBtnOpen);
+            instanceLeftContainer.appendChild(new BoosterCard(container, world));
+            instanceRightContainer.appendChild(instanceBtnOpen);
+            instanceContainerExtension.appendChild(instanceLeftContainer);
+            instanceContainerExtension.appendChild(instanceRightContainer);
+            this._instanceContainer.appendChild(instanceContainerExtension);
+        }));
+    }
+    internalLoop() {
+        this.updateNumberBoosterOwned();
+    }
+    updateNumberBoosterOwned() {
+        const booster = this._container.get(Booster.name);
+        this._listDisplayNumberBoosterOwned.forEach((element, world) => {
+            element.innerHTML = "Open booster (" + Number.displayNumber(booster.getNumberBoosterOwnedForWorld(world)) + " owned)";
+        });
     }
 }
 customElements.define('opening-panel', OpeningPanelGraphicComponent);

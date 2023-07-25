@@ -13,6 +13,7 @@ import ShopPanelGraphicComponent from "./Component/Panel/ShopPanelGraphicCompone
 import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
 import Container from "./Container.js";
 import WorldList from "./Game/Adventure/WorldList.js";
+import Booster from "./Game/Booster/Booster.js";
 import Hero from "./Game/Card/Hero.js";
 import RawCarac from "./Game/Card/RawCarac.js";
 import Collection from "./Game/CardManager/Collection.js";
@@ -75,6 +76,7 @@ const myDeck = mainContainer.get(Deck.name);
 myDeck.addCard(cardA);
 /* END -------------  FOR TESTS */
 mainContainer.add(new WorldList(mainContainer));
+mainContainer.add(new Booster(mainContainer));
 mainContainer.add(new Store());
 mainContainer.add(new StoreGraphicComponent(mainContainer));
 mainContainer.add(new Combat(mainContainer));

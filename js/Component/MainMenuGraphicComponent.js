@@ -4,6 +4,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _MainMenuGraphicComponent_instances, _MainMenuGraphicComponent_displayPanel, _MainMenuGraphicComponent_getBtnFromLabel, _MainMenuGraphicComponent_setAnimationBtn;
+import Booster from "../Game/Booster/Booster.js";
 import MainScreen from "../Game/MainScreen.js";
 import AbstractGraphicComponent from "./AbstractGraphicComponent.js";
 class MainMenuGraphicComponent extends AbstractGraphicComponent {
@@ -67,6 +68,9 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(instanceMenuShop);
         __classPrivateFieldGet(this, _MainMenuGraphicComponent_instances, "m", _MainMenuGraphicComponent_displayPanel).call(this, this._mainScreen.getLabelCombat());
     }
+    internalLoop() {
+        this.refreshOpeningTitle();
+    }
     goToPage(label) {
         if (label != this._mainScreen.getCurrentPanel()) {
             let btnUnselected = __classPrivateFieldGet(this, _MainMenuGraphicComponent_instances, "m", _MainMenuGraphicComponent_getBtnFromLabel).call(this, this._mainScreen.getCurrentPanel());
@@ -75,6 +79,14 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
             let btnSelected = __classPrivateFieldGet(this, _MainMenuGraphicComponent_instances, "m", _MainMenuGraphicComponent_getBtnFromLabel).call(this, label);
             __classPrivateFieldGet(this, _MainMenuGraphicComponent_instances, "m", _MainMenuGraphicComponent_setAnimationBtn).call(this, btnSelected);
         }
+    }
+    refreshOpeningTitle() {
+        let booster = this._container.get(Booster.name);
+        let text = "Opening";
+        if (booster.getTotalNumberBoosterOwned() > 0) {
+            text += " (" + booster.getTotalNumberBoosterOwned() + ")";
+        }
+        this._instanceMenuOpening.innerHTML = text;
     }
     // background color
     static BGC_NORMAL() {

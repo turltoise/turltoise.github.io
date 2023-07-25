@@ -8,7 +8,7 @@ class Beach extends AbstractWorld {
 		title="Title",
 		background="Background"
 		) {
-		super(container, title, background);
+		super(container, title, background, 40000);
 		this.addWorldLevel(this.#generateWorldLevelOne());
 		this.addWorldLevel(this.#generateWorldLevelTwo());
 		this.addWorldLevel(this.#generateWorldLevelThree());
@@ -26,5 +26,4 @@ class Beach extends AbstractWorld {
 		return new WorldLevel();
 	}
 }
-
 export default Beach;
