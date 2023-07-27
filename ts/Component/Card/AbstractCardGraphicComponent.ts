@@ -18,9 +18,7 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
 
     constructor(container: Container, card: AbstractPrintableCard) {
         super(container);
-        if (card.constructor.name != "StackPlayCard" ) {
-            console.warn("Card not of type Hero, Enemy or Item: " + card.constructor.name + " " + card.getTitle());
-        }
+  
         this._card      = card;
         this._title     = card.getTitle();
         this._img       = card.getImg();
@@ -30,7 +28,7 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._actionNumber = 0;
         this._actionLoop = 0;
 
-        const STYLE_PADDING = "5px"
+        const STYLE_PADDING = "5px";;
 
         this._instanceCardContainer = this.getCurrentDocument().createElement('div');
         this._instanceCardContainer.style.fontSize = "100%";
@@ -66,20 +64,17 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._instanceCardImg.style.position = "absolute";
         this._instanceCardImg.style.bottom = "0%";
         this._instanceCardImg.style.left = "50%";
-        this._instanceCardImg.style.transform = "translate(-50%, -20px)"
+        this._instanceCardImg.style.transform = "translate(-50%, -20px)";
+        console.log(this.constructor.name);
+        if (this._card.isYours() && this.constructor.name == "CombatCardGraphicComponent") {
+            this._instanceCardImg.style.transform = "translate(-50%, -20px) scaleX(-1)";
+        }
         this._instanceCardContainer.appendChild(this._instanceCardImg);
     }
 
     internalLoop():void {
         this.#displayImg();
-        
-
     }
-
-    /*#computeLife(): void {
-        let percentageLife: number = Math.floor(this._card.getCurrentLife() / this._card.getMaxLife()  * 100);
-        this._instanceLife.style.width = percentageLife + "%";
-    }*/
 
     #displayImg():void {
         this._actionLoop += 1;
@@ -91,42 +86,26 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
 
     #computeImg():string {
         this._actionNumber += 1;
-        let nextUrl = F.sprintf(
-            'img/%s/%s_%s.png',
-            this._img,
-            this._card.getCinematicText(),
-            this._actionNumber
-        );
 
-        if (this.#isImgExists(nextUrl)) {
-            return nextUrl;
+        switch(this._card.getCinematicText()) {
+            case AbstractCardGraphicComponent.IMG_DIE():
+                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteDie) {this._actionNumber = this._card.getCardGraphicSetting()._maxSpriteDie;}
+                break;
+            case AbstractCardGraphicComponent.IMG_STAND():
+                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {this._actionNumber = 0;}
+                break;
+            case AbstractCardGraphicComponent.IMG_HIT():
+                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {this._actionNumber = 0;}
+                break;
+            default:
+                0;
         }
-        if (this._card.getCinematicText() == AbstractCardGraphicComponent.IMG_DIE()) {
-            this._actionNumber -= 1;
-            return F.sprintf(
-                'img/%s/%s_%s.png',
-                this._img,
-                this._card.getCinematicText(),
-                this._actionNumber
-            );
-        }
-        if (this._card.getCinematicText() == AbstractCardGraphicComponent.IMG_HIT()) {
-            this._card.setCinematicText(AbstractCardGraphicComponent.IMG_STAND());
-        }
-        this._actionNumber = 0;
         return F.sprintf(
             'img/%s/%s_%s.png',
             this._img,
             this._card.getCinematicText(),
             this._actionNumber
         );
-    }
-
-    #isImgExists(urlImg: string):boolean {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', urlImg, false);
-        http.send();
-        return http.status != 404;
     }
 
     static IMG_DIE(): string {return "die1";}

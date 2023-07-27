@@ -101,7 +101,6 @@ _CombatCardGraphicComponent_instances = new WeakSet(), _CombatCardGraphicCompone
         this._instanceContainer.style.animationDirection = "normal";
         this._instanceContainer.style.animationFillMode = "none";
         this._instanceContainer.style.animationPlayState = "running";
-        //this._instanceContainer.style.animationTimeline = "auto";
         this._combatAnimation = 0;
     }
     if (animation._type == CardAnimation.DIE()) {
@@ -118,8 +117,6 @@ _CombatCardGraphicComponent_instances = new WeakSet(), _CombatCardGraphicCompone
         this._instanceAnimationDie.style.animationDirection = "normal";
         this._instanceAnimationDie.style.animationFillMode = "none";
         this._instanceAnimationDie.style.animationPlayState = "running";
-        //this._instanceAnimationDie.style.animationTimeline = "auto";
-        //this._instanceAnimationDie.style.webkitAnimationFillMode = "forwards";
         this._combatAnimation = 0;
     }
     if (animation._type == CardAnimation.DAMAGE()) {
@@ -136,8 +133,6 @@ _CombatCardGraphicComponent_instances = new WeakSet(), _CombatCardGraphicCompone
         this._instanceAnimationDamage.style.animationDirection = "normal";
         this._instanceAnimationDamage.style.animationFillMode = "none";
         this._instanceAnimationDamage.style.animationPlayState = "running";
-        //this._instanceAnimationDamage.style.animationTimeline = "auto";
-        //this._instanceAnimationDamage.style.webkitAnimationFillMode = "forwards";
         this._combatAnimation = 0;
     }
 }, _CombatCardGraphicComponent_cancelCombatAnimation = function _CombatCardGraphicComponent_cancelCombatAnimation() {

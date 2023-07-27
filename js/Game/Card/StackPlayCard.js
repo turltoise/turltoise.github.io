@@ -11,8 +11,8 @@ import AbstractPrintableCard from './AbstractPrintableCard.js';
 import CardAnimation from './CardAnimation.js';
 import Hero from './Hero.js';
 class StackPlayCard extends AbstractPrintableCard {
-    constructor(container, playCardMap) {
-        super(container, playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID());
+    constructor(container, playCardMap, cardGraphicSetting) {
+        super(container, playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID(), cardGraphicSetting);
         _StackPlayCard_instances.add(this);
         this._sMap = playCardMap;
         this._statusList = new Map();
@@ -61,7 +61,7 @@ class StackPlayCard extends AbstractPrintableCard {
             this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
         }
         else {
-            this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+            //this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
         }
     }
     addStatus(status) {

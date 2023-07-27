@@ -5,6 +5,7 @@ import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import PlayCard from "./PlayCard.js";
 import AbstractPrintableCard from "./AbstractPrintableCard.js";
 import Container from "../../Container.js";
+import CardGraphicSetting from "./CardGraphicSetting.js";
 
 /**
  * Use in collection and shop : to display raw carac of leveled card 
@@ -21,9 +22,10 @@ class CollectionCard extends AbstractPrintableCard {
 		title: string,
 		img: string,
 		capacities: Map<string, AbstractCapacity> = new Map(),
-		uuid: string = UUID.generateUUID()
+		uuid: string = UUID.generateUUID(),
+		cardGraphicSetting: CardGraphicSetting
 	) {
-		super(container, title, img, uuid);
+		super(container, title, img, uuid, cardGraphicSetting);
 		this._rawCarac = rawCarac;
 		this._levelNumber = level;
 		this._capacities = capacities;

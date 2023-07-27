@@ -6,6 +6,7 @@ import Status from '../Fight/Status/Status.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
 import CardAnimation from './CardAnimation.js';
+import CardGraphicSetting from './CardGraphicSetting.js';
 import Hero from './Hero.js';
 import PlayCard from './PlayCard.js';
 
@@ -15,12 +16,17 @@ class StackPlayCard extends AbstractPrintableCard {
 	private _currentLife: number;
 	private _currentShield: number;
 
-	constructor(container:Container, playCardMap: Map<string, PlayCard>) {
+	constructor(
+		container:Container,
+		playCardMap: Map<string,PlayCard>,
+		cardGraphicSetting: CardGraphicSetting
+	) {
 		super(
 			container,
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(),
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(),
-			playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID()
+			playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID(),
+			cardGraphicSetting
 		);
 		this._sMap = playCardMap;
 		this._statusList = new Map<string, Status>();
@@ -74,7 +80,7 @@ class StackPlayCard extends AbstractPrintableCard {
 		if (this._currentLife <= 0) { 
 			this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
 		} else {
-			this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+			//this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
 		}
 	}
 

@@ -11,8 +11,8 @@ import AbstractPrintableCard from "./AbstractPrintableCard.js";
  * Use in collection and shop : to display raw carac of leveled card
  */
 class CollectionCard extends AbstractPrintableCard {
-    constructor(container, rawCarac, level, title, img, capacities = new Map(), uuid = UUID.generateUUID()) {
-        super(container, title, img, uuid);
+    constructor(container, rawCarac, level, title, img, capacities = new Map(), uuid = UUID.generateUUID(), cardGraphicSetting) {
+        super(container, title, img, uuid, cardGraphicSetting);
         _CollectionCard_instances.add(this);
         this._rawCarac = rawCarac;
         this._levelNumber = level;

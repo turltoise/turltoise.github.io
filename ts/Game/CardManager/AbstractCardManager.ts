@@ -13,21 +13,13 @@ class AbstractCardManager {
 	}
 
 	addCard(card: CollectionCard): void {
-		if (this.isCard(card)) {
-			this._cardList.set(card.getUUID(), card);
-			console.info(card.getUUID() + " added!");
-		} else {
-			console.warn("addCard : bad constructor type : " + card.constructor.name);
-		}
+		this._cardList.set(card.getUUID(), card);
+		console.info(card.getUUID() + " added!");
 	}
 
 	removeCard(card: CollectionCard): void {
-		if (this.isCard(card)) {
-			this._cardList.delete(card.getUUID());
-			console.info(card.getUUID() + " removed!");
-		} else {
-			console.warn("removeCard : bad constructor type : " + card.constructor.name);
-		}
+		this._cardList.delete(card.getUUID());
+		console.info(card.getUUID() + " removed!");
 	}
 
 	removeCardFromUUID(uuid: string): void {
@@ -56,14 +48,5 @@ class AbstractCardManager {
 			return null;
 		}
 	}
-
-	private isCard(card: CollectionCard): boolean {
-		if (card.constructor.name == "Hero" || card.constructor.name == "Enemy" || card.constructor.name == "Item") {
-			return true;
-		} else {
-			return false;
-		}
-	}
 }
-
 export default AbstractCardManager;

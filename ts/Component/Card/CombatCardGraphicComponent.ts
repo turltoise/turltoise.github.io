@@ -113,7 +113,6 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
             this._instanceContainer.style.animationDirection = "normal";
             this._instanceContainer.style.animationFillMode = "none";
             this._instanceContainer.style.animationPlayState = "running";
-            //this._instanceContainer.style.animationTimeline = "auto";
             this._combatAnimation = 0;  
         }
 
@@ -132,8 +131,6 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
             this._instanceAnimationDie.style.animationDirection = "normal";
             this._instanceAnimationDie.style.animationFillMode = "none";
             this._instanceAnimationDie.style.animationPlayState = "running";
-            //this._instanceAnimationDie.style.animationTimeline = "auto";
-            //this._instanceAnimationDie.style.webkitAnimationFillMode = "forwards";
             this._combatAnimation = 0;
         }
 
@@ -152,8 +149,6 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
             this._instanceAnimationDamage.style.animationDirection = "normal";
             this._instanceAnimationDamage.style.animationFillMode = "none";
             this._instanceAnimationDamage.style.animationPlayState = "running";
-            //this._instanceAnimationDamage.style.animationTimeline = "auto";
-            //this._instanceAnimationDamage.style.webkitAnimationFillMode = "forwards";
             this._combatAnimation = 0;
         }
     }

@@ -6,12 +6,21 @@ import RawCarac from "./RawCarac.js";
 import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import PlayCard from "./PlayCard.js";
 import Container from "../../Container.js";
+import CardGraphicSetting from "./CardGraphicSetting.js";
 
 class Hero extends CollectionCard {
 	private _itemList: Map<string, Item>;
 
-	constructor(container: Container, rawCarac: RawCarac, level: number, title: string, img: string, capacities: Map<string, AbstractCapacity> = new Map()) {
-		super(container, rawCarac, level, title, img, capacities);
+	constructor(
+		container: Container,
+		rawCarac: RawCarac,
+		level: number,
+		title: string,
+		img: string,
+		capacities: Map<string, AbstractCapacity> = new Map(),
+		cardGraphicSetting:CardGraphicSetting
+	) {
+		super(container, rawCarac, level, title, img, capacities, UUID.generateUUID(), cardGraphicSetting);
 		this._itemList = new Map(); 
 	}
 
@@ -38,7 +47,7 @@ class Hero extends CollectionCard {
 			playCardList.set(item.getUUID(), item.getPlayCard());
 		});
 		playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
-		return new StackPlayCard(this._container, playCardList);
+		return new StackPlayCard(this._container, playCardList, this._cardGraphicSetting);
 	}
 }
 

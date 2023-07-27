@@ -3,16 +3,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _AbstractCardGraphicComponent_instances, _AbstractCardGraphicComponent_displayImg, _AbstractCardGraphicComponent_computeImg, _AbstractCardGraphicComponent_isImgExists;
+var _AbstractCardGraphicComponent_instances, _AbstractCardGraphicComponent_displayImg, _AbstractCardGraphicComponent_computeImg;
 import AbstractGraphicComponent from "../AbstractGraphicComponent.js";
 import F from "../../Game/Tools/F.js";
 class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     constructor(container, card) {
         super(container);
         _AbstractCardGraphicComponent_instances.add(this);
-        if (card.constructor.name != "StackPlayCard") {
-            console.warn("Card not of type Hero, Enemy or Item: " + card.constructor.name + " " + card.getTitle());
-        }
         this._card = card;
         this._title = card.getTitle();
         this._img = card.getImg();
@@ -21,6 +18,7 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._actionNumber = 0;
         this._actionLoop = 0;
         const STYLE_PADDING = "5px";
+        ;
         this._instanceCardContainer = this.getCurrentDocument().createElement('div');
         this._instanceCardContainer.style.fontSize = "100%";
         this._instanceCardContainer.style.borderRadius = "5px";
@@ -52,6 +50,10 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._instanceCardImg.style.bottom = "0%";
         this._instanceCardImg.style.left = "50%";
         this._instanceCardImg.style.transform = "translate(-50%, -20px)";
+        console.log(this.constructor.name);
+        if (this._card.isYours() && this.constructor.name == "CombatCardGraphicComponent") {
+            this._instanceCardImg.style.transform = "translate(-50%, -20px) scaleX(-1)";
+        }
         this._instanceCardContainer.appendChild(this._instanceCardImg);
     }
     internalLoop() {
@@ -71,24 +73,27 @@ _AbstractCardGraphicComponent_instances = new WeakSet(), _AbstractCardGraphicCom
     }
 }, _AbstractCardGraphicComponent_computeImg = function _AbstractCardGraphicComponent_computeImg() {
     this._actionNumber += 1;
-    let nextUrl = F.sprintf('img/%s/%s_%s.png', this._img, this._card.getCinematicText(), this._actionNumber);
-    if (__classPrivateFieldGet(this, _AbstractCardGraphicComponent_instances, "m", _AbstractCardGraphicComponent_isImgExists).call(this, nextUrl)) {
-        return nextUrl;
+    console.log(this._card.getCinematicText());
+    switch (this._card.getCinematicText()) {
+        case AbstractCardGraphicComponent.IMG_DIE():
+            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteDie) {
+                this._actionNumber = this._card.getCardGraphicSetting()._maxSpriteDie;
+            }
+            break;
+        case AbstractCardGraphicComponent.IMG_STAND():
+            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {
+                this._actionNumber = 0;
+            }
+            break;
+        case AbstractCardGraphicComponent.IMG_HIT():
+            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {
+                this._actionNumber = 0;
+            }
+            break;
+        default:
+            0;
     }
-    if (this._card.getCinematicText() == AbstractCardGraphicComponent.IMG_DIE()) {
-        this._actionNumber -= 1;
-        return F.sprintf('img/%s/%s_%s.png', this._img, this._card.getCinematicText(), this._actionNumber);
-    }
-    if (this._card.getCinematicText() == AbstractCardGraphicComponent.IMG_HIT()) {
-        this._card.setCinematicText(AbstractCardGraphicComponent.IMG_STAND());
-    }
-    this._actionNumber = 0;
     return F.sprintf('img/%s/%s_%s.png', this._img, this._card.getCinematicText(), this._actionNumber);
-}, _AbstractCardGraphicComponent_isImgExists = function _AbstractCardGraphicComponent_isImgExists(urlImg) {
-    var http = new XMLHttpRequest();
-    http.open('HEAD', urlImg, false);
-    http.send();
-    return http.status != 404;
 };
 export default AbstractCardGraphicComponent;
 //# sourceMappingURL=AbstractCardGraphicComponent.js.map

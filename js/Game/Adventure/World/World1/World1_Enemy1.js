@@ -1,3 +1,4 @@
+import CardGraphicSetting from "../../../Card/CardGraphicSetting.js";
 import Enemy from "../../../Card/Enemy.js";
 import RawCarac from "../../../Card/RawCarac.js";
 import PhysicalAttack from "../../../Fight/Capacity/List/PhysicalAttack.js";
@@ -30,9 +31,12 @@ class World1_Enemy1 extends Enemy {
         let capacities = new Map([
             [UUID.generateUUID(), new PhysicalAttack(container)]
         ]);
-        super(container, carac, levelNumber, name, backgroundImage, gold, capacities);
+        let cardGraphicSetting = new CardGraphicSetting();
+        cardGraphicSetting._maxSpriteDie = 2;
+        cardGraphicSetting._maxSpriteStand = 2;
+        cardGraphicSetting._maxSpriteHit = 0;
+        super(container, carac, levelNumber, name, backgroundImage, gold, capacities, cardGraphicSetting);
     }
 }
 export default World1_Enemy1;
-// new Enemy(this._caracE, 1, 'Level 1 enemy', "illidan.webp", 5, capacities1);
 //# sourceMappingURL=World1_Enemy1.js.map

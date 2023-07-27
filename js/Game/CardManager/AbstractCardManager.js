@@ -7,22 +7,12 @@ class AbstractCardManager {
         return this._cardList;
     }
     addCard(card) {
-        if (this.isCard(card)) {
-            this._cardList.set(card.getUUID(), card);
-            console.info(card.getUUID() + " added!");
-        }
-        else {
-            console.warn("addCard : bad constructor type : " + card.constructor.name);
-        }
+        this._cardList.set(card.getUUID(), card);
+        console.info(card.getUUID() + " added!");
     }
     removeCard(card) {
-        if (this.isCard(card)) {
-            this._cardList.delete(card.getUUID());
-            console.info(card.getUUID() + " removed!");
-        }
-        else {
-            console.warn("removeCard : bad constructor type : " + card.constructor.name);
-        }
+        this._cardList.delete(card.getUUID());
+        console.info(card.getUUID() + " removed!");
     }
     removeCardFromUUID(uuid) {
         if (UUID.checkUUID(uuid)) {
@@ -49,14 +39,6 @@ class AbstractCardManager {
         else {
             console.warn("getCardFromUUID : bad UUID : " + uuid);
             return null;
-        }
-    }
-    isCard(card) {
-        if (card.constructor.name == "Hero" || card.constructor.name == "Enemy" || card.constructor.name == "Item") {
-            return true;
-        }
-        else {
-            return false;
         }
     }
 }
