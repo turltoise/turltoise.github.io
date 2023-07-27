@@ -73,7 +73,6 @@ _AbstractCardGraphicComponent_instances = new WeakSet(), _AbstractCardGraphicCom
     }
 }, _AbstractCardGraphicComponent_computeImg = function _AbstractCardGraphicComponent_computeImg() {
     this._actionNumber += 1;
-    console.log(this._card.getCinematicText());
     switch (this._card.getCinematicText()) {
         case AbstractCardGraphicComponent.IMG_DIE():
             if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteDie) {
