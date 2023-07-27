@@ -83,10 +83,10 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 		const worldList: WorldList = this._container.get(WorldList.name); 
 		worldList.getList().forEach((worldObject, id) => {
 			const instanceTitleText = <HTMLElement> this._templateTitleText.cloneNode(true);
-			instanceTitleText.innerHTML = worldObject.constructor.name;
+			instanceTitleText.innerHTML = worldObject.getName();
 			this._instanceWorld = <HTMLElement> templateAdventureFrameTitle.cloneNode(true);
 			this._instanceWorld.onclick = () => this.#launchWorld(worldObject);
-			this._instanceWorld.style.backgroundImage = "url(./img/world/"+worldObject.constructor.name+".jpg)";
+			this._instanceWorld.style.backgroundImage = "url(./img/world/"+worldObject.getName()+".jpg)";
 			this._instanceWorld.style.backgroundPosition = "-100%, -100%";
 			this._instanceWorld.style.backgroundSize = "300%";
 			this._instanceWorld.appendChild(instanceTitleText);
@@ -111,7 +111,7 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 		this._instanceCombat.style.display = "block";
 		const combat: Combat = this._container.get(Combat.name);
 		combat.setCurrentWorld(world);
-		this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().constructor.name;
+		this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().getName();
 	}
 
 	#returnToList(){

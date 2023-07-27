@@ -1,3 +1,4 @@
+import AbstractCardGraphicComponent from '../../Component/Card/AbstractCardGraphicComponent.js';
 import Container from '../../Container.js';
 import AbstractCapacity from '../Fight/Capacity/List/AbstractCapacity.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
@@ -14,8 +15,9 @@ class StackPlayCard extends AbstractPrintableCard {
 	private _currentLife: number;
 	private _currentShield: number;
 
-	constructor(playCardMap: Map<string, PlayCard>) {
+	constructor(container:Container, playCardMap: Map<string, PlayCard>) {
 		super(
+			container,
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(),
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(),
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID()
@@ -27,7 +29,17 @@ class StackPlayCard extends AbstractPrintableCard {
 		
 	}
 
-	getDisplayableLife(): number {return this._currentLife;}
+	addCurrentLife(addLife: number): void {
+		this._currentLife += addLife;
+		this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+	}
+	removeCurrentLife(removeLife: number): void {
+		this._currentLife -= removeLife;
+		this._currentLife = (this._currentLife < 0) ? 0 : this._currentLife;
+	}
+
+	getCurrentLife(): number {return this._currentLife;}
+	getMaxLife(): number {return this.getLife()}
 	getMainPlayCard() : PlayCard {return this._sMap.get(StackPlayCard.MAIN_KEY());}
 	isYours(): boolean {
 		return (this.getMainPlayCard().getCollectionCard() instanceof Hero) ? true : false;
@@ -38,8 +50,7 @@ class StackPlayCard extends AbstractPrintableCard {
 	}
 
 	heal(heal: number): void {
-		this._currentLife += heal;
-		this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+		this.addCurrentLife(heal);
 		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + heal.toString(), '#43a047'));
 	}
 
@@ -58,8 +69,13 @@ class StackPlayCard extends AbstractPrintableCard {
 				dmg = leftDmg;
 			}
 		}
-		this._currentLife -= dmg;
+		this.removeCurrentLife(dmg);
 		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
+		if (this._currentLife <= 0) { 
+			this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
+		} else {
+			this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+		}
 	}
 
 	addStatus(status: Status): void {

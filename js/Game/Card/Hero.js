@@ -2,8 +2,8 @@ import StackPlayCard from "./StackPlayCard.js";
 import CollectionCard from "./CollectionCard.js";
 import UUID from "../Tools/UUID.js";
 class Hero extends CollectionCard {
-    constructor(rawCarac, level, title, img, capacities = new Map()) {
-        super(rawCarac, level, title, img, capacities);
+    constructor(container, rawCarac, level, title, img, capacities = new Map()) {
+        super(container, rawCarac, level, title, img, capacities);
         this._itemList = new Map();
     }
     addItem(item) {
@@ -25,7 +25,7 @@ class Hero extends CollectionCard {
             playCardList.set(item.getUUID(), item.getPlayCard());
         });
         playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
-        return new StackPlayCard(playCardList);
+        return new StackPlayCard(this._container, playCardList);
     }
 }
 export default Hero;

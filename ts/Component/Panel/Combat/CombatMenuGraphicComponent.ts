@@ -19,7 +19,7 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
 
         this._instanceContainer.style.backgroundColor = "#C0C0C0";//"#0C5D20";//"#145f24";
         
-        this._instanceContainer.style.padding = "10px";
+        //this._instanceContainer.style.padding = "10px";
 
         const templateLevelText = this.getCurrentDocument().createElement('div');
         templateLevelText.style.fontSize = "18px";
@@ -109,10 +109,10 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     #setBackgroundImage() {
         const combat: Combat = this._container.get(Combat.name);
         if (combat.getCurrentWorld()) {
-            const url = "url(./img/world/" + combat.getCurrentWorld().constructor.name + ".jpg)";
+            const url = "url(./img/world/" + combat.getCurrentWorld().getName() + ".jpg)";
             this._instanceContainer.style.backgroundImage = url;
-            this._instanceContainer.style.backgroundPosition = "-25%, -25%";
-            this._instanceContainer.style.backgroundSize = "150%";
+            this._instanceContainer.style.backgroundPosition = "0%";
+            //this._instanceContainer.style.backgroundSize = "150%";
         }
     }
 

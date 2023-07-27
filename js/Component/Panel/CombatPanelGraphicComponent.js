@@ -63,10 +63,10 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
         const worldList = this._container.get(WorldList.name);
         worldList.getList().forEach((worldObject, id) => {
             const instanceTitleText = this._templateTitleText.cloneNode(true);
-            instanceTitleText.innerHTML = worldObject.constructor.name;
+            instanceTitleText.innerHTML = worldObject.getName();
             this._instanceWorld = templateAdventureFrameTitle.cloneNode(true);
             this._instanceWorld.onclick = () => __classPrivateFieldGet(this, _CombatPanelGraphicComponent_instances, "m", _CombatPanelGraphicComponent_launchWorld).call(this, worldObject);
-            this._instanceWorld.style.backgroundImage = "url(./img/world/" + worldObject.constructor.name + ".jpg)";
+            this._instanceWorld.style.backgroundImage = "url(./img/world/" + worldObject.getName() + ".jpg)";
             this._instanceWorld.style.backgroundPosition = "-100%, -100%";
             this._instanceWorld.style.backgroundSize = "300%";
             this._instanceWorld.appendChild(instanceTitleText);
@@ -86,7 +86,7 @@ _CombatPanelGraphicComponent_instances = new WeakSet(), _CombatPanelGraphicCompo
     this._instanceCombat.style.display = "block";
     const combat = this._container.get(Combat.name);
     combat.setCurrentWorld(world);
-    this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().constructor.name;
+    this._instanceTitleAdventure.innerHTML = combat.getCurrentWorld().getName();
 }, _CombatPanelGraphicComponent_returnToList = function _CombatPanelGraphicComponent_returnToList() {
     this._instanceCombat.style.display = "none";
     this._instanceListAdventure.style.display = "block";

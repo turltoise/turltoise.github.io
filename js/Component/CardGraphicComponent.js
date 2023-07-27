@@ -42,7 +42,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         templateHover.style.height = "100%";
         templateHover.style.top = "0";
         templateHover.style.left = "0";
-        templateHover.style.zIndex = "5";
+        // templateHover.style.zIndex   = "5";
         //templateHover.style.backgroundColor = "#fafafa";
         // TO DO
         //templateHover.style.visibility = "hidden";
@@ -152,6 +152,7 @@ class CardGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.appendChild(instanceStyle);
         this._instanceContainer.appendChild(instanceCardContainer);
         this._instanceHover = templateHover.cloneNode(true);
+        this._instanceHover.style.zIndex = "5";
         this._instanceAnimationDamage = templateAnimationDamage.cloneNode(true);
         this._instanceAnimationDie = templateAnimationDie.cloneNode(true);
         this._instanceHover.appendChild(this._instanceAnimationDamage);

@@ -4,21 +4,31 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _StackPlayCard_instances, _StackPlayCard_getRandomCapacity, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
+import AbstractCardGraphicComponent from '../../Component/Card/AbstractCardGraphicComponent.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
 import CardAnimation from './CardAnimation.js';
 import Hero from './Hero.js';
 class StackPlayCard extends AbstractPrintableCard {
-    constructor(playCardMap) {
-        super(playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID());
+    constructor(container, playCardMap) {
+        super(container, playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID());
         _StackPlayCard_instances.add(this);
         this._sMap = playCardMap;
         this._statusList = new Map();
         this._currentLife = this.getLife();
         this._currentShield = 0;
     }
-    getDisplayableLife() { return this._currentLife; }
+    addCurrentLife(addLife) {
+        this._currentLife += addLife;
+        this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+    }
+    removeCurrentLife(removeLife) {
+        this._currentLife -= removeLife;
+        this._currentLife = (this._currentLife < 0) ? 0 : this._currentLife;
+    }
+    getCurrentLife() { return this._currentLife; }
+    getMaxLife() { return this.getLife(); }
     getMainPlayCard() { return this._sMap.get(StackPlayCard.MAIN_KEY()); }
     isYours() {
         return (this.getMainPlayCard().getCollectionCard() instanceof Hero) ? true : false;
@@ -27,8 +37,7 @@ class StackPlayCard extends AbstractPrintableCard {
         return (this._currentLife > 0) ? true : false;
     }
     heal(heal) {
-        this._currentLife += heal;
-        this._currentLife = (this._currentLife > this.getLife()) ? this.getLife() : this._currentLife;
+        this.addCurrentLife(heal);
         this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '+ ' + heal.toString(), '#43a047'));
     }
     shield(shield) {
@@ -46,8 +55,14 @@ class StackPlayCard extends AbstractPrintableCard {
                 dmg = leftDmg;
             }
         }
-        this._currentLife -= dmg;
+        this.removeCurrentLife(dmg);
         this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
+        if (this._currentLife <= 0) {
+            this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
+        }
+        else {
+            this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+        }
     }
     addStatus(status) {
         this._statusList.set(UUID.generateUUID(), status);

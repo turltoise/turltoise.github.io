@@ -3,23 +3,24 @@ import RawCarac from "./RawCarac.js";
 import CollectionCard from "./CollectionCard.js";
 import PlayCard from "./PlayCard.js";
 import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
+import Container from "../../Container.js";
 
 class Enemy extends CollectionCard {
 	private _gold: number;
 
-	constructor(rawCarac: RawCarac, level: number, title: string, img: string, gold: number = 5, capacities: Map<string, AbstractCapacity> = new Map()) {
-		super(rawCarac, level, title, img, capacities);
+	constructor(container: Container, rawCarac: RawCarac, levelNumber: number, title: string, img: string, gold: number = 5, capacities: Map<string, AbstractCapacity> = new Map()) {
+		super(container, rawCarac, levelNumber, title, img, capacities);
 		this._gold = gold;
 	}
 
 	getStackPlayCard(): StackPlayCard {
 		let playCardList = <Map<string, PlayCard>> new Map();
 		playCardList.set(StackPlayCard.MAIN_KEY(), this.getPlayCard());
-		return new StackPlayCard(playCardList);
+		return new StackPlayCard(this._container, playCardList);
 	}
 
-	getGold() {
-		return this._gold;
+	getGold(): number {
+		return Math.floor(this._gold * 1.05 ** this._levelNumber);
 	}
 }
 export default Enemy;

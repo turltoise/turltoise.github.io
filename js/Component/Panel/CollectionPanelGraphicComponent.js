@@ -8,7 +8,7 @@ import Collection from "../../Game/CardManager/Collection.js";
 import Deck from "../../Game/CardManager/Deck.js";
 import Chat from "../../Game/Chat/Chat.js";
 import ChatMessage from "../../Game/Chat/ChatMessage.js";
-import CardGraphicComponent from "../CardGraphicComponent.js";
+import CollectionCardGraphicComponent from "../Card/CollectionCardGraphicComponent.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     constructor(container) {
@@ -41,7 +41,7 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         var cardList = collection.getCardList();
         cardList.forEach((card, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            const graphicCard = new CardGraphicComponent(this._container, card);
+            const graphicCard = new CollectionCardGraphicComponent(this._container, card);
             const instanceBtnCollectionAction = this._templateBtnCollectionAction.cloneNode(true);
             const divId = "btn-action-collection-" + uuid;
             instanceBtnCollectionAction.setAttribute("id", divId);

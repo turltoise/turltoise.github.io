@@ -4,16 +4,18 @@ import RawCarac from "./RawCarac.js";
 import AbstractCapacity from "../Fight/Capacity/List/AbstractCapacity.js";
 import PlayCard from "./PlayCard.js";
 import AbstractPrintableCard from "./AbstractPrintableCard.js";
+import Container from "../../Container.js";
 
 /**
  * Use in collection and shop : to display raw carac of leveled card 
  */
 class CollectionCard extends AbstractPrintableCard {
 	private _rawCarac: RawCarac;
-	private _level: number;
+	protected _levelNumber: number;
 	private _capacities: Map<string, AbstractCapacity>
 
 	constructor(
+		container: Container,
 		rawCarac: RawCarac,
 		level: number,
 		title: string,
@@ -21,15 +23,16 @@ class CollectionCard extends AbstractPrintableCard {
 		capacities: Map<string, AbstractCapacity> = new Map(),
 		uuid: string = UUID.generateUUID()
 	) {
-		super(title, img, uuid);
+		super(container, title, img, uuid);
 		this._rawCarac = rawCarac;
-		this._level = level;
+		this._levelNumber = level;
 		this._capacities = capacities;
 	}
 	getPlayCard() : PlayCard {return new PlayCard(this);}
 	getStackPlayCard(): StackPlayCard {return null;}
-	getLevel(): number {return this._level;}
-	getDisplayableLife(): number {return this.getLife();}
+	getLevel(): number {return this._levelNumber;}
+	getCurrentLife(): number {return this.getLife();}
+	getMaxLife(): number {return this.getLife();}
 
 	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;}
 	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}
@@ -65,15 +68,15 @@ class CollectionCard extends AbstractPrintableCard {
 	getLife() {	return this.#computeLifeStat(this._rawCarac._rawLife);}
 
 	#computeMainStat(raw) {
-		return raw + Math.floor(this._level * raw / 2);
+		return raw + Math.floor(this._levelNumber * raw / 2);
 	}
 
 	#computeSecondaryStat(raw) {
-		return raw + Math.floor(this._level * raw / 6);
+		return raw + Math.floor(this._levelNumber * raw / 6);
 	}
 
 	#computeLifeStat(raw) {
-		return raw + Math.floor(this._level * raw * 4 / 10);
+		return raw + Math.floor(this._levelNumber * raw * 4 / 10);
 	}
 }
 

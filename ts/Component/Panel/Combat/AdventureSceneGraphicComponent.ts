@@ -1,7 +1,7 @@
 import Container from "../../../Container.js";
 import StackPlayCard from "../../../Game/Card/StackPlayCard.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
-import CardGraphicComponent from "../../CardGraphicComponent.js";
+import CombatCardGraphicComponent from "../../Card/CombatCardGraphicComponent.js";
 
 class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     private _templateContainerCard: HTMLElement;
@@ -19,13 +19,13 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         templateContainerCard.setAttribute('class', this.getClassName('container-card'));
         //templateContainerCard.style.backgroundColor = "#88AA33";
         templateContainerCard.style.display = "inline-block";
-        templateContainerCard.style.margin = "5px";
+        //templateContainerCard.style.margin = "5px";
         templateContainerCard.style.padding = "5px";
         this._templateContainerCard = templateContainerCard;
 
         const templateCardListView = this.getCurrentDocument().createElement('div');
-        templateCardListView.style.backgroundColor = "rgba(255,255,255, 0.4)";
-        templateCardListView.style.margin = "10px";
+        //templateCardListView.style.backgroundColor = "rgba(255,255,255, 0.4)";
+        //templateCardListView.style.margin = "10px";
         templateCardListView.style.marginBottom = "20px";
         templateCardListView.style.padding = "10px";
         templateCardListView.style.boxSizing = "border-box";
@@ -46,19 +46,26 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
     render() {
 
         this._enemyTitle = <HTMLElement> this._templateCardListViewTitle.cloneNode(true);
-        this._enemyTitle.innerHTML = "Enemy";
+        this._enemyTitle.innerHTML = " ";
 
         this._heroTitle = <HTMLElement> this._templateCardListViewTitle.cloneNode(true);
-        this._heroTitle.innerHTML = "Deck";
+        this._heroTitle.innerHTML = " ";
 
         this._interfaceEnemyView = <HTMLElement> this._templateCardListView.cloneNode(true);
         this._interfaceEnemyView.setAttribute('class', this.getClassName('enemy-view'))
-        this._interfaceEnemyView.style.height= "200px";
+        this._interfaceEnemyView.style.height = "210px";
+        this._interfaceEnemyView.style.textAlign = "right";
+        this._interfaceEnemyView.style.backgroundPosition = "bottom 0px right 0px";
+        this._interfaceEnemyView.style.backgroundImage = "url(./img/world/Meadow_platform.png)";
+        this._interfaceEnemyView.style.backgroundRepeat = "no-repeat";
         this._interfaceEnemyView.setAttribute('id', AdventureSceneGraphicComponent.ID_ENEMY_VIEW());
 
         this._interfaceDeckView = <HTMLElement> this._templateCardListView.cloneNode(true);
         this._interfaceDeckView.setAttribute('class', this.getClassName('deck-view'));
-        this._interfaceDeckView.style.height= "200px";
+        this._interfaceDeckView.style.height = "315px";
+        this._interfaceDeckView.style.backgroundPosition = "bottom 0px right 0px";
+        this._interfaceDeckView.style.backgroundImage = "url(./img/world/Meadow_ground.png)";
+        this._interfaceDeckView.style.backgroundRepeat = "no-repeat";
         this._interfaceDeckView.setAttribute('id', AdventureSceneGraphicComponent.ID_DECK_VIEW());
 
         this._interfaceEnemyView.appendChild(this._enemyTitle);
@@ -88,7 +95,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         const self = this;
         cardList.forEach((card: StackPlayCard) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
-            instanceContainerCard.appendChild(new CardGraphicComponent(self._container, card));
+            instanceContainerCard.appendChild(new CombatCardGraphicComponent(self._container, card));
             interfaceView.appendChild(instanceContainerCard);
         });
     }

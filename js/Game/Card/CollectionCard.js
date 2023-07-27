@@ -11,17 +11,18 @@ import AbstractPrintableCard from "./AbstractPrintableCard.js";
  * Use in collection and shop : to display raw carac of leveled card
  */
 class CollectionCard extends AbstractPrintableCard {
-    constructor(rawCarac, level, title, img, capacities = new Map(), uuid = UUID.generateUUID()) {
-        super(title, img, uuid);
+    constructor(container, rawCarac, level, title, img, capacities = new Map(), uuid = UUID.generateUUID()) {
+        super(container, title, img, uuid);
         _CollectionCard_instances.add(this);
         this._rawCarac = rawCarac;
-        this._level = level;
+        this._levelNumber = level;
         this._capacities = capacities;
     }
     getPlayCard() { return new PlayCard(this); }
     getStackPlayCard() { return null; }
-    getLevel() { return this._level; }
-    getDisplayableLife() { return this.getLife(); }
+    getLevel() { return this._levelNumber; }
+    getCurrentLife() { return this.getLife(); }
+    getMaxLife() { return this.getLife(); }
     getCapacities() { return this._capacities; }
     addCapacity(capacity) { this._capacities.set(UUID.generateUUID(), capacity); }
     getCapacityByUUID(uuid) { return this._capacities.get(uuid); }
@@ -50,11 +51,11 @@ class CollectionCard extends AbstractPrintableCard {
     getLife() { return __classPrivateFieldGet(this, _CollectionCard_instances, "m", _CollectionCard_computeLifeStat).call(this, this._rawCarac._rawLife); }
 }
 _CollectionCard_instances = new WeakSet(), _CollectionCard_computeMainStat = function _CollectionCard_computeMainStat(raw) {
-    return raw + Math.floor(this._level * raw / 2);
+    return raw + Math.floor(this._levelNumber * raw / 2);
 }, _CollectionCard_computeSecondaryStat = function _CollectionCard_computeSecondaryStat(raw) {
-    return raw + Math.floor(this._level * raw / 6);
+    return raw + Math.floor(this._levelNumber * raw / 6);
 }, _CollectionCard_computeLifeStat = function _CollectionCard_computeLifeStat(raw) {
-    return raw + Math.floor(this._level * raw * 4 / 10);
+    return raw + Math.floor(this._levelNumber * raw * 4 / 10);
 };
 export default CollectionCard;
 //# sourceMappingURL=CollectionCard.js.map

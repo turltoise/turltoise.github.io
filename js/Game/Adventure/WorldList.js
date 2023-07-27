@@ -1,25 +1,25 @@
-import Beach from "./World/Beach.js";
-import Cave from "./World/Cave.js";
-import Desert from "./World/Desert.js";
-import Forest from "./World/Forest.js";
-import Heaven from "./World/Heaven.js";
-import Hell from "./World/Hell.js";
-import Meadow from "./World/Meadow.js";
-import Mountain from "./World/Mountain.js";
-import Ocean from "./World/Ocean.js";
+import World5 from "./World/World5.js";
+import World7 from "./World/World7.js";
+import World3 from "./World/World3.js";
+import World2 from "./World/World2.js";
+import World9 from "./World/World9.js";
+import World8 from "./World/World8.js";
+import World1 from "./World/World1.js";
+import World4 from "./World/World4.js";
+import World6 from "./World/World6.js";
 class WorldList {
     constructor(container) {
         this._container = container;
         this._list = new Map();
-        this._list.set(1, new Meadow(this._container));
-        this._list.set(2, new Forest(this._container));
-        this._list.set(3, new Desert(this._container));
-        this._list.set(4, new Mountain(this._container));
-        this._list.set(5, new Beach(this._container));
-        this._list.set(6, new Ocean(this._container));
-        this._list.set(7, new Cave(this._container));
-        this._list.set(8, new Hell(this._container));
-        this._list.set(9, new Heaven(this._container));
+        this._list.set(1, new World1(this._container));
+        this._list.set(2, new World2(this._container));
+        this._list.set(3, new World3(this._container));
+        this._list.set(4, new World4(this._container));
+        this._list.set(5, new World5(this._container));
+        this._list.set(6, new World6(this._container));
+        this._list.set(7, new World7(this._container));
+        this._list.set(8, new World8(this._container));
+        this._list.set(9, new World9(this._container));
     }
     getList() {
         return this._list;
