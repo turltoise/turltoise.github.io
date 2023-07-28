@@ -50,10 +50,11 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._instanceCardImg.style.position = "absolute";
         this._instanceCardImg.style.bottom = "0%";
         this._instanceCardImg.style.left = "50%";
-        this._instanceCardImg.style.transform = "translate(-50%, -20px)";
+        let translate = F.sprintf('translate(%s, %s)', card.getCardGraphicSetting()._xSprite, card.getCardGraphicSetting()._ySprite);
+        this._instanceCardImg.style.transform = translate;
         console.log(this.constructor.name);
         if (this._card.isYours() && this.constructor.name == "CombatCardGraphicComponent") {
-            this._instanceCardImg.style.transform = "translate(-50%, -20px) scaleX(-1)";
+            this._instanceCardImg.style.transform = translate + " scaleX(-1)";
         }
         this._instanceCardContainer.appendChild(this._instanceCardImg);
     }

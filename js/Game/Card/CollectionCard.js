@@ -23,6 +23,7 @@ class CollectionCard extends AbstractPrintableCard {
     getLevel() { return this._levelNumber; }
     getCurrentLife() { return this.getLife(); }
     getMaxLife() { return this.getLife(); }
+    getGold() { return null; }
     getCapacities() { return this._capacities; }
     addCapacity(capacity) { this._capacities.set(UUID.generateUUID(), capacity); }
     getCapacityByUUID(uuid) { return this._capacities.get(uuid); }

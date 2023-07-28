@@ -43,7 +43,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
 
         this._interfaceDeckView = <HTMLElement> this._templateCardListView.cloneNode(true);
         this._interfaceDeckView.setAttribute('class', this.getClassName('deck-view'));
-        this._interfaceDeckView.style.height = "315px";
+        this._interfaceDeckView.style.height = "300px";
         this._interfaceDeckView.style.backgroundPosition = "bottom 0px right 0px";
         this._interfaceDeckView.style.backgroundImage = "url(./img/world/Meadow_ground.png)";
         this._interfaceDeckView.style.backgroundRepeat = "no-repeat";

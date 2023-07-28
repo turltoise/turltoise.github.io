@@ -35,6 +35,8 @@ class World1_Hero1 extends Hero {
         cardGraphicSetting._maxSpriteStand = 3;
         cardGraphicSetting._maxSpriteHit1 = -1;
         cardGraphicSetting._maxSpriteAttack1 = 10;
+        cardGraphicSetting._xSprite = "-30px";
+        cardGraphicSetting._ySprite = "-20px";
         super(container, carac, levelNumber, name, backgroundImage, capacities, cardGraphicSetting);
     }
 }

@@ -36,6 +36,8 @@ class World1_Enemy1 extends Enemy {
         cardGraphicSetting._maxSpriteStand = 2;
         cardGraphicSetting._maxSpriteHit1 = 0;
         cardGraphicSetting._maxSpriteAttack1 = -1;
+        cardGraphicSetting._xSprite = "-30px";
+        cardGraphicSetting._ySprite = "-20px";
         super(container, carac, levelNumber, name, backgroundImage, gold, capacities, cardGraphicSetting);
     }
 }

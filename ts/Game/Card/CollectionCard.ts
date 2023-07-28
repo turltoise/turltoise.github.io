@@ -36,6 +36,8 @@ class CollectionCard extends AbstractPrintableCard {
 	getCurrentLife(): number {return this.getLife();}
 	getMaxLife(): number {return this.getLife();}
 
+	getGold(): number {return null;}
+
 	getCapacities():  Map<string, AbstractCapacity> {return this._capacities;}
 	addCapacity(capacity : AbstractCapacity) : void {this._capacities.set(UUID.generateUUID(), capacity);}
 	getCapacityByUUID(uuid: string) : AbstractCapacity {return this._capacities.get(uuid);}

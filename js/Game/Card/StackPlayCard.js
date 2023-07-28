@@ -5,7 +5,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _StackPlayCard_instances, _StackPlayCard_getRandomCapacity, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
 import SpriteManager from '../../Component/Card/SpriteManager.js';
+import Chat from '../Chat/Chat.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
+import Resource from '../Resource.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
 import CardAnimation from './CardAnimation.js';
@@ -59,6 +61,11 @@ class StackPlayCard extends AbstractPrintableCard {
         this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
         if (this._currentLife <= 0) {
             this.setCombatSpriteText(SpriteManager.IMG_DIE1());
+            let resource = this._container.get(Resource.name);
+            let goldEarned = this.getMainPlayCard().getCollectionCard().getGold();
+            resource.addGold(goldEarned);
+            let chat = this._container.get(Chat.name);
+            chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", null);
         }
         else {
             this.setCombatSpriteText(SpriteManager.IMG_HIT1());

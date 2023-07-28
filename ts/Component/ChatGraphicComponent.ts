@@ -44,6 +44,11 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
         .message-combat-skill {
           font-style: italic;
         }
+
+        .message-earn-gold {
+          color: rgb(253, 201, 17);
+          font-weight: 900;
+        }
         `;
         let templateStyle = this.getCurrentDocument().createElement( 'style' );
         templateStyle.innerHTML = style;
