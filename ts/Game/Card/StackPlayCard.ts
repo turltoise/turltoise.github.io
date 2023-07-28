@@ -1,4 +1,4 @@
-import AbstractCardGraphicComponent from '../../Component/Card/AbstractCardGraphicComponent.js';
+import SpriteManager from '../../Component/Card/SpriteManager.js';
 import Container from '../../Container.js';
 import AbstractCapacity from '../Fight/Capacity/List/AbstractCapacity.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
@@ -78,9 +78,9 @@ class StackPlayCard extends AbstractPrintableCard {
 		this.removeCurrentLife(dmg);
 		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
 		if (this._currentLife <= 0) { 
-			this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
+			this.setCombatSpriteText(SpriteManager.IMG_DIE1());
 		} else {
-			//this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+			this.setCombatSpriteText(SpriteManager.IMG_HIT1());
 		}
 	}
 
@@ -137,6 +137,7 @@ class StackPlayCard extends AbstractPrintableCard {
 		let capacity: AbstractCapacity = this.#getRandomCapacity(container);
 		capacity.trigger(this, target);
 		this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
+		this.setCombatSpriteText(SpriteManager.IMG_ATTACK1());
 	}
 
 	#getRandomCapacity(container: Container): AbstractCapacity {

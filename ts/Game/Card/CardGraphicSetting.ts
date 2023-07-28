@@ -1,8 +1,9 @@
 class CardGraphicSetting {
 	constructor(
-		public _maxSpriteDie: number | null = null,
-        public _maxSpriteStand: number | null = null,
-        public _maxSpriteHit: number | null = null
+		public _maxSpriteDie1: number     | null = null,
+        public _maxSpriteStand: number   | null = null,
+        public _maxSpriteHit1: number     | null = null,
+        public _maxSpriteAttack1: number | null = null
     )
     {}
 }

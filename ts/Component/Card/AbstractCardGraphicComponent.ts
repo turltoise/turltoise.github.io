@@ -2,6 +2,7 @@ import AbstractGraphicComponent from "../AbstractGraphicComponent.js";
 import AbstractPrintableCard from "../../Game/Card/AbstractPrintableCard.js";
 import Container from "../../Container.js";
 import F from "../../Game/Tools/F.js";
+import SpriteManager from "./SpriteManager.js";
 
 class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     protected _card: AbstractPrintableCard;
@@ -9,7 +10,6 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     protected _img: string;
     protected _cardUUID: string;
 
-    protected _actionNumber: number;
     protected _actionLoop: number;
 
     protected _instanceCardContainer: HTMLElement;
@@ -24,11 +24,13 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._img       = card.getImg();
         this._cardUUID = card.getUUID();
 
-        this._card.setCinematicText(AbstractCardGraphicComponent.IMG_STAND());
-        this._actionNumber = 0;
+        this._card.setCombatSpriteText(SpriteManager.IMG_STAND());
+        this._card.resetCombatSpriteIndex();
+        this._card.resetCombatSpriteTimeCounter();
+
         this._actionLoop = 0;
 
-        const STYLE_PADDING = "5px";;
+        const STYLE_PADDING = "5px";
 
         this._instanceCardContainer = this.getCurrentDocument().createElement('div');
         this._instanceCardContainer.style.fontSize = "100%";
@@ -79,39 +81,23 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     #displayImg():void {
         this._actionLoop += 1;
         if (AbstractGraphicComponent.MS_LOOP() * this._actionLoop >= 150 ) {
-                this._instanceCardImg.src =  this.#computeImg();
+                let imgUrl = this.#computeImg();
+                if (this._card.getCombatSpriteIndex() > -1) {
+                    this._instanceCardImg.src = imgUrl;
+                }
                 this._actionLoop = 0;
         }
     }
 
     #computeImg():string {
-        this._actionNumber += 1;
-
-        switch(this._card.getCinematicText()) {
-            case AbstractCardGraphicComponent.IMG_DIE():
-                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteDie) {this._actionNumber = this._card.getCardGraphicSetting()._maxSpriteDie;}
-                break;
-            case AbstractCardGraphicComponent.IMG_STAND():
-                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {this._actionNumber = 0;}
-                break;
-            case AbstractCardGraphicComponent.IMG_HIT():
-                if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {this._actionNumber = 0;}
-                break;
-            default:
-                0;
-        }
+        let spriteManager: SpriteManager = this._container.get(SpriteManager.name);
+        spriteManager.compute(this._card);
         return F.sprintf(
             'img/%s/%s_%s.png',
             this._img,
-            this._card.getCinematicText(),
-            this._actionNumber
+            this._card.getCombatSpriteText(),
+            this._card.getCombatSpriteIndex()
         );
     }
-
-    static IMG_DIE(): string {return "die1";}
-    static IMG_HIT(): string {return "hit1";}
-    static IMG_MOVE(): string {return "move";}
-    static IMG_STAND(): string {return "stand";}
-    static IMG_JUMP(): string {return "jump";}
 }
 export default AbstractCardGraphicComponent;

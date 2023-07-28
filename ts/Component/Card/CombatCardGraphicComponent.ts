@@ -94,7 +94,8 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
     }
  
     #combatAnimation(animation) {
-        if (animation._type == CardAnimation.ATTACK()) {console.debug(this._card.getTitle() + " Start animation Card " + CardAnimation.ATTACK());
+        if (animation._type == CardAnimation.ATTACK()) {
+            console.debug(this._card.getTitle() + " Start animation Card " + CardAnimation.ATTACK());
             // reset
             this._instanceContainer.style.animation = 'non';
             this._instanceContainer.offsetHeight;
@@ -149,6 +150,20 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
             this._instanceAnimationDamage.style.animationDirection = "normal";
             this._instanceAnimationDamage.style.animationFillMode = "none";
             this._instanceAnimationDamage.style.animationPlayState = "running";
+
+            this._instanceCardImg.style.animation = 'non';
+            this._instanceCardImg.offsetHeight;
+            this._instanceCardImg.style.animation = null;
+
+            this._instanceCardImg.style.animationDuration = "1s";
+            this._instanceCardImg.style.animationTimingFunction = "linear";
+            this._instanceCardImg.style.animationName = "blinking";
+            this._instanceCardImg.style.animationDelay = "250ms";
+            this._instanceCardImg.style.animationIterationCount = "1";
+            this._instanceCardImg.style.animationDirection = "normal";
+            this._instanceCardImg.style.animationFillMode = "none";
+            this._instanceCardImg.style.animationPlayState = "running";
+
             this._combatAnimation = 0;
         }
     }
@@ -165,6 +180,10 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
         this._instanceAnimationDamage.style.animation = 'non';
         this._instanceAnimationDamage.offsetHeight;
         this._instanceAnimationDamage.style.animation = null;
+
+        this._instanceCardImg.style.animation = 'non';
+        this._instanceCardImg.offsetHeight;
+        this._instanceCardImg.style.animation = null;
     }
  
     #getAnimationCombatCss() {
@@ -172,29 +191,36 @@ class CombatCardGraphicComponent extends AbstractCardGraphicComponent {
         
         keyframes += `
         @keyframes attackCardHero {
-            0%   {transform: translate(0, 0);}
+            0%   {transform: translate(0,    0);}
             25%  {transform: translate(40px, 0px);}
-            100% {transform: translate(0, 0);}
+            100% {transform: translate(0,    0);}
         }`;
-    
         keyframes += `
         @keyframes attackCardEnemy {
-            0%   {transform: translate(0, 0);}
+            0%   {transform: translate(0,     0);}
             25%  {transform: translate(-40px, 0px);}
-            100% {transform: translate(0, 0);}
+            100% {transform: translate(0,     0);}
         }`;
-
         keyframes += `
         @keyframes damage {
-            0%   {transform: translate(0, 0);    opacity: 1;}
+            0%   {transform: translate(0, 0);      opacity: 1;}
             100% {transform: translate(0, 100px);  opacity: 0;}
         }`;
         keyframes += `
         @keyframes die {
-            0%   {transform: translate(0, 0);    opacity: 1;}
+            0%   {transform: translate(0, 0);      opacity: 1;}
             100% {transform: translate(0, 100px);  opacity: 0;}
         }`;
-
+        keyframes += `
+        @keyframes blinking {
+            0%   {opacity: 1;}
+            17%  {opacity: 0;}
+            33%  {opacity: 1;}
+            50%  {opacity: 0;}
+            67%  {opacity: 1;}
+            83%  {opacity: 0;}
+            100% {opacity: 1;}
+        }`;
         
         let instanceStyle = this.getCurrentDocument().createElement( 'style' );
         instanceStyle.innerHTML = keyframes;

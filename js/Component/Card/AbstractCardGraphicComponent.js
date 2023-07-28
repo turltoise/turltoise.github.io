@@ -6,6 +6,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _AbstractCardGraphicComponent_instances, _AbstractCardGraphicComponent_displayImg, _AbstractCardGraphicComponent_computeImg;
 import AbstractGraphicComponent from "../AbstractGraphicComponent.js";
 import F from "../../Game/Tools/F.js";
+import SpriteManager from "./SpriteManager.js";
 class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     constructor(container, card) {
         super(container);
@@ -14,11 +15,11 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._title = card.getTitle();
         this._img = card.getImg();
         this._cardUUID = card.getUUID();
-        this._card.setCinematicText(AbstractCardGraphicComponent.IMG_STAND());
-        this._actionNumber = 0;
+        this._card.setCombatSpriteText(SpriteManager.IMG_STAND());
+        this._card.resetCombatSpriteIndex();
+        this._card.resetCombatSpriteTimeCounter();
         this._actionLoop = 0;
         const STYLE_PADDING = "5px";
-        ;
         this._instanceCardContainer = this.getCurrentDocument().createElement('div');
         this._instanceCardContainer.style.fontSize = "100%";
         this._instanceCardContainer.style.borderRadius = "5px";
@@ -59,40 +60,20 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     internalLoop() {
         __classPrivateFieldGet(this, _AbstractCardGraphicComponent_instances, "m", _AbstractCardGraphicComponent_displayImg).call(this);
     }
-    static IMG_DIE() { return "die1"; }
-    static IMG_HIT() { return "hit1"; }
-    static IMG_MOVE() { return "move"; }
-    static IMG_STAND() { return "stand"; }
-    static IMG_JUMP() { return "jump"; }
 }
 _AbstractCardGraphicComponent_instances = new WeakSet(), _AbstractCardGraphicComponent_displayImg = function _AbstractCardGraphicComponent_displayImg() {
     this._actionLoop += 1;
     if (AbstractGraphicComponent.MS_LOOP() * this._actionLoop >= 150) {
-        this._instanceCardImg.src = __classPrivateFieldGet(this, _AbstractCardGraphicComponent_instances, "m", _AbstractCardGraphicComponent_computeImg).call(this);
+        let imgUrl = __classPrivateFieldGet(this, _AbstractCardGraphicComponent_instances, "m", _AbstractCardGraphicComponent_computeImg).call(this);
+        if (this._card.getCombatSpriteIndex() > -1) {
+            this._instanceCardImg.src = imgUrl;
+        }
         this._actionLoop = 0;
     }
 }, _AbstractCardGraphicComponent_computeImg = function _AbstractCardGraphicComponent_computeImg() {
-    this._actionNumber += 1;
-    switch (this._card.getCinematicText()) {
-        case AbstractCardGraphicComponent.IMG_DIE():
-            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteDie) {
-                this._actionNumber = this._card.getCardGraphicSetting()._maxSpriteDie;
-            }
-            break;
-        case AbstractCardGraphicComponent.IMG_STAND():
-            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {
-                this._actionNumber = 0;
-            }
-            break;
-        case AbstractCardGraphicComponent.IMG_HIT():
-            if (this._actionNumber >= this._card.getCardGraphicSetting()._maxSpriteStand) {
-                this._actionNumber = 0;
-            }
-            break;
-        default:
-            0;
-    }
-    return F.sprintf('img/%s/%s_%s.png', this._img, this._card.getCinematicText(), this._actionNumber);
+    let spriteManager = this._container.get(SpriteManager.name);
+    spriteManager.compute(this._card);
+    return F.sprintf('img/%s/%s_%s.png', this._img, this._card.getCombatSpriteText(), this._card.getCombatSpriteIndex());
 };
 export default AbstractCardGraphicComponent;
 //# sourceMappingURL=AbstractCardGraphicComponent.js.map

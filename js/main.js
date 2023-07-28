@@ -1,4 +1,5 @@
 import BodyGraphicComponent from "./Component/BodyGraphicComponent.js";
+import SpriteManager from "./Component/Card/SpriteManager.js";
 import ChatGraphicComponent from "./Component/ChatGraphicComponent.js";
 import GoldIndicatorGraphicComponent from "./Component/GoldIndicatorGraphicComponent.js";
 import HeaderGraphicComponent from "./Component/HeaderGraphicComponent.js";
@@ -41,6 +42,7 @@ myDeck.addCard(cardA);
 /* END -------------  FOR TESTS */
 mainContainer.add(new WorldList(mainContainer));
 mainContainer.add(new Booster(mainContainer));
+mainContainer.add(new SpriteManager(mainContainer));
 mainContainer.add(new Store());
 mainContainer.add(new StoreGraphicComponent(mainContainer));
 mainContainer.add(new Combat(mainContainer));

@@ -4,7 +4,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _StackPlayCard_instances, _StackPlayCard_getRandomCapacity, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
-import AbstractCardGraphicComponent from '../../Component/Card/AbstractCardGraphicComponent.js';
+import SpriteManager from '../../Component/Card/SpriteManager.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import UUID from '../Tools/UUID.js';
 import AbstractPrintableCard from './AbstractPrintableCard.js';
@@ -58,10 +58,10 @@ class StackPlayCard extends AbstractPrintableCard {
         this.removeCurrentLife(dmg);
         this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
         if (this._currentLife <= 0) {
-            this.setCinematicText(AbstractCardGraphicComponent.IMG_DIE());
+            this.setCombatSpriteText(SpriteManager.IMG_DIE1());
         }
         else {
-            //this.setCinematicText(AbstractCardGraphicComponent.IMG_HIT());
+            this.setCombatSpriteText(SpriteManager.IMG_HIT1());
         }
     }
     addStatus(status) {
@@ -109,6 +109,7 @@ class StackPlayCard extends AbstractPrintableCard {
         let capacity = __classPrivateFieldGet(this, _StackPlayCard_instances, "m", _StackPlayCard_getRandomCapacity).call(this, container);
         capacity.trigger(this, target);
         this.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
+        this.setCombatSpriteText(SpriteManager.IMG_ATTACK1());
     }
     static MAIN_KEY() { return 'this'; }
 }

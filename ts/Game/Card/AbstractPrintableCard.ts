@@ -9,7 +9,11 @@ class AbstractPrintableCard {
     protected _img: string;
     protected _uuid: string;
     protected _fightAnimation: Map<string, CardAnimation>;
-    protected _cinematicText: string;
+
+    protected _combatSpriteText: string;
+    protected _combatSpriteIndex: number;
+    protected _combatSpriteTimeCounter: number; // to loop on the same sprite several times
+
     protected _cardGraphicSetting: CardGraphicSetting;
 
     constructor(container: Container, title: string, img: string, uuid: string, cardGraphicSetting: CardGraphicSetting) {
@@ -18,7 +22,7 @@ class AbstractPrintableCard {
         this._img = img;
         this._uuid = uuid;
         this._fightAnimation = new Map();
-        this._cinematicText  = null;
+        this._combatSpriteText  = null;
         this._cardGraphicSetting = cardGraphicSetting;
     }
     getImg(): string {return this._img;}
@@ -28,8 +32,18 @@ class AbstractPrintableCard {
     getMaxLife(): number {return 0;}
     isYours(): boolean {return null;}
     
-    setCinematicText(text: string): void {this._cinematicText = text;}
-    getCinematicText(): string {return this._cinematicText;}
+    setCombatSpriteText(text: string): void {this._combatSpriteText = text;}
+    getCombatSpriteText(): string {return this._combatSpriteText;}
+
+    resetCombatSpriteIndex(): void {this._combatSpriteIndex = -1;}
+    setCombatSpriteIndex(index: number): void {this._combatSpriteIndex = index;}
+    getCombatSpriteIndex(): number {return this._combatSpriteIndex;}
+    incrementCombatSpriteIndex(): void {this._combatSpriteIndex += 1;}
+
+    resetCombatSpriteTimeCounter(): void {this._combatSpriteTimeCounter = -1;}
+    setCombatSpriteTimeCounter(index: number): void {this._combatSpriteTimeCounter = index;}
+    getCombatSpriteTimeCounter(): number {return this._combatSpriteTimeCounter;}
+    incrementCombatSpriteTimeCounter(): void {this._combatSpriteTimeCounter += 1;}
 
     getCardGraphicSetting(){return this._cardGraphicSetting;}
 

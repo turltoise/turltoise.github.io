@@ -42,9 +42,10 @@ class World1_Enemy1 extends Enemy {
         ]);
 
         let cardGraphicSetting  = new CardGraphicSetting();
-        cardGraphicSetting._maxSpriteDie = 2;
+        cardGraphicSetting._maxSpriteDie1 = 2;
         cardGraphicSetting._maxSpriteStand = 2;
-        cardGraphicSetting._maxSpriteHit = 0; 
+        cardGraphicSetting._maxSpriteHit1 = 0;
+        cardGraphicSetting._maxSpriteAttack1 = -1;
 
         super(container, carac, levelNumber, name, backgroundImage, gold, capacities, cardGraphicSetting);
     }

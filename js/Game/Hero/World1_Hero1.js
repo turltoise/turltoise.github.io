@@ -31,8 +31,10 @@ class World1_Hero1 extends Hero {
             [UUID.generateUUID(), new PhysicalAttack(container)]
         ]);
         let cardGraphicSetting = new CardGraphicSetting();
-        cardGraphicSetting._maxSpriteDie = 11;
+        cardGraphicSetting._maxSpriteDie1 = 11;
         cardGraphicSetting._maxSpriteStand = 3;
+        cardGraphicSetting._maxSpriteHit1 = -1;
+        cardGraphicSetting._maxSpriteAttack1 = 10;
         super(container, carac, levelNumber, name, backgroundImage, capacities, cardGraphicSetting);
     }
 }

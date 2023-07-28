@@ -1,4 +1,5 @@
 import BodyGraphicComponent from "./Component/BodyGraphicComponent.js";
+import SpriteManager from "./Component/Card/SpriteManager.js";
 import ChatGraphicComponent from "./Component/ChatGraphicComponent.js";
 import GoldIndicatorGraphicComponent from "./Component/GoldIndicatorGraphicComponent.js";
 import HeaderGraphicComponent from "./Component/HeaderGraphicComponent.js";
@@ -14,19 +15,15 @@ import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
 import Container from "./Container.js";
 import WorldList from "./Game/Adventure/WorldList.js";
 import Booster from "./Game/Booster/Booster.js";
-import Hero from "./Game/Card/Hero.js";
-import RawCarac from "./Game/Card/RawCarac.js";
 import Collection from "./Game/CardManager/Collection.js";
 import Deck from "./Game/CardManager/Deck.js";
 import Chat from "./Game/Chat/Chat.js";
 import Combat from "./Game/Combat.js";
-import PhysicalAttack from "./Game/Fight/Capacity/List/PhysicalAttack.js";
 import World1_Hero1 from "./Game/Hero/World1_Hero1.js";
 import MainScreen from "./Game/MainScreen.js";
 import Resource from "./Game/Resource.js";
 import AllWorldProgress from "./Game/State/AllWorldProgress.js";
 import Store from "./Game/Store.js";
-import UUID from "./Game/Tools/UUID.js";
 
 const  mainContainer = new Container();
 
@@ -59,6 +56,7 @@ myDeck.addCard(cardA);
 
 mainContainer.add(new WorldList(mainContainer));
 mainContainer.add(new Booster(mainContainer));
+mainContainer.add(new SpriteManager(mainContainer));
 
 mainContainer.add(new Store());
 mainContainer.add(new StoreGraphicComponent(mainContainer));
