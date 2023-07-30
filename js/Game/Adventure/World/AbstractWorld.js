@@ -7,7 +7,7 @@ class AbstractWorld {
         this._baseCostBooster = baseCostBooster;
         this._boosterLevel = 0;
     }
-    getWorlLeveldByNumber(lvlNumber) {
+    getWorldLeveldByNumber(lvlNumber) {
         let newWorldLevel = new WorldLevel();
         newWorldLevel.addMonster(this.getEnemy1(lvlNumber));
         return newWorldLevel;

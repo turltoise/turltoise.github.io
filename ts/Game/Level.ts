@@ -33,6 +33,7 @@ class Level {
 
 	getHeroListForFight(): Map<string, StackPlayCard> {return this._heroListForFight;}
 	getEnemyList(): Map<string, StackPlayCard> {return this._enemyList;}
+	getLevelNumber(): number {return this._levelNumber;}
 
 	fight(): void {
 		const combat: Combat = this._container.get(Combat.name);
@@ -117,7 +118,7 @@ class Level {
 
 	#generateEnemyList(currentWorld:AbstractWorld): void {
 		let idListCard = Level.ZERO();
-		const currentLevel: WorldLevel = currentWorld.getWorlLeveldByNumber(this._levelNumber);
+		const currentLevel: WorldLevel = currentWorld.getWorldLeveldByNumber(this._levelNumber);
 		currentLevel.getMonsterList().forEach((enemy: Enemy, uuid) => {
             this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
             idListCard++;

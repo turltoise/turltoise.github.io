@@ -131,7 +131,7 @@ class MainMenuGraphicComponent extends AbstractGraphicComponent {
         return e;
     }
 
-    #setAnimationBtn(e, reverse=false) {
+    #setAnimationBtn(e, reverse: boolean = false) {
         //animation
         e.style.animation = 'non';
         e.offsetHeight;

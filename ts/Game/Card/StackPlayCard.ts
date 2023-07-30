@@ -81,11 +81,13 @@ class StackPlayCard extends AbstractPrintableCard {
 		this.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), '- ' + dmg.toString(), '#b71c1c'));
 		if (this._currentLife <= 0) { 
 			this.setCombatSpriteText(SpriteManager.IMG_DIE1());
-			let resource: Resource = this._container.get(Resource.name);
-			let goldEarned: number = this.getMainPlayCard().getCollectionCard().getGold()
-			resource.addGold(goldEarned);
-			let chat: Chat = this._container.get(Chat.name);
-			chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", null);
+			if (!this.isYours()) {
+				let resource: Resource = this._container.get(Resource.name);
+				let goldEarned: number = this.getMainPlayCard().getCollectionCard().getGold()
+				resource.addGold(goldEarned);
+				let chat: Chat = this._container.get(Chat.name);
+				chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", null);
+			}
 		} else {
 			this.setCombatSpriteText(SpriteManager.IMG_HIT1());
 		}

@@ -1,1 +1,1 @@
-{"version":3,"file":"Progress.js","sourceRoot":"","sources":["../../../ts/Game/State/Progress.ts"],"names":[],"mappings":"AAAA,MAAM,CAAE,IAAI,QAAQ,GAAG,EACtB,CAAC;AAEF,4CAA4C"}
+{"version":3,"file":"Progress.js","sourceRoot":"","sources":["../../../ts/Game/State/Progress.ts"],"names":[],"mappings":"AAAA,MAAM,CAAE,IAAI,QAAQ,GAAG;IACnB,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,CAAC;CACZ,CAAC;AAEF,4CAA4C"}

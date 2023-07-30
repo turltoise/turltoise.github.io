@@ -22,6 +22,7 @@ class Level {
     }
     getHeroListForFight() { return this._heroListForFight; }
     getEnemyList() { return this._enemyList; }
+    getLevelNumber() { return this._levelNumber; }
     fight() {
         const combat = this._container.get(Combat.name);
         let currentHero = this.getCurrentHero();
@@ -106,7 +107,7 @@ _Level_instances = new WeakSet(), _Level_action = function _Level_action(thrower
     target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
 }, _Level_generateEnemyList = function _Level_generateEnemyList(currentWorld) {
     let idListCard = Level.ZERO();
-    const currentLevel = currentWorld.getWorlLeveldByNumber(this._levelNumber);
+    const currentLevel = currentWorld.getWorldLeveldByNumber(this._levelNumber);
     currentLevel.getMonsterList().forEach((enemy, uuid) => {
         this._enemyList.set(idListCard.toString(), enemy.getStackPlayCard());
         idListCard++;
