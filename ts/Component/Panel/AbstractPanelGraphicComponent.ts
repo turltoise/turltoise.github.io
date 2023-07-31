@@ -5,7 +5,7 @@ class AbstractPanelGraphicComponent extends AbstractGraphicComponent {
 	constructor(container: Container) {
         super(container);
 
-        this._instanceContainer.style.minHeight = "540px";
+        //this._instanceContainer.style.minHeight = "540px";
     }
 }
 export default AbstractPanelGraphicComponent;

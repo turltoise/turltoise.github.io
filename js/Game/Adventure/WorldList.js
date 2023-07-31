@@ -24,6 +24,9 @@ class WorldList {
     getList() {
         return this._list;
     }
+    getFirst() {
+        return this._list.values().next().value;
+    }
     // static call # TODO rework
     static getListName() {
         const levelList = new Map();

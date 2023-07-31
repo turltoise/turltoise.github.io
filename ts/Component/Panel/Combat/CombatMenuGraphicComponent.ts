@@ -4,17 +4,10 @@ import Combat from "../../../Game/Combat.js";
 import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import F from "../../../Game/Tools/F.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
-import CombatPanelGraphicComponent from "../CombatPanelGraphicComponent.js";
 import AdventureSceneGraphicComponent from "./AdventureSceneGraphicComponent.js";
 
 class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     private _adventureSceneGraphicComponent: AdventureSceneGraphicComponent;
-    private _templateLevelText: HTMLElement;
-    private _templateBtn: HTMLElement;
-    private _templateStatusCombat: HTMLElement;
-    private _instanceLevelText: HTMLElement;
-    private _instanceStatusCombat: HTMLElement;
-    private _instanceBtnReturn: HTMLElement;
 
     private _btnStart: HTMLElement;
     private _btnForfeit: HTMLElement;
@@ -28,8 +21,6 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         super(container);
 
         this._adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
-
-        this._instanceContainer.style.backgroundColor = "#C0C0C0";//"#0C5D20";//"#145f24";
 
         let style = `
         @keyframes clickAutomaticMode {
@@ -46,94 +37,66 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         }`;
         let templateStyle = this.getCurrentDocument().createElement( 'style' );
         templateStyle.innerHTML = style;
-        this._instanceContainer.appendChild(templateStyle);   
-
-
-        const templateLevelText = this.getCurrentDocument().createElement('div');
-        templateLevelText.style.fontSize = "18px";
-        templateLevelText.style.display = "inline-block";
-        templateLevelText.style.marginRight = "20px";
-        this._templateLevelText = templateLevelText;
+        this._instanceContainer.appendChild(templateStyle);
 
         const templateBtn = this.getCurrentDocument().createElement('div');
         templateBtn.setAttribute('class', this.getClassName('btn'));
-      
         templateBtn.style.cursor = "pointer";
         templateBtn.style.display = "inline-block";
         templateBtn.style.margin = "5px";
         templateBtn.style.padding = "5px";
         templateBtn.style.backgroundColor = "#CCDDCC";
         templateBtn.style.caretColor = "transparent";
-        templateBtn.style.borderRadius = "3px";       
-        this._templateBtn = templateBtn;
+        templateBtn.style.borderRadius = "3px";
 
-        const templateStatusCombat = this.getCurrentDocument().createElement('div');
-        templateStatusCombat.innerHTML = "";
-        templateStatusCombat.style.fontWeight = "bold";
-        templateStatusCombat.style.marginLeft = "10px";
-        templateStatusCombat.style.display = "inline-block";
-        this._templateStatusCombat = templateStatusCombat;
+        const instanceLevelText = <HTMLElement> this.getCurrentDocument().createElement('div');
+        instanceLevelText.style.fontSize = "18px";
+        instanceLevelText.style.display = "inline-block";
+        instanceLevelText.style.marginRight = "20px";
+        instanceLevelText.setAttribute('id', 'level-text');
+        instanceLevelText.style.backgroundColor = "rgba(255,255,255,0.8)";
+        instanceLevelText.style.padding = "5px";
+        this._instanceContainer.appendChild(instanceLevelText);
 
-        this.render();
-    }
-
-    render() {
-
-        const templateBtnReturn = this.getCurrentDocument().createElement('div');
-		this._instanceBtnReturn = <HTMLElement> templateBtnReturn.cloneNode(true);
-		this._instanceBtnReturn.innerHTML = "↩ Return to world selection";
-		this._instanceBtnReturn.onclick = () => this.#returnToList();
-		this._instanceBtnReturn.style.fontWeight = "bold";
-		this._instanceBtnReturn.style.color = "white";
-		this._instanceBtnReturn.style.cursor = "pointer";
-		this._instanceBtnReturn.style.caretColor = "transparent";
-		this._instanceBtnReturn.style.margin = "20px";
-		this._instanceBtnReturn.style.backgroundColor = "#A3E1FF";
-		this._instanceBtnReturn.style.width = "200px";
-		this._instanceBtnReturn.style.padding = "5px";
-		this._instanceBtnReturn.style.display = "inline-block";
-
-        this._instanceLevelText = <HTMLElement> this._templateLevelText.cloneNode(true);
-        this._instanceLevelText.setAttribute('id', 'level-text');
-        this._instanceLevelText.style.backgroundColor = "rgba(255,255,255,0.8)";
-        this._instanceLevelText.style.padding = "5px";
+        const instanceStatusCombat = this.getCurrentDocument().createElement('div');
+        instanceStatusCombat.innerHTML = "";
+        instanceStatusCombat.style.fontWeight = "bold";
+        instanceStatusCombat.style.marginLeft = "10px";
+        instanceStatusCombat.style.display = "inline-block";
+        instanceStatusCombat.setAttribute('id', 'statut-combat');
+        this._instanceContainer.appendChild(instanceStatusCombat);
 
         const btnContainerLine1 = this.getCurrentDocument().createElement('div');
-        btnContainerLine1.style.marginLeft = "20px";
-        const btnContainerLine2 = this.getCurrentDocument().createElement('div');
-        btnContainerLine2.style.marginLeft = "20px";
-
-        this._btnStart = <HTMLElement> this._templateBtn.cloneNode(true);
-        this._btnStart.onclick = () => this.setCombatState(Combat.STATE_START());
-        this._btnForfeit = <HTMLElement> this._templateBtn.cloneNode(true);
-        this._btnForfeit.onclick = () => this.setCombatState(Combat.STATE_FORFEIT());
-        this._btnPrevious = <HTMLElement> this._templateBtn.cloneNode(true);
-        this._btnPrevious .onclick = () => this.setCombatState(Combat.STATE_PREVIOUS());
-        this._btnNext = <HTMLElement> this._templateBtn.cloneNode(true);
-        this._btnNext.onclick = () => this.setCombatState(Combat.STATE_NEXT());
-
         this._instanceContainer.appendChild(btnContainerLine1);
+
+        const btnContainerLine2 = this.getCurrentDocument().createElement('div');
         this._instanceContainer.appendChild(btnContainerLine2);
+
+        this._btnStart = <HTMLElement> templateBtn.cloneNode(true);
+        this._btnStart.onclick = () => this.setCombatState(Combat.STATE_START());
         btnContainerLine1.appendChild(this._btnStart);
+
+        this._btnForfeit = <HTMLElement> templateBtn.cloneNode(true);
+        this._btnForfeit.onclick = () => this.setCombatState(Combat.STATE_FORFEIT());
         btnContainerLine1.appendChild(this._btnForfeit);
+
+        this._btnPrevious = <HTMLElement> templateBtn.cloneNode(true);
+        this._btnPrevious .onclick = () => this.setCombatState(Combat.STATE_PREVIOUS());
         btnContainerLine1.appendChild(this._btnPrevious);
+
+        this._btnNext = <HTMLElement> templateBtn.cloneNode(true);
+        this._btnNext.onclick = () => this.setCombatState(Combat.STATE_NEXT());
         btnContainerLine1.appendChild(this._btnNext);
 
-        this._btnLoop = <HTMLElement> this._templateBtn.cloneNode(true);
+        this._btnLoop = <HTMLElement> templateBtn.cloneNode(true);
         this._btnLoop.onclick = () => this.setAutomaticMode(Combat.AUTOMATIC_MODE_LOOP());
         this._btnLoop.innerHTML = "Loop";
-        this._btnIncrement = <HTMLElement> this._templateBtn.cloneNode(true);
+        btnContainerLine2.appendChild(this._btnLoop);
+
+        this._btnIncrement = <HTMLElement> templateBtn.cloneNode(true);
         this._btnIncrement.onclick = () => this.setAutomaticMode(Combat.AUTOMATIC_MODE_INCREMENT());
         this._btnIncrement.innerHTML = "Increment";
-        btnContainerLine2.appendChild(this._btnLoop);
         btnContainerLine2.appendChild(this._btnIncrement);
-
-        this._instanceContainer.appendChild(this._instanceBtnReturn);
-        this._instanceContainer.appendChild(this._instanceLevelText);
-
-        this._instanceStatusCombat = <HTMLElement> this._templateStatusCombat.cloneNode(true);
-        this._instanceStatusCombat.setAttribute('id', 'statut-combat');
-        this._instanceContainer.appendChild(this._instanceStatusCombat);
 
         this._instanceContainer.appendChild(this._adventureSceneGraphicComponent);
 
@@ -169,11 +132,6 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
             this.#setAnimationBtn(this._btnIncrement, true);
             this.#setAnimationBtn(this._btnLoop);
         }  
-    }
-
-    #returnToList(): void {
-        let combatPanel:CombatPanelGraphicComponent = this._container.get(CombatPanelGraphicComponent.name);
-        combatPanel.returnToList(); 
     }
 
     #displayBtnText(): void {

@@ -31,6 +31,10 @@ class WorldList {
 		return this._list;
 	}
 
+	getFirst(): AbstractWorld {
+		return this._list.values().next().value;
+	}
+
 	// static call # TODO rework
 	static getListName() {
 		const levelList = new Map();

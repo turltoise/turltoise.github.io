@@ -5,11 +5,10 @@ class HeaderGraphicComponent extends AbstractGraphicComponent {
     constructor(container) {
         super(container);
         this._instanceContainer.style.backgroundImage = "url(./img/b1.png)";
-        this._instanceContainer.style.height = "180px";
+        this._instanceContainer.style.height = "130px";
         this._instanceContainer.style.backgroundRepeat = "repeat";
         this._instanceContainer.style.backgroundSize = "50% 100%";
         this._instanceContainer.style.padding = "10px";
-        this._instanceContainer.style.margin = "40px";
         const goldIndicator = this._container.get(GoldIndicatorGraphicComponent.name);
         const mainMenu = this._container.get(MainMenuGraphicComponent.name);
         this._instanceContainer.appendChild(goldIndicator);

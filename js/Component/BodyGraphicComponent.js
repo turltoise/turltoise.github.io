@@ -12,15 +12,15 @@ class BodyGraphicComponent extends AbstractGraphicComponent {
         const openingPanel = container.get(OpeningPanelGraphicComponent.name);
         const shopPanel = container.get(ShopPanelGraphicComponent.name);
         const chatComponent = container.get(ChatGraphicComponent.name);
-        this._instanceContainer.style.margin = "40px";
+        //this._instanceContainer.style.margin = "40px";
         const templateSubContainerBody = this.getCurrentDocument().createElement('div');
         templateSubContainerBody.setAttribute('class', this.getClassName('sub-container'));
         templateSubContainerBody.style.display = "inline-block";
         templateSubContainerBody.style.verticalAlign = "top";
-        templateSubContainerBody.style.width = "33.33%";
+        templateSubContainerBody.style.width = "25%";
         this._templateSubContainerBody = templateSubContainerBody;
         const instanceSubContainerBodyLeft = this._templateSubContainerBody.cloneNode(true);
-        instanceSubContainerBodyLeft.style.width = "66.66%";
+        instanceSubContainerBodyLeft.style.width = "75%";
         const instanceSubContainerBodyRight = this._templateSubContainerBody.cloneNode(true);
         this._instanceContainer.appendChild(instanceSubContainerBodyLeft);
         this._instanceContainer.appendChild(instanceSubContainerBodyRight);

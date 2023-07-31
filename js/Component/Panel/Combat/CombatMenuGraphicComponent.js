@@ -3,20 +3,18 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _CombatMenuGraphicComponent_instances, _CombatMenuGraphicComponent_returnToList, _CombatMenuGraphicComponent_displayBtnText, _CombatMenuGraphicComponent_setAnimationBtn, _CombatMenuGraphicComponent_setBackgroundImage, _CombatMenuGraphicComponent_updateTextStatus, _CombatMenuGraphicComponent_updateLevelText, _CombatMenuGraphicComponent_getCurrentLevelName, _CombatMenuGraphicComponent_getMaxLevelReachName;
+var _CombatMenuGraphicComponent_instances, _CombatMenuGraphicComponent_displayBtnText, _CombatMenuGraphicComponent_setAnimationBtn, _CombatMenuGraphicComponent_setBackgroundImage, _CombatMenuGraphicComponent_updateTextStatus, _CombatMenuGraphicComponent_updateLevelText, _CombatMenuGraphicComponent_getCurrentLevelName, _CombatMenuGraphicComponent_getMaxLevelReachName;
 import Chat from "../../../Game/Chat/Chat.js";
 import Combat from "../../../Game/Combat.js";
 import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import F from "../../../Game/Tools/F.js";
 import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
-import CombatPanelGraphicComponent from "../CombatPanelGraphicComponent.js";
 import AdventureSceneGraphicComponent from "./AdventureSceneGraphicComponent.js";
 class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     constructor(container) {
         super(container);
         _CombatMenuGraphicComponent_instances.add(this);
         this._adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
-        this._instanceContainer.style.backgroundColor = "#C0C0C0"; //"#0C5D20";//"#145f24";
         let style = `
         @keyframes clickAutomaticMode {
             0%   {
@@ -33,11 +31,6 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         let templateStyle = this.getCurrentDocument().createElement('style');
         templateStyle.innerHTML = style;
         this._instanceContainer.appendChild(templateStyle);
-        const templateLevelText = this.getCurrentDocument().createElement('div');
-        templateLevelText.style.fontSize = "18px";
-        templateLevelText.style.display = "inline-block";
-        templateLevelText.style.marginRight = "20px";
-        this._templateLevelText = templateLevelText;
         const templateBtn = this.getCurrentDocument().createElement('div');
         templateBtn.setAttribute('class', this.getClassName('btn'));
         templateBtn.style.cursor = "pointer";
@@ -47,64 +40,45 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         templateBtn.style.backgroundColor = "#CCDDCC";
         templateBtn.style.caretColor = "transparent";
         templateBtn.style.borderRadius = "3px";
-        this._templateBtn = templateBtn;
-        const templateStatusCombat = this.getCurrentDocument().createElement('div');
-        templateStatusCombat.innerHTML = "";
-        templateStatusCombat.style.fontWeight = "bold";
-        templateStatusCombat.style.marginLeft = "10px";
-        templateStatusCombat.style.display = "inline-block";
-        this._templateStatusCombat = templateStatusCombat;
-        this.render();
-    }
-    render() {
-        const templateBtnReturn = this.getCurrentDocument().createElement('div');
-        this._instanceBtnReturn = templateBtnReturn.cloneNode(true);
-        this._instanceBtnReturn.innerHTML = "↩ Return to world selection";
-        this._instanceBtnReturn.onclick = () => __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_returnToList).call(this);
-        this._instanceBtnReturn.style.fontWeight = "bold";
-        this._instanceBtnReturn.style.color = "white";
-        this._instanceBtnReturn.style.cursor = "pointer";
-        this._instanceBtnReturn.style.caretColor = "transparent";
-        this._instanceBtnReturn.style.margin = "20px";
-        this._instanceBtnReturn.style.backgroundColor = "#A3E1FF";
-        this._instanceBtnReturn.style.width = "200px";
-        this._instanceBtnReturn.style.padding = "5px";
-        this._instanceBtnReturn.style.display = "inline-block";
-        this._instanceLevelText = this._templateLevelText.cloneNode(true);
-        this._instanceLevelText.setAttribute('id', 'level-text');
-        this._instanceLevelText.style.backgroundColor = "rgba(255,255,255,0.8)";
-        this._instanceLevelText.style.padding = "5px";
+        const instanceLevelText = this.getCurrentDocument().createElement('div');
+        instanceLevelText.style.fontSize = "18px";
+        instanceLevelText.style.display = "inline-block";
+        instanceLevelText.style.marginRight = "20px";
+        instanceLevelText.setAttribute('id', 'level-text');
+        instanceLevelText.style.backgroundColor = "rgba(255,255,255,0.8)";
+        instanceLevelText.style.padding = "5px";
+        this._instanceContainer.appendChild(instanceLevelText);
+        const instanceStatusCombat = this.getCurrentDocument().createElement('div');
+        instanceStatusCombat.innerHTML = "";
+        instanceStatusCombat.style.fontWeight = "bold";
+        instanceStatusCombat.style.marginLeft = "10px";
+        instanceStatusCombat.style.display = "inline-block";
+        instanceStatusCombat.setAttribute('id', 'statut-combat');
+        this._instanceContainer.appendChild(instanceStatusCombat);
         const btnContainerLine1 = this.getCurrentDocument().createElement('div');
-        btnContainerLine1.style.marginLeft = "20px";
-        const btnContainerLine2 = this.getCurrentDocument().createElement('div');
-        btnContainerLine2.style.marginLeft = "20px";
-        this._btnStart = this._templateBtn.cloneNode(true);
-        this._btnStart.onclick = () => this.setCombatState(Combat.STATE_START());
-        this._btnForfeit = this._templateBtn.cloneNode(true);
-        this._btnForfeit.onclick = () => this.setCombatState(Combat.STATE_FORFEIT());
-        this._btnPrevious = this._templateBtn.cloneNode(true);
-        this._btnPrevious.onclick = () => this.setCombatState(Combat.STATE_PREVIOUS());
-        this._btnNext = this._templateBtn.cloneNode(true);
-        this._btnNext.onclick = () => this.setCombatState(Combat.STATE_NEXT());
         this._instanceContainer.appendChild(btnContainerLine1);
+        const btnContainerLine2 = this.getCurrentDocument().createElement('div');
         this._instanceContainer.appendChild(btnContainerLine2);
+        this._btnStart = templateBtn.cloneNode(true);
+        this._btnStart.onclick = () => this.setCombatState(Combat.STATE_START());
         btnContainerLine1.appendChild(this._btnStart);
+        this._btnForfeit = templateBtn.cloneNode(true);
+        this._btnForfeit.onclick = () => this.setCombatState(Combat.STATE_FORFEIT());
         btnContainerLine1.appendChild(this._btnForfeit);
+        this._btnPrevious = templateBtn.cloneNode(true);
+        this._btnPrevious.onclick = () => this.setCombatState(Combat.STATE_PREVIOUS());
         btnContainerLine1.appendChild(this._btnPrevious);
+        this._btnNext = templateBtn.cloneNode(true);
+        this._btnNext.onclick = () => this.setCombatState(Combat.STATE_NEXT());
         btnContainerLine1.appendChild(this._btnNext);
-        this._btnLoop = this._templateBtn.cloneNode(true);
+        this._btnLoop = templateBtn.cloneNode(true);
         this._btnLoop.onclick = () => this.setAutomaticMode(Combat.AUTOMATIC_MODE_LOOP());
         this._btnLoop.innerHTML = "Loop";
-        this._btnIncrement = this._templateBtn.cloneNode(true);
+        btnContainerLine2.appendChild(this._btnLoop);
+        this._btnIncrement = templateBtn.cloneNode(true);
         this._btnIncrement.onclick = () => this.setAutomaticMode(Combat.AUTOMATIC_MODE_INCREMENT());
         this._btnIncrement.innerHTML = "Increment";
-        btnContainerLine2.appendChild(this._btnLoop);
         btnContainerLine2.appendChild(this._btnIncrement);
-        this._instanceContainer.appendChild(this._instanceBtnReturn);
-        this._instanceContainer.appendChild(this._instanceLevelText);
-        this._instanceStatusCombat = this._templateStatusCombat.cloneNode(true);
-        this._instanceStatusCombat.setAttribute('id', 'statut-combat');
-        this._instanceContainer.appendChild(this._instanceStatusCombat);
         this._instanceContainer.appendChild(this._adventureSceneGraphicComponent);
         __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_setAnimationBtn).call(this, this._btnIncrement, true);
         __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_setAnimationBtn).call(this, this._btnLoop);
@@ -138,10 +112,7 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
         }
     }
 }
-_CombatMenuGraphicComponent_instances = new WeakSet(), _CombatMenuGraphicComponent_returnToList = function _CombatMenuGraphicComponent_returnToList() {
-    let combatPanel = this._container.get(CombatPanelGraphicComponent.name);
-    combatPanel.returnToList();
-}, _CombatMenuGraphicComponent_displayBtnText = function _CombatMenuGraphicComponent_displayBtnText() {
+_CombatMenuGraphicComponent_instances = new WeakSet(), _CombatMenuGraphicComponent_displayBtnText = function _CombatMenuGraphicComponent_displayBtnText() {
     const combat = this._container.get(Combat.name);
     const allWorldProgress = this._container.get(AllWorldProgress.name);
     if (combat.getCurrentWorld()) {

@@ -21,10 +21,10 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         this._templateContainerCard = templateContainerCard;
 
         const templateCardListView = this.getCurrentDocument().createElement('div');
-        templateCardListView.style.marginBottom = "20px";
+        //templateCardListView.style.marginBottom = "20px";
         templateCardListView.style.padding = "10px";
         templateCardListView.style.boxSizing = "border-box";
-        templateCardListView.style.height = "180px";
+        templateCardListView.style.height = "200px";
         this._templateCardListView = templateCardListView;
 
         this.render();
