@@ -40,9 +40,9 @@ const cardA = new World1_Hero1(mainContainer, 1);
 const myCollection: Collection = mainContainer.get(Collection.name);
 myCollection.addCard(cardA);
 myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
+myCollection.addCard(new World1_Hero1(mainContainer, 2));
+myCollection.addCard(new World1_Hero1(mainContainer, 3));
+myCollection.addCard(new World1_Hero1(mainContainer, 4));
 
 
 const myDeck: Deck = mainContainer.get(Deck.name);

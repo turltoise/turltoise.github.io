@@ -1,7 +1,7 @@
 import AbstractCapacity from "./AbstractCapacity.js";
 class PhysicalAttack extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Physical attack');
+        super(container, 'Physical attack', null);
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

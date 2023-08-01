@@ -3,6 +3,9 @@ class AbstractCardManager {
     constructor() {
         this._cardList = new Map();
     }
+    getFirst() {
+        return this._cardList.values().next().value;
+    }
     getCardList() {
         return this._cardList;
     }

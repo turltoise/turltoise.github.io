@@ -2,7 +2,7 @@ import Element from "../../Element.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 class FireBall extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Fireball');
+        super(container, 'Fireball', Element.FIRE());
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

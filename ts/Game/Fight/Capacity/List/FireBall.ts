@@ -5,7 +5,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class FireBall extends AbstractCapacity {
     constructor(container: Container) {
-        super(container, 'Fireball');
+        super(
+            container,
+            'Fireball',
+            Element.FIRE()
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {

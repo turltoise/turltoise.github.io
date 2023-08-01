@@ -1,7 +1,7 @@
 import AbstractCapacity from "./AbstractCapacity.js";
 class LifeStealSwordStrike extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Life steal sword strike');
+        super(container, 'Life steal sword strike', null);
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

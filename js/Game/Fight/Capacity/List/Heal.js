@@ -1,7 +1,7 @@
 import AbstractCapacity from "./AbstractCapacity.js";
 class Heal extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Heal');
+        super(container, 'Heal', null);
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

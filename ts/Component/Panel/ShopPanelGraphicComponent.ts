@@ -9,8 +9,45 @@ import BoosterCard from "../Card/BoosterCard.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
 
 class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
+    private _btnBuyList: Map<AbstractWorld, HTMLElement>;
+    private _boosterCardList: Map<AbstractWorld, BoosterCard>;
+
     constructor(container: Container) {
         super(container);
+
+        this._btnBuyList = new Map();
+        this._boosterCardList = new Map();
+
+        let keyframes = `
+        @keyframes clickBuyBtn {
+            0%   {
+                box-shadow: 2px 4px rgba(75, 75, 75, 0.5);
+                transform: translate(0, 0);
+            }
+            50%  {
+                box-shadow: 0px 0px rgba(75, 75, 75, 0.5);
+                transform: translate(2px, 4px);
+            }
+            100%   {
+                box-shadow: 2px 4px rgba(75, 75, 75, 0.5);
+                transform: translate(0, 0);
+            }
+        }
+        @keyframes clickBuyBooster {
+            0%   {
+                opacity: 1;
+            }
+            50%   {
+                opacity: 0;
+            }
+            100%   {
+                opacity: 0;
+            }
+        }
+        `;
+        let templateStyle = this.getCurrentDocument().createElement( 'style' );
+        templateStyle.innerHTML = keyframes;
+        this._instanceContainer.appendChild(templateStyle);  
 
         this._instanceContainer.style.backgroundColor = "#F2D090";
         this._instanceContainer.style.paddingBottom = "20px";
@@ -77,8 +114,11 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             let instanceBtnBuy: HTMLElement = <HTMLElement> templateBtnBuy.cloneNode(true);
             instanceBtnBuy.onclick = () => self.buyBooster(world);
             instanceBtnBuy.innerHTML = Number.displayNumber(world.getPriceNextBooster()) + " Gold";
+            this._btnBuyList.set(world, instanceBtnBuy);
 
-            instanceLeftContainer.appendChild(new BoosterCard(container, world));
+            let boosterCard = new BoosterCard(container, world);
+            this._boosterCardList.set(world, boosterCard);
+            instanceLeftContainer.appendChild(boosterCard);
             instanceRightContainer.appendChild(instanceBtnBuy);
             instanceContainerExtension.appendChild(instanceLeftContainer);
             instanceContainerExtension.appendChild(instanceRightContainer);
@@ -87,10 +127,12 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
     }
 
     buyBooster(world: AbstractWorld) {
+        this.#animationBtnBuyBooster(world);
         const resource = this._container.get(Resource.name);
         const chat = this._container.get(Chat.name);
         const booster = this._container.get(Booster.name);
         if (resource.getGold() >= world.getPriceNextBooster()) {
+            this.#animationBoosterBuyBooster(world);
             resource.removeGold(world.getPriceNextBooster());
             booster.buyBooster(world); 
             chat.addChatMessage("You bought booster " + world.getName() + ".");
@@ -98,6 +140,47 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             chat.addChatMessage("You don't have enough money to buy booster " + world.getName() + ".");
         }
     }
+
+    #animationBtnBuyBooster(world: AbstractWorld) {
+        let speedAnimation = 250;
+        let btn:HTMLElement = this._btnBuyList.get(world);
+        btn.style.animation = 'non';
+        btn.offsetHeight;
+        btn.style.animation = null;
+        btn.style.animationDuration = speedAnimation + "ms";
+        btn.style.animationTimingFunction = "linear";
+        btn.style.animationName = "clickBuyBtn";
+        btn.style.animationDelay = "0ms";
+        btn.style.animationIterationCount = "1";
+        btn.style.animationFillMode = "none";
+        btn.style.animationPlayState = "running";
+        setTimeout(function () {
+            btn.style.animation = 'non';
+            btn.offsetHeight;
+            btn.style.animation = null;
+        }, speedAnimation);
+    }
+
+    #animationBoosterBuyBooster(world: AbstractWorld) {
+        let speedAnimation = 500;
+        let booster:BoosterCard = this._boosterCardList.get(world);
+        booster.style.animation = 'non';
+        booster.offsetHeight;
+        booster.style.animation = null;
+        booster.style.animationDuration = speedAnimation + "ms";
+        booster.style.animationTimingFunction = "linear";
+        booster.style.animationName = "clickBuyBooster";
+        booster.style.animationDelay = "0ms";
+        booster.style.animationIterationCount = "1";
+        booster.style.animationFillMode = "none";
+        booster.style.animationPlayState = "running";
+        setTimeout(function () {
+            booster.style.animation = 'non';
+            booster.offsetHeight;
+            booster.style.animation = null;
+        }, speedAnimation);
+    }
+
 }
 customElements.define('shop-panel', ShopPanelGraphicComponent);
 export default ShopPanelGraphicComponent;

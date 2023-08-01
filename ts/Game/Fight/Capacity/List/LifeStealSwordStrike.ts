@@ -4,7 +4,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class LifeStealSwordStrike extends AbstractCapacity {
     constructor(container: Container) {
-        super(container, 'Life steal sword strike');
+        super(
+            container,
+            'Life steal sword strike',
+            null
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {

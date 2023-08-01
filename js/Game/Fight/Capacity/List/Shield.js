@@ -1,7 +1,7 @@
 import AbstractCapacity from "./AbstractCapacity.js";
 class Shield extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Shield');
+        super(container, 'Shield', null);
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

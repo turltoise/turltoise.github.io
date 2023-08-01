@@ -1,9 +1,10 @@
+import Element from "../../Element.js";
 import PoisonTick from "../../Status/List/PoisonTick.js";
 import Status from "../../Status/Status.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 class Poison extends AbstractCapacity {
     constructor(container) {
-        super(container, 'Poison');
+        super(container, 'Poison', Element.PLANT());
     }
     trigger(thrower, target) {
         super.trigger(thrower, target);

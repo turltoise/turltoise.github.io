@@ -8,6 +8,10 @@ class AbstractCardManager {
 		this._cardList = new Map<string, CollectionCard>();
 	}
 
+	getFirst(): CollectionCard {
+		return this._cardList.values().next().value;
+	}
+
 	getCardList(): Map<string, CollectionCard> {
 		return this._cardList;
 	}

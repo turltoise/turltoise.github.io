@@ -6,7 +6,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class AttackBuffCapacity extends AbstractCapacity {
     constructor(container: Container) {
-        super(container, 'Attack buff');
+        super(
+            container,
+            'Attack buff',
+            null
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {

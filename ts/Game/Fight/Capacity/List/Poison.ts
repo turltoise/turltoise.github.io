@@ -1,12 +1,17 @@
 import Container from "../../../../Container.js";
 import StackPlayCard from "../../../Card/StackPlayCard.js"
+import Element from "../../Element.js";
 import PoisonTick from "../../Status/List/PoisonTick.js";
 import Status from "../../Status/Status.js";
 import AbstractCapacity from "./AbstractCapacity.js";
 
 class Poison extends AbstractCapacity {
     constructor(container: Container) {
-        super(container, 'Poison');
+        super(
+            container,
+            'Poison',
+            Element.PLANT()
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {

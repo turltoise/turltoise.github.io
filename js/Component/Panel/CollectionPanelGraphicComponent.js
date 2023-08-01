@@ -3,13 +3,14 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _CollectionPanelGraphicComponent_instances, _CollectionPanelGraphicComponent_setToAddBtn, _CollectionPanelGraphicComponent_setToRemoveBtn;
+var _CollectionPanelGraphicComponent_instances, _CollectionPanelGraphicComponent_showPreview, _CollectionPanelGraphicComponent_setToAddBtn, _CollectionPanelGraphicComponent_setToRemoveBtn;
 import Collection from "../../Game/CardManager/Collection.js";
 import Deck from "../../Game/CardManager/Deck.js";
 import Chat from "../../Game/Chat/Chat.js";
 import ChatMessage from "../../Game/Chat/ChatMessage.js";
 import CollectionCardGraphicComponent from "../Card/CollectionCardGraphicComponent.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
+import CardPreviewGraphicComponent from "./Collection/CardPreviewGraphicComponent.js";
 class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     constructor(container) {
         super(container);
@@ -20,34 +21,42 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this._instanceContainer.style.padding = "10px";
         this._instanceContainer.style.textAlign = "center";
         this._instanceContainer.style.userSelect = "none";
-        const templateContainerCard = this.getCurrentDocument().createElement('div');
-        templateContainerCard.setAttribute('class', this.getClassName('card-container'));
-        templateContainerCard.style.backgroundColor = "#22AA33";
-        templateContainerCard.style.borderRadius = "5px";
-        templateContainerCard.style.display = "inline-block";
-        templateContainerCard.style.margin = "5px";
-        templateContainerCard.style.padding = "5px";
-        this._templateContainerCard = templateContainerCard;
-        const templateBtnCollectionAction = this.getCurrentDocument().createElement('div');
-        templateBtnCollectionAction.setAttribute('class', this.getClassName('btn-action'));
-        templateBtnCollectionAction.style.textAlign = "center";
-        templateBtnCollectionAction.style.marginTop = "5px";
-        templateBtnCollectionAction.style.cursor = "pointer";
-        this._templateBtnCollectionAction = templateBtnCollectionAction;
-        this.render();
-    }
-    render() {
+        this._templateContainerCard = this.getCurrentDocument().createElement('div');
+        this._templateContainerCard.setAttribute('class', this.getClassName('card-container'));
+        this._templateContainerCard.style.backgroundColor = "#22AA33";
+        this._templateContainerCard.style.borderRadius = "5px";
+        this._templateContainerCard.style.display = "inline-block";
+        this._templateContainerCard.style.margin = "5px";
+        this._templateContainerCard.style.padding = "5px";
+        this._templateBtnCollectionAction = this.getCurrentDocument().createElement('div');
+        this._templateBtnCollectionAction.setAttribute('class', this.getClassName('btn-action'));
+        this._templateBtnCollectionAction.style.textAlign = "center";
+        this._templateBtnCollectionAction.style.marginTop = "5px";
+        this._templateBtnCollectionAction.style.cursor = "pointer";
         const collection = this._container.get(Collection.name);
         var cardList = collection.getCardList();
+        this._instancePreviewCard = this.getCurrentDocument().createElement('div');
+        this._instancePreviewCard.style.display = "inline-block";
+        this._instancePreviewCard.style.width = "50%";
+        this._instancePreviewCard.style.verticalAlign = "top";
+        this._instanceContainer.appendChild(this._instancePreviewCard);
+        this._cardPreview = new CardPreviewGraphicComponent(this._container, collection.getFirst());
+        this._instancePreviewCard.appendChild(this._cardPreview);
+        const instanceListingCard = this.getCurrentDocument().createElement('div');
+        this._instanceContainer.appendChild(instanceListingCard);
+        instanceListingCard.style.display = "inline-block";
+        instanceListingCard.style.width = "50%";
+        instanceListingCard.style.verticalAlign = "top";
         cardList.forEach((card, uuid) => {
             const instanceContainerCard = this._templateContainerCard.cloneNode(true);
             const graphicCard = new CollectionCardGraphicComponent(this._container, card);
+            graphicCard.onclick = () => __classPrivateFieldGet(this, _CollectionPanelGraphicComponent_instances, "m", _CollectionPanelGraphicComponent_showPreview).call(this, this._instancePreviewCard, card);
             const instanceBtnCollectionAction = this._templateBtnCollectionAction.cloneNode(true);
             const divId = "btn-action-collection-" + uuid;
             instanceBtnCollectionAction.setAttribute("id", divId);
             instanceContainerCard.appendChild(graphicCard);
             instanceContainerCard.appendChild(instanceBtnCollectionAction);
-            this._instanceContainer.appendChild(instanceContainerCard);
+            instanceListingCard.appendChild(instanceContainerCard);
             const deck = this._container.get(Deck.name);
             if (deck.getCardList().has(uuid)) {
                 __classPrivateFieldGet(this, _CollectionPanelGraphicComponent_instances, "m", _CollectionPanelGraphicComponent_setToRemoveBtn).call(this, instanceBtnCollectionAction, card, divId);
@@ -77,7 +86,11 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         chat.addChatMessage("Card " + card._title + " remove from deck.", ChatMessage.REMOVE());
     }
 }
-_CollectionPanelGraphicComponent_instances = new WeakSet(), _CollectionPanelGraphicComponent_setToAddBtn = function _CollectionPanelGraphicComponent_setToAddBtn(e, card, divId) {
+_CollectionPanelGraphicComponent_instances = new WeakSet(), _CollectionPanelGraphicComponent_showPreview = function _CollectionPanelGraphicComponent_showPreview(container, card) {
+    container.innerHTML = "";
+    let preview = new CardPreviewGraphicComponent(this._container, card);
+    container.appendChild(preview);
+}, _CollectionPanelGraphicComponent_setToAddBtn = function _CollectionPanelGraphicComponent_setToAddBtn(e, card, divId) {
     e.parentElement.style.backgroundColor = "#CCDDCC";
     e.innerHTML = "✔️";
     e.title = "Add to deck";

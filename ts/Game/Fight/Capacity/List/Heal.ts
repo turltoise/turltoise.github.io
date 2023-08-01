@@ -4,7 +4,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class Heal extends AbstractCapacity {
     constructor(container: Container) {
-        super(container, 'Heal');
+        super(
+            container,
+            'Heal',
+            null
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {

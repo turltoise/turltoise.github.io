@@ -34,9 +34,9 @@ const cardA = new World1_Hero1(mainContainer, 1);
 const myCollection = mainContainer.get(Collection.name);
 myCollection.addCard(cardA);
 myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
+myCollection.addCard(new World1_Hero1(mainContainer, 2));
+myCollection.addCard(new World1_Hero1(mainContainer, 3));
+myCollection.addCard(new World1_Hero1(mainContainer, 4));
 const myDeck = mainContainer.get(Deck.name);
 myDeck.addCard(cardA);
 /* END -------------  FOR TESTS */

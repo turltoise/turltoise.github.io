@@ -4,7 +4,11 @@ import AbstractCapacity from "./AbstractCapacity.js";
 
 class Shield extends AbstractCapacity {
     constructor(container: Container) {
-      super(container, 'Shield');
+        super(
+            container,
+            'Shield',
+            null
+        );
     }
 
     trigger(thrower: StackPlayCard, target: StackPlayCard) {
