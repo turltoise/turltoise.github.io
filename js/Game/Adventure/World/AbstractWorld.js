@@ -6,6 +6,7 @@ class AbstractWorld {
         this._container = container;
         this._baseCostBooster = baseCostBooster;
         this._boosterLevel = 0;
+        this._itemClassList = new Map();
     }
     getWorldLeveldByNumber(lvlNumber) {
         let newWorldLevel = new WorldLevel();
@@ -14,6 +15,12 @@ class AbstractWorld {
     }
     getEnemy1(numberLevel) {
         return null;
+    }
+    generateItem() {
+        let keys = Array.from(this._itemClassList.keys());
+        let className = this._itemClassList.get(keys[Math.floor(Math.random() * keys.length)]);
+        let item = eval(`new ${className}()`);
+        return item;
     }
     getName() { return this._title; }
     getTitle() { return this._title; }

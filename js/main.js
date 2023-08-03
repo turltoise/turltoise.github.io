@@ -13,8 +13,10 @@ import OpeningPanelGraphicComponent from "./Component/Panel/OpeningPanelGraphicC
 import ShopPanelGraphicComponent from "./Component/Panel/ShopPanelGraphicComponent.js";
 import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
 import Container from "./Container.js";
+import World1_Item1 from "./Game/Adventure/World/World1/World1_Item1.js";
 import WorldList from "./Game/Adventure/WorldList.js";
 import Booster from "./Game/Booster/Booster.js";
+import Chest from "./Game/CardManager/Chest.js";
 import Collection from "./Game/CardManager/Collection.js";
 import Deck from "./Game/CardManager/Deck.js";
 import Chat from "./Game/Chat/Chat.js";
@@ -29,14 +31,19 @@ mainContainer.add(new Chat());
 mainContainer.add(new AllWorldProgress());
 mainContainer.add(new Collection());
 mainContainer.add(new Deck());
+mainContainer.add(new Chest());
 /* BEGIN -------------  FOR TESTS */
 const cardA = new World1_Hero1(mainContainer, 1);
 const myCollection = mainContainer.get(Collection.name);
 myCollection.addCard(cardA);
-myCollection.addCard(new World1_Hero1(mainContainer, 1));
 myCollection.addCard(new World1_Hero1(mainContainer, 2));
 myCollection.addCard(new World1_Hero1(mainContainer, 3));
 myCollection.addCard(new World1_Hero1(mainContainer, 4));
+myCollection.addCard(new World1_Hero1(mainContainer, 5));
+myCollection.addCard(new World1_Hero1(mainContainer, 100));
+myCollection.addCard(new World1_Hero1(mainContainer, 100));
+const myChest = mainContainer.get(Chest.name);
+myChest.addCard(new World1_Item1(mainContainer, 1));
 const myDeck = mainContainer.get(Deck.name);
 myDeck.addCard(cardA);
 /* END -------------  FOR TESTS */

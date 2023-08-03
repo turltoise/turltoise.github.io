@@ -27,7 +27,7 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         this._instanceCardContainer.style.width = "100px";
         this._instanceCardContainer.style.height = "150px";
         //this._instanceCardContainer.style.backgroundColor = "#EEAAEE"; // HERE WE WILL CHANGE WITH BACKGROUND IMG
-        this._instanceCardContainer.style.border = "3px solid #AA00AA"; // HERE WE DEFINE BORDER COLOR
+        this._instanceCardContainer.style.border = "3px solid #333"; // HERE WE DEFINE BORDER COLOR
         this._instanceCardContainer.style.position = "relative";
         this._instanceCardContainer.style.textAlign = "left";
         this._instanceContainer.appendChild(this._instanceCardContainer);
