@@ -3,7 +3,7 @@ import AbstractGraphicComponent from "../../AbstractGraphicComponent.js";
 import CollectionCardGraphicComponent from "../../Card/CollectionCardGraphicComponent.js";
 import PreviewCaracGraphicComponent from "./CardPreview/PreviewCaracGraphicComponent.js";
 import CardSlotGraphicComponent from "./CardSlotGraphicComponent.js";
-class CardPreviewGraphicComponent extends AbstractGraphicComponent {
+class HeroPreviewGraphicComponent extends AbstractGraphicComponent {
     constructor(container, card, templateContainerCard) {
         super(container);
         this._card = card;
@@ -128,6 +128,6 @@ class CardPreviewGraphicComponent extends AbstractGraphicComponent {
         }
     }
 }
-customElements.define('card-preview', CardPreviewGraphicComponent);
-export default CardPreviewGraphicComponent;
-//# sourceMappingURL=CardPreviewGraphicComponent.js.map
+customElements.define('hero-preview', HeroPreviewGraphicComponent);
+export default HeroPreviewGraphicComponent;
+//# sourceMappingURL=HeroPreviewGraphicComponent.js.map

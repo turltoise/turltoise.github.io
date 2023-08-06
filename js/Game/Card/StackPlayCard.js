@@ -14,7 +14,7 @@ import CardAnimation from './CardAnimation.js';
 import Hero from './Hero.js';
 class StackPlayCard extends AbstractPrintableCard {
     constructor(container, playCardMap, cardGraphicSetting) {
-        super(container, playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID(), cardGraphicSetting);
+        super(container, playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(), playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(), playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID(), cardGraphicSetting, playCardMap.get(StackPlayCard.MAIN_KEY()).getLevel());
         _StackPlayCard_instances.add(this);
         this._sMap = playCardMap;
         this._statusList = new Map();

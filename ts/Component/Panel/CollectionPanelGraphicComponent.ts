@@ -1,20 +1,30 @@
 import Container from "../../Container.js";
-import CollectionCard from "../../Game/Card/CollectionCard.js";
+import Hero from "../../Game/Card/Hero.js";
+import Item from "../../Game/Card/Item.js";
 import Chest from "../../Game/CardManager/Chest.js";
 import Collection from "../../Game/CardManager/Collection.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
-import CardListGraphicComponent from "./Collection/CardListGraphicComponent.js";
-import CardPreviewGraphicComponent from "./Collection/CardPreviewGraphicComponent.js";
+import HeroPreviewGraphicComponent from "./Collection/HeroPreviewGraphicComponent.js";
+import HeroListGraphicComponent from "./Collection/HeroListGraphicComponent.js";
+import ItemListGraphicComponent from "./Collection/ItemListGraphicComponent.js";
+import ItemPreviewGraphicComponent from "./Collection/ItemPreviewGraphicComponent.js";
 
 class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     private _templateContainerCard: HTMLElement;
-    private _cardPreview: HTMLElement;
-    private _instancePreviewCard: HTMLElement;
+    private _heroPreview: HTMLElement;
+    private _itemPreview: HTMLElement;
+    //private _instancePreviewCard: HTMLElement;
+    private _instancePreviewCardHero: HTMLElement;
+    private _instancePreviewCardItem: HTMLElement;
+    private _currentHero: Hero;
+    private _currentItem: Item;
 
     constructor(container : Container) {
         super(container);
         const collection: Collection = this._container.get(Collection.name);
         const chest: Chest = this._container.get(Chest.name);
+        this._currentHero = <Hero> collection.getFirst();
+        this._currentItem = <Item> chest.getFirst();
 
         this._instanceContainer.style.backgroundColor = "#1B5E20";//"#0C5D20";//"#145f24";
         this._instanceContainer.style.backgroundImage = "url(./img/arches.png)";
@@ -31,13 +41,22 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this._templateContainerCard.style.margin = "5px";
         this._templateContainerCard.style.padding = "5px";
 
-        this._instancePreviewCard = this.getCurrentDocument().createElement('div');
-        this._instancePreviewCard.style.display = "inline-block";
-        this._instancePreviewCard.style.width = "40%";
-        this._instancePreviewCard.style.verticalAlign = "top";
-        this._instanceContainer.appendChild(this._instancePreviewCard);
-        this._cardPreview = new CardPreviewGraphicComponent(this._container, collection.getFirst());
-        this._instancePreviewCard.appendChild(this._cardPreview);
+        let instancePreviewCard = this.getCurrentDocument().createElement('div');
+        instancePreviewCard.style.display = "inline-block";
+        instancePreviewCard.style.width = "40%";
+        instancePreviewCard.style.verticalAlign = "top";
+        this._instanceContainer.appendChild(instancePreviewCard);
+        this._heroPreview = new HeroPreviewGraphicComponent(this._container, this._currentHero, this._templateContainerCard);
+        this._itemPreview = new ItemPreviewGraphicComponent(this._container, this._currentItem, this._templateContainerCard);
+
+        this._instancePreviewCardHero = this.getCurrentDocument().createElement('div');
+        this._instancePreviewCardHero.style.marginBottom = "20px";
+        this._instancePreviewCardItem = this.getCurrentDocument().createElement('div');
+        this._instancePreviewCardHero.appendChild(this._heroPreview);
+        this._instancePreviewCardItem.appendChild(this._itemPreview);
+
+        instancePreviewCard.appendChild(this._instancePreviewCardHero);
+        instancePreviewCard.appendChild(this._instancePreviewCardItem);
 
         const instanceColumn = this.getCurrentDocument().createElement('div');
         this._instanceContainer.appendChild(instanceColumn);
@@ -50,31 +69,43 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         instanceContainerCollectionAndChest.style.width = "59%";
         instanceContainerCollectionAndChest.style.verticalAlign = "top";
 
-        let heroList = new CardListGraphicComponent(
+        let heroList = new HeroListGraphicComponent(
             container,
             "Your Heroes",
             collection.getCardList(),
             this._templateContainerCard,
-            this._instancePreviewCard,
+            this._instancePreviewCardHero,
             this
         );
         instanceContainerCollectionAndChest.appendChild(heroList);
-        let itemList = new CardListGraphicComponent(
+        let itemList = new ItemListGraphicComponent(
             container,
             "Your Items",
             chest.getCardList(),
             this._templateContainerCard,
-            this._instancePreviewCard,
+            this._instancePreviewCardItem,
             this
         );
         instanceContainerCollectionAndChest.appendChild(itemList);
     }
 
-    showPreview(container:HTMLElement, card: CollectionCard) {
+    showHeroPreview(container:HTMLElement, hero: Hero) {
         container.innerHTML = "";
-        let preview = new CardPreviewGraphicComponent(this._container, card);
+        this._currentHero = hero;
+        let preview = new HeroPreviewGraphicComponent(this._container, hero, this._templateContainerCard);
         container.appendChild(preview);
     }
+
+    showItemPreview(container:HTMLElement, item: Item) {
+        container.innerHTML = "";
+        let preview = new ItemPreviewGraphicComponent(this._container, item, this._templateContainerCard);
+    container.appendChild(preview);
+    }
+
+    getCurrentHero() {
+        return this._currentHero;
+    }
+
 }
 customElements.define('collection-panel', CollectionPanelGraphicComponent);
 export default CollectionPanelGraphicComponent;

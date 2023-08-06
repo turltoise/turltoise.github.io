@@ -11,16 +11,15 @@ import AbstractPrintableCard from "./AbstractPrintableCard.js";
  * Use in collection and shop : to display raw carac of leveled card
  */
 class CollectionCard extends AbstractPrintableCard {
-    constructor(container, rawCarac, level, title, img, capacities = new Map(), uuid = UUID.generateUUID(), cardGraphicSetting) {
-        super(container, title, img, uuid, cardGraphicSetting);
+    constructor(container, rawCarac, level, title, img, capacities = new Map(), uuid, cardGraphicSetting) {
+        super(container, title, img, uuid, cardGraphicSetting, level);
         _CollectionCard_instances.add(this);
         this._rawCarac = rawCarac;
-        this._levelNumber = level;
         this._capacities = capacities;
     }
     getPlayCard() { return new PlayCard(this); }
     getStackPlayCard() { return null; }
-    getLevel() { return this._levelNumber; }
+    getLevel() { return this._level; }
     getCurrentLife() { return this.getLife(); }
     getMaxLife() { return this.getLife(); }
     getGold() { return null; }
@@ -51,12 +50,6 @@ class CollectionCard extends AbstractPrintableCard {
     getEscape() { return __classPrivateFieldGet(this, _CollectionCard_instances, "m", _CollectionCard_computeSecondaryStat).call(this, this._rawCarac._rawEscape); }
     getLife() { return __classPrivateFieldGet(this, _CollectionCard_instances, "m", _CollectionCard_computeLifeStat).call(this, this._rawCarac._rawLife); }
 }
-_CollectionCard_instances = new WeakSet(), _CollectionCard_computeMainStat = function _CollectionCard_computeMainStat(raw) {
-    return raw + Math.floor(this._levelNumber * raw / 2);
-}, _CollectionCard_computeSecondaryStat = function _CollectionCard_computeSecondaryStat(raw) {
-    return raw + Math.floor(this._levelNumber * raw / 6);
-}, _CollectionCard_computeLifeStat = function _CollectionCard_computeLifeStat(raw) {
-    return raw + Math.floor(this._levelNumber * raw * 4 / 10);
-};
+_CollectionCard_instances = new WeakSet(), _CollectionCard_computeMainStat = function _CollectionCard_computeMainStat(raw) { return raw + Math.floor(this._level * raw / 2); }, _CollectionCard_computeSecondaryStat = function _CollectionCard_computeSecondaryStat(raw) { return raw + Math.floor(this._level * raw / 6); }, _CollectionCard_computeLifeStat = function _CollectionCard_computeLifeStat(raw) { return raw + Math.floor(this._level * raw * 4 / 10); };
 export default CollectionCard;
 //# sourceMappingURL=CollectionCard.js.map

@@ -28,7 +28,8 @@ class StackPlayCard extends AbstractPrintableCard {
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getTitle(),
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getImg(),
 			playCardMap.get(StackPlayCard.MAIN_KEY()).getUUID(),
-			cardGraphicSetting
+			cardGraphicSetting,
+			playCardMap.get(StackPlayCard.MAIN_KEY()).getLevel()
 		);
 		this._sMap = playCardMap;
 		this._statusList = new Map<string, Status>();

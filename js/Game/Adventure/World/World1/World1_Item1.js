@@ -10,23 +10,9 @@ class World1_Item1 extends Item {
         let carac = new RawCarac();
         carac._rawStrength = 3;
         carac._rawDexterity = 3;
-        carac._rawIntelligence = 3;
-        carac._rawLuck = 3;
         carac._rawPhysicalDamage = 3;
         carac._rawPhysicalCriticalRate = 3;
         carac._rawPhysicalCriticalNumber = 3;
-        carac._rawMagicDamage = 3;
-        carac._rawMagicCriticalRate = 3;
-        carac._rawMagicCriticalNumber = 3;
-        carac._rawFireResistance = 0;
-        carac._rawWaterResistance = 0;
-        carac._rawPlantResistance = 0;
-        carac._rawNecromancyResistance = 0;
-        carac._rawBlessingResistance = 0;
-        carac._rawArmor = 0;
-        carac._rawAccuracy = 2;
-        carac._rawEscape = 2;
-        carac._rawLife = 30;
         let capacities = new Map([
             [UUID.generateUUID(), new PhysicalAttack(container)]
         ]);
@@ -35,9 +21,11 @@ class World1_Item1 extends Item {
         cardGraphicSetting._maxSpriteStand = -1;
         cardGraphicSetting._maxSpriteHit1 = -1;
         cardGraphicSetting._maxSpriteAttack1 = -1;
-        cardGraphicSetting._xSprite = "0px";
-        cardGraphicSetting._ySprite = "0px";
-        super(container, carac, levelNumber, name, backgroundImage, capacities, cardGraphicSetting);
+        cardGraphicSetting._xSprite = "-36px";
+        cardGraphicSetting._ySprite = "-40px";
+        cardGraphicSetting._maxWidth = "70px";
+        let uuid = UUID.generateUUID();
+        super(container, carac, levelNumber, name, backgroundImage, capacities, cardGraphicSetting, uuid);
     }
 }
 export default World1_Item1;

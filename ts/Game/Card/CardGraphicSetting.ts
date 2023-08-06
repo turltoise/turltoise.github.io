@@ -7,6 +7,9 @@ class CardGraphicSetting {
 
         public _xSprite: string  | null = null,
         public _ySprite: string  | null = null,
+
+        public _maxWidth: string  | null = null,
+        public _maxHeight: string  | null = null,
     )
     {}
 }

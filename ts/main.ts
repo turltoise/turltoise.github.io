@@ -51,6 +51,7 @@ myCollection.addCard(new World1_Hero1(mainContainer, 100));
 
 const myChest: Chest = mainContainer.get(Chest.name);
 myChest.addCard(new World1_Item1(mainContainer, 1));
+myChest.addCard(new World1_Item1(mainContainer, 10));
 
 const myDeck: Deck = mainContainer.get(Deck.name);
 myDeck.addCard(cardA);

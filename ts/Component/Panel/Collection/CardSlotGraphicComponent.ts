@@ -9,7 +9,7 @@ class CardSlotGraphicComponent extends AbstractGraphicComponent {
         this._instanceContainer.style.verticalAlign = "top";
         this._instanceContainer.style.margin = "5px";
         this._instanceContainer.style.width = "136px";
-        this._instanceContainer.style.height = "212px";
+        this._instanceContainer.style.height = "234px";
     }
 
     appendChild<T extends Node>(node: T): T {

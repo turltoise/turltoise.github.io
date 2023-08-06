@@ -9,6 +9,12 @@ class PreviewCaracGraphicComponent extends AbstractGraphicComponent {
         let nameWithoutSpace = name.replace(/\s+/g, '');
         let getter = 'get' + nameWithoutSpace;
 
+        if (card.isItem() && card[getter]() == 0) {
+            return;
+        }
+        
+        let plus = (card.isItem()) ? '+ ' : '';
+
         this._instanceContainer.style.width = "100%";
         this._instanceContainer.style.display = "inline-block";
         this._instanceContainer.style.display = "5px";
@@ -29,7 +35,7 @@ class PreviewCaracGraphicComponent extends AbstractGraphicComponent {
         instanceValue.style.textAlign = "right";
         instanceValue.style.color="rgb(200, 230, 201)";
         instanceValue.style.fontWeight = "700";
-        instanceValue.innerHTML = card[getter]();
+        instanceValue.innerHTML = plus + card[getter]();
     }
 }
 customElements.define('preview-carac', PreviewCaracGraphicComponent);

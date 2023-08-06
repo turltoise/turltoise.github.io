@@ -31,7 +31,7 @@ class Enemy extends CollectionCard {
 	}
 
 	getGold(): number {
-		return Math.floor(this._gold * 1.05 ** this._levelNumber);
+		return Math.floor(this._gold * 1.05 ** this._level);
 	}
 }
 export default Enemy;

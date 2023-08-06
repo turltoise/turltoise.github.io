@@ -12,7 +12,6 @@ import CardGraphicSetting from "./CardGraphicSetting.js";
  */
 class CollectionCard extends AbstractPrintableCard {
 	private _rawCarac: RawCarac;
-	protected _levelNumber: number;
 	private _capacities: Map<string, AbstractCapacity>
 
 	constructor(
@@ -22,17 +21,16 @@ class CollectionCard extends AbstractPrintableCard {
 		title: string,
 		img: string,
 		capacities: Map<string, AbstractCapacity> = new Map(),
-		uuid: string = UUID.generateUUID(),
+		uuid: string,
 		cardGraphicSetting: CardGraphicSetting
 	) {
-		super(container, title, img, uuid, cardGraphicSetting);
+		super(container, title, img, uuid, cardGraphicSetting, level);
 		this._rawCarac = rawCarac;
-		this._levelNumber = level;
 		this._capacities = capacities;
 	}
 	getPlayCard() : PlayCard {return new PlayCard(this);}
 	getStackPlayCard(): StackPlayCard {return null;}
-	getLevel(): number {return this._levelNumber;}
+	getLevel(): number {return this._level;}
 	getCurrentLife(): number {return this.getLife();}
 	getMaxLife(): number {return this.getLife();}
 
@@ -47,7 +45,7 @@ class CollectionCard extends AbstractPrintableCard {
 	}
 
 	getStrength() {		return this.#computeMainStat(this._rawCarac._rawStrength);}
-	getDexterity() {		return this.#computeMainStat(this._rawCarac._rawDexterity);}
+	getDexterity() {	return this.#computeMainStat(this._rawCarac._rawDexterity);}
 	getIntelligence() {	return this.#computeMainStat(this._rawCarac._rawIntelligence);}
 	getLuck() {			return this.#computeMainStat(this._rawCarac._rawLuck);}
 
@@ -56,7 +54,7 @@ class CollectionCard extends AbstractPrintableCard {
 	getPhysicalCriticalNumber() {return this.#computeSecondaryStat(this._rawCarac._rawPhysicalCriticalNumber);}
 
 	getMagicDamage() {			return this.#computeSecondaryStat(this._rawCarac._rawMagicDamage);}
-	getMagicCriticalRate() {		return this.#computeSecondaryStat(this._rawCarac._rawMagicCriticalRate);}
+	getMagicCriticalRate() {	return this.#computeSecondaryStat(this._rawCarac._rawMagicCriticalRate);}
 	getMagicCriticalNumber() {	return this.#computeSecondaryStat(this._rawCarac._rawMagicCriticalNumber);}
 
 	getFireResistance() {		return this.#computeSecondaryStat(this._rawCarac._rawFireResistance);}
@@ -64,24 +62,16 @@ class CollectionCard extends AbstractPrintableCard {
 	getPlantResistance() {		return this.#computeSecondaryStat(this._rawCarac._rawPlantResistance);}
 	getNecromancyResistance() {	return this.#computeSecondaryStat(this._rawCarac._rawNecromancyResistance);}
 	getBlessingResistance() {	return this.#computeSecondaryStat(this._rawCarac._rawBlessingResistance);}
-	getArmor() {					return this.#computeSecondaryStat(this._rawCarac._rawArmor);}
+	getArmor() {				return this.#computeSecondaryStat(this._rawCarac._rawArmor);}
 
 	getAccuracy() {	return this.#computeSecondaryStat(this._rawCarac._rawAccuracy);}
 	getEscape() {	return this.#computeSecondaryStat(this._rawCarac._rawEscape);}
 
 	getLife() {	return this.#computeLifeStat(this._rawCarac._rawLife);}
 
-	#computeMainStat(raw) {
-		return raw + Math.floor(this._levelNumber * raw / 2);
-	}
-
-	#computeSecondaryStat(raw) {
-		return raw + Math.floor(this._levelNumber * raw / 6);
-	}
-
-	#computeLifeStat(raw) {
-		return raw + Math.floor(this._levelNumber * raw * 4 / 10);
-	}
+	#computeMainStat(raw) {return raw + Math.floor(this._level * raw / 2);}
+	#computeSecondaryStat(raw) {return raw + Math.floor(this._level * raw / 6);}
+	#computeLifeStat(raw) {return raw + Math.floor(this._level * raw * 4 / 10);}
 }
 
 export default CollectionCard;

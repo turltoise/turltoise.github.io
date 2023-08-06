@@ -12,7 +12,7 @@ class Enemy extends CollectionCard {
         return new StackPlayCard(this._container, playCardList, this._cardGraphicSetting);
     }
     getGold() {
-        return Math.floor(this._gold * 1.05 ** this._levelNumber);
+        return Math.floor(this._gold * 1.05 ** this._level);
     }
 }
 export default Enemy;

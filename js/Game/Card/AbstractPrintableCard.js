@@ -1,6 +1,6 @@
 import UUID from "../Tools/UUID.js";
 class AbstractPrintableCard {
-    constructor(container, title, img, uuid, cardGraphicSetting) {
+    constructor(container, title, img, uuid, cardGraphicSetting, level) {
         this._container = container;
         this._title = title;
         this._img = img;
@@ -8,13 +8,16 @@ class AbstractPrintableCard {
         this._fightAnimation = new Map();
         this._combatSpriteText = null;
         this._cardGraphicSetting = cardGraphicSetting;
+        this._level = level;
     }
     getImg() { return this._img; }
+    getLevel() { return this._level; }
     getTitle() { return this._title; }
     getUUID() { return this._uuid; }
     getCurrentLife() { return 0; }
     getMaxLife() { return 0; }
     isYours() { return null; }
+    isItem() { return null; }
     setCombatSpriteText(text) { this._combatSpriteText = text; }
     getCombatSpriteText() { return this._combatSpriteText; }
     resetCombatSpriteIndex() { this._combatSpriteIndex = -1; }
