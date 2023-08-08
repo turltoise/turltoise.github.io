@@ -5,6 +5,7 @@ import Booster from "../../Game/Booster/Booster.js";
 import Chat from "../../Game/Chat/Chat.js";
 import ChatMessage from "../../Game/Chat/ChatMessage.js";
 import Resource from "../../Game/Resource.js";
+import F from "../../Game/Tools/F.js";
 import Number from "../../Game/Tools/Number.js";
 import BoosterCard from "../Card/BoosterCard.js";
 import AbstractPanelGraphicComponent from "./AbstractPanelGraphicComponent.js";
@@ -66,7 +67,7 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this._instanceContainer.appendChild(instanceTitleShop);
 
         let instanceContainerListExtension = <HTMLElement> this.getCurrentDocument().createElement('div');
-        instanceContainerListExtension.style.backgroundColor = "red";
+        instanceContainerListExtension.style.backgroundColor = "#e05048";
         instanceContainerListExtension.style.marginLeft = "70px";
         instanceContainerListExtension.style.marginRight = "70px";
         instanceContainerListExtension.style.marginBottom = "70px";
@@ -137,12 +138,18 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             resource.removeGold(world.getPriceNextBooster());
             booster.buyBooster(world); 
             chat.addChatMessage(
-                "You bought booster " + world.getName() + ".",
+                F.sprintf(
+                    "You bought booster <font style='font-weight:bold;'>%s</font>",
+                    world.getName()
+                ),
                 ChatMessage.BOOSTER()
             );
         } else {
             chat.addChatMessage(
-                "You don't have enough money to buy booster " + world.getName() + ".",
+                F.sprintf(
+                    "You don't have enough money to buy booster <font style='font-weight:bold;'>%s</font>",
+                    world.getName()
+                ),
                 ChatMessage.BOOSTER()
             );
         }

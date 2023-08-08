@@ -28,6 +28,10 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
         templateContainerBooster.style.margin = "5px";
         let instanceContainerListBooster = this.getCurrentDocument().createElement('div');
         instanceContainerListBooster.style.textAlign = "center";
+        instanceContainerListBooster.style.backgroundColor = "#828acd";
+        instanceContainerListBooster.style.margin = "70px 175px";
+        instanceContainerListBooster.style.padding = "20px";
+        instanceContainerListBooster.style.height = "160px";
         let templateBtnOpen = this.getCurrentDocument().createElement('div');
         templateBtnOpen.style.display = "block";
         templateBtnOpen.style.background = "linear-gradient(to left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 5%,rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.5) 100%)";
@@ -40,7 +44,7 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
         templateBtnOpen.style.marginTop = "-50px";
         templateBtnOpen.style.fontWeight = "700";
         let instanceTitle = this.getCurrentDocument().createElement('div');
-        instanceTitle.innerHTML = "Opening booster";
+        instanceTitle.innerHTML = "Open booster";
         instanceTitle.style.fontSize = "30px";
         instanceTitle.style.fontWeight = "900";
         instanceTitle.style.marginLeft = "40px";
@@ -60,9 +64,13 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             instanceContainerListBooster.appendChild(instanceContainerBooster);
         }));
         this._instanceContainerOpening = this.getCurrentDocument().createElement('div');
-        this._instanceContainerOpening.style.margin = "5px";
-        this._instanceContainerOpening.style.height = "300px";
+        //this._instanceContainerOpening.style.margin = "5px";
+        //this._instanceContainerOpening.style.height = "300px";
         this._instanceContainerOpening.style.textAlign = "center";
+        this._instanceContainerOpening.style.backgroundColor = "#828acd";
+        this._instanceContainerOpening.style.margin = "70px 175px";
+        this._instanceContainerOpening.style.padding = "20px";
+        this._instanceContainerOpening.style.height = "230px";
         this._instanceContainer.appendChild(this._instanceContainerOpening);
     }
     internalLoop() {
@@ -77,7 +85,6 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             let boosterCard = new BoosterCard(this._container, world);
             let subContainer = this.getCurrentDocument().createElement('div');
             subContainer.style.display = "inline-block";
-            subContainer.style.marginTop = "40px";
             let instanceTitleOpenCurrentBooster = this.getCurrentDocument().createElement('div');
             instanceTitleOpenCurrentBooster.innerHTML = "Open booster (#TODO open 1 - 10 - 100)";
             instanceTitleOpenCurrentBooster.style.fontSize = "20px";
@@ -89,7 +96,7 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             this._instanceContainerOpening.appendChild(subContainer);
         }
         else {
-            chat.addChatMessage("No booster " + world.getName() + " owned.", ChatMessage.BOOSTER());
+            chat.addChatMessage(F.sprintf("No booster <font style='font-weight:bold;'>%s</font> owned.", world.getName()), ChatMessage.BOOSTER());
         }
     }
     openingBooster(world) {
@@ -103,7 +110,6 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             this._instanceContainerOpening.innerHTML = "";
             let subContainer = this.getCurrentDocument().createElement('div');
             subContainer.style.display = "inline-block";
-            subContainer.style.marginTop = "40px";
             let instanceTitleOpenCurrentBooster = this.getCurrentDocument().createElement('div');
             instanceTitleOpenCurrentBooster.innerHTML = "Cards obtained";
             instanceTitleOpenCurrentBooster.style.fontSize = "20px";
@@ -122,22 +128,22 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             });
             this._instanceContainerOpening.appendChild(subContainer);
             booster.decrementNumberBoosterOwnedForWorld(world);
-            chat.addChatMessage("Opening booster", ChatMessage.BOOSTER());
+            chat.addChatMessage(F.sprintf("Opening booster <font style='font-weight:bold;'>%s</font>", world.getName()), ChatMessage.BOOSTER());
             cardList.forEach((collectionCard) => {
                 if (collectionCard instanceof Item) {
                     let item = collectionCard;
                     chest.addCard(item);
-                    chat.addChatMessage(F.sprintf("Obtain new Item <font style='color:%s;'>%s</font>", itemRarity.getColor(item.getRarity()), item.getTitle()), ChatMessage.BOOSTER());
+                    chat.addChatMessage(F.sprintf("Obtain new Item <font style='color:%s;font-weight:bold;'>%s</font>", itemRarity.getColor(item.getRarity()), item.getTitle()), ChatMessage.BOOSTER());
                 }
                 if (collectionCard instanceof Hero) {
                     let hero = deck.getCardWithName(collectionCard.getTitle());
                     if (hero) {
                         hero.incrementXP();
-                        chat.addChatMessage("Obtain XP  for Hero " + hero.getTitle(), ChatMessage.BOOSTER());
+                        chat.addChatMessage(F.sprintf("Obtain XP  for Hero <font style='font-weight:bold;'>%s</font>", hero.getTitle()), ChatMessage.BOOSTER());
                     }
                     else {
                         deck.addCard(hero);
-                        chat.addChatMessage("Obtain new Hero " + hero.getTitle(), ChatMessage.BOOSTER());
+                        chat.addChatMessage(F.sprintf("Obtain new Hero <font style='font-weight:bold;'>%s</font>", hero.getTitle()), ChatMessage.BOOSTER());
                     }
                 }
             });
@@ -145,7 +151,7 @@ class OpeningPanelGraphicComponent extends AbstractPanelGraphicComponent {
             collectionPanelGraphicComponent.refreshCardLists();
         }
         else {
-            chat.addChatMessage("No booster " + world.getName() + " owned.", ChatMessage.BOOSTER());
+            chat.addChatMessage(F.sprintf("No booster <font style='font-weight:bold;'>%s</font> owned", world.getName()), ChatMessage.BOOSTER());
         }
     }
     updateNumberBoosterOwned() {

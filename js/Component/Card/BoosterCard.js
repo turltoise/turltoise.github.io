@@ -4,6 +4,8 @@ class BoosterCard extends AbstractGraphicComponent {
         super(container);
         this._world = world;
         const templateBackground = this.getCurrentDocument().createElement('div');
+        templateBackground.style.userSelect = "none";
+        templateBackground.style.caretColor = "transparent";
         templateBackground.style.backgroundColor = "pink";
         templateBackground.style.backgroundImage = "url(./img/world/" + this._world.getName() + ".jpg)";
         templateBackground.style.backgroundPosition = "-100%, -100%";
