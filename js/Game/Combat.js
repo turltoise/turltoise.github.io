@@ -77,7 +77,7 @@ class Combat {
         this._combatState = Combat.STATE_STARTING();
         const text = "Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + " starts in " + this._combatCountDownLevel + ".";
         this._combatStatusText = text;
-        chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+        chat.addChatMessage(text, ChatMessage.COMBAT());
         this._combatCountDownLevel -= 1;
         const adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
         adventureSceneGraphicComponent.cleanHeroCards();
@@ -90,7 +90,7 @@ class Combat {
         let chat = this._container.get(Chat.name);
         this._currentLevel = null;
         this._combatState = null;
-        chat.addChatMessage("Level forfeited, you can now choose another world.", null);
+        chat.addChatMessage("Level forfeited, you can now choose another world.", ChatMessage.COMBAT());
         const adventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
         adventureSceneGraphicComponent.cleanHeroCards();
         adventureSceneGraphicComponent.cleanEnemyCards();
@@ -103,7 +103,7 @@ class Combat {
             this._combatState = Combat.STATE_START();
         }
         else {
-            chat.addChatMessage("Can't increase above level " + allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()) + ". You need to win current level first.", ChatMessage.ERROR());
+            chat.addChatMessage("Can't increase above level " + allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()) + ". You need to win current level first.", ChatMessage.COMBAT());
             this._combatState = Combat.STATE_STOP();
         }
     }
@@ -119,7 +119,7 @@ class Combat {
             this._combatState = Combat.STATE_START();
         }
         else {
-            chat.addChatMessage("Level can't be reduce", ChatMessage.ERROR());
+            chat.addChatMessage("Level can't be reduce", ChatMessage.COMBAT());
             this._combatState = Combat.STATE_STOP();
         }
     }
@@ -127,7 +127,7 @@ class Combat {
         const chat = this._container.get(Chat.name);
         const text = "Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + " starts in " + this._combatCountDownLevel + ".";
         this._combatStatusText = text;
-        chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+        chat.addChatMessage(text, ChatMessage.COMBAT());
         if (this._combatCountDownLevel == 0) {
             this._currentLevel.start();
             // then continue
@@ -151,7 +151,7 @@ class Combat {
         let currentEnemy = this._currentLevel.getCurrentEnemy();
         let currentHero = this._currentLevel.getCurrentHero();
         if (currentEnemy == null) {
-            chat.addChatMessage("You win !  Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + " completed !", ChatMessage.SUCCES());
+            chat.addChatMessage("You win !  Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + " completed !", ChatMessage.COMBAT());
             this._combatState = null;
             allWorldProgress.setMaxLevelReachForWorld(this._currentWorld.getName(), allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()));
             this._currentLevel = null;
@@ -163,7 +163,7 @@ class Combat {
             return;
         }
         if (currentHero == null) {
-            chat.addChatMessage("You loose !  Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + ".", ChatMessage.FAILURE());
+            chat.addChatMessage("You loose !  Level " + __classPrivateFieldGet(this, _Combat_instances, "m", _Combat_getCurrentLevelName).call(this) + ".", ChatMessage.COMBAT());
             this._combatState = null;
             this._currentLevel = null;
             this.setCombatStatusText("You lost!");

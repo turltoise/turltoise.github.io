@@ -75,23 +75,32 @@ class HeroListGraphicComponent extends AbstractListGraphicComponent {
         let deck: Deck = this._container.get(Deck.name);
         let chat: Chat = this._container.get(Chat.name);
         let collection: Collection = this._container.get(Collection.name);
-        let card: CollectionCard = collection.getCardFromUUID(uuid);
+        let card: Hero = <Hero> collection.getCardFromUUID(uuid);
         if(!deck.addCard(card)) {
-            chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.ERROR());
+            chat.addChatMessage(
+                "Max card in deck reached. Max is set to : " + deck.getMaxCard(),
+                ChatMessage.COLLECTION()
+            );
             return;
         }
         this.setToRemoveBtn(uuid);
-        chat.addChatMessage("Card " + card.getTitle() +" add to deck.", ChatMessage.ADD());
+        chat.addChatMessage(
+            "Card " + card.getTitle() +" add to deck.",
+            ChatMessage.COLLECTION()
+        );
     }
 
     btnActionRemoveFromDeck(uuid: string) {
         const deck: Deck = this._container.get(Deck.name);
         const chat: Chat = this._container.get(Chat.name);
         let collection: Collection = this._container.get(Collection.name);
-        let card: CollectionCard = collection.getCardFromUUID(uuid);
+        let card: Hero = <Hero> collection.getCardFromUUID(uuid);
         deck.removeCard(card);
         this.setToAddBtn(uuid);
-        chat.addChatMessage("Card " + card.getTitle() +" remove from deck.", ChatMessage.REMOVE());
+        chat.addChatMessage(
+            "Card " + card.getTitle() +" remove from deck.",
+            ChatMessage.COLLECTION()
+        );
     }
 
 }

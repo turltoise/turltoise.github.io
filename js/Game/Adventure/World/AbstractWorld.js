@@ -16,18 +16,12 @@ class AbstractWorld {
     getEnemy1(numberLevel) {
         return null;
     }
-    getHeroList() {
+    getHeroListByLevel(level) {
         return null;
     }
-    getItemList() {
+    getItemListByLevel(level) {
         return null;
     }
-    /*generateItem(): Item{
-        let keys = Array.from(this._itemClassList.keys());
-        let className: string = this._itemClassList.get(keys[Math.floor(Math.random() * keys.length)]);
-        let item: Item = eval(`new ${className}()`);
-        return item;
-    }*/
     getName() { return this._title; }
     getTitle() { return this._title; }
     getBackground() { return this._background; }

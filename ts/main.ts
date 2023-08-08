@@ -16,6 +16,7 @@ import Container from "./Container.js";
 import World1_Item1 from "./Game/Adventure/World/World1/World1_Item1.js";
 import WorldList from "./Game/Adventure/WorldList.js";
 import Booster from "./Game/Booster/Booster.js";
+import ItemRarity from "./Game/Card/ItemRarity.js";
 import Chest from "./Game/CardManager/Chest.js";
 import Collection from "./Game/CardManager/Collection.js";
 import Deck from "./Game/CardManager/Deck.js";
@@ -34,6 +35,7 @@ mainContainer.add(new AllWorldProgress());
 mainContainer.add(new Collection());
 mainContainer.add(new Deck());
 mainContainer.add(new Chest());
+mainContainer.add(new ItemRarity());
 
 
 
@@ -49,9 +51,9 @@ myCollection.addCard(new World1_Hero1(mainContainer, 5));
 myCollection.addCard(new World1_Hero1(mainContainer, 100));
 myCollection.addCard(new World1_Hero1(mainContainer, 100));
 
-const myChest: Chest = mainContainer.get(Chest.name);
-myChest.addCard(new World1_Item1(mainContainer, 1));
-myChest.addCard(new World1_Item1(mainContainer, 10));
+//const myChest: Chest = mainContainer.get(Chest.name);
+//myChest.addCard(new World1_Item1(mainContainer, 1));
+//myChest.addCard(new World1_Item1(mainContainer, 10));
 
 const myDeck: Deck = mainContainer.get(Deck.name);
 myDeck.addCard(cardA);

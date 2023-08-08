@@ -9,6 +9,7 @@ class Hero extends CollectionCard {
     }
     static getMaxItem() { return 3; }
     getXP() { return this._currentXP; }
+    incrementXP() { this._currentXP += 1; }
     getXPForNextLevel() { return this._level + 1; }
     addItem(item) {
         item = item;

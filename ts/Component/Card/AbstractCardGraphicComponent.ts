@@ -15,6 +15,7 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
     protected _instanceCardContainer: HTMLElement;
     protected _instanceCardImg: HTMLImageElement;
     protected _instanceLife: HTMLElement; 
+    protected _instanceCardTitle: HTMLElement;
 
     constructor(container: Container, card: AbstractPrintableCard) {
         super(container);
@@ -50,14 +51,14 @@ class AbstractCardGraphicComponent extends AbstractGraphicComponent {
         templateHover.style.top      = "0";
         templateHover.style.left     = "0";
 
-        const instanceCardTitle: HTMLElement = <HTMLElement> this.getCurrentDocument().createElement('div');
-        instanceCardTitle.innerHTML = this._title + "<br>Lvl " + this._card.getLevel();
-        instanceCardTitle.style.fontSize = "12px";
-        instanceCardTitle.style.textAlign = "center";
-        instanceCardTitle.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        instanceCardTitle.style.color = "white";
-        instanceCardTitle.style.padding = "2px";
-        this._instanceCardContainer.appendChild(instanceCardTitle);
+        this._instanceCardTitle = <HTMLElement> this.getCurrentDocument().createElement('div');
+        this._instanceCardTitle.innerHTML = this._title + "<br>Lvl " + this._card.getLevel();
+        this._instanceCardTitle.style.fontSize = "12px";
+        this._instanceCardTitle.style.textAlign = "center";
+        this._instanceCardTitle.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        this._instanceCardTitle.style.color = "white";
+        this._instanceCardTitle.style.padding = "2px";
+        this._instanceCardContainer.appendChild(this._instanceCardTitle);
 
         this._instanceCardImg = <HTMLImageElement> this.getCurrentDocument().createElement('img');
         this._instanceCardImg.setAttribute('class', this.getClassName('img'));

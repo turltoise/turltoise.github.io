@@ -180,7 +180,10 @@ class CombatPanelGraphicComponent extends AbstractPanelGraphicComponent {
 			combat.setCurrentWorld(world);
 		} else {
 			let chat:Chat = this._container.get(Chat.name);
-			chat.addChatMessage("You can't change world, if a level is in progress.", ChatMessage.ERROR());
+			chat.addChatMessage(
+				"You can't change world, if a level is in progress.",
+				ChatMessage.COMBAT()
+			);
 		}
 		
 	}

@@ -14,6 +14,15 @@ class Deck extends AbstractCardManager {
     getMaxCard() {
         return this._maxCard;
     }
+    getCardWithName(name) {
+        let heroFound = null;
+        this._cardList.forEach((hero) => {
+            if (hero.getTitle() == name) {
+                heroFound = hero;
+            }
+        });
+        return heroFound;
+    }
 }
 export default Deck;
 //# sourceMappingURL=Deck.js.map

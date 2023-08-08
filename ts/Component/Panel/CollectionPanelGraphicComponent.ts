@@ -18,6 +18,9 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     private _instancePreviewCardItem: HTMLElement;
     private _currentHero: Hero;
     private _currentItem: Item;
+    private _itemList :ItemListGraphicComponent;
+    private _heroList  :HeroListGraphicComponent;
+    private  _instanceContainerCollectionAndChest: HTMLElement;
 
     constructor(container : Container) {
         super(container);
@@ -47,13 +50,13 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         instancePreviewCard.style.verticalAlign = "top";
         this._instanceContainer.appendChild(instancePreviewCard);
         this._heroPreview = new HeroPreviewGraphicComponent(this._container, this._currentHero, this._templateContainerCard);
-        this._itemPreview = new ItemPreviewGraphicComponent(this._container, this._currentItem, this._templateContainerCard);
+        //this._itemPreview = new ItemPreviewGraphicComponent(this._container, this._currentItem, this._templateContainerCard);
 
         this._instancePreviewCardHero = this.getCurrentDocument().createElement('div');
         this._instancePreviewCardHero.style.marginBottom = "20px";
         this._instancePreviewCardItem = this.getCurrentDocument().createElement('div');
         this._instancePreviewCardHero.appendChild(this._heroPreview);
-        this._instancePreviewCardItem.appendChild(this._itemPreview);
+        //this._instancePreviewCardItem.appendChild(this._itemPreview);
 
         instancePreviewCard.appendChild(this._instancePreviewCardHero);
         instancePreviewCard.appendChild(this._instancePreviewCardItem);
@@ -63,30 +66,37 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         instanceColumn.style.width = "1%";
         instanceColumn.style.display = "inline-block";
 
-        const instanceContainerCollectionAndChest = this.getCurrentDocument().createElement('div');
-        this._instanceContainer.appendChild(instanceContainerCollectionAndChest);
-        instanceContainerCollectionAndChest.style.display = "inline-block";
-        instanceContainerCollectionAndChest.style.width = "59%";
-        instanceContainerCollectionAndChest.style.verticalAlign = "top";
+        this._instanceContainerCollectionAndChest = this.getCurrentDocument().createElement('div');
+        this._instanceContainer.appendChild(this._instanceContainerCollectionAndChest);
+        this._instanceContainerCollectionAndChest.style.display = "inline-block";
+        this._instanceContainerCollectionAndChest.style.width = "59%";
+        this._instanceContainerCollectionAndChest.style.verticalAlign = "top";
 
-        let heroList = new HeroListGraphicComponent(
-            container,
+        this.refreshCardLists();
+    }
+
+    refreshCardLists() {
+        this._instanceContainerCollectionAndChest.innerHTML = "";
+        const collection: Collection = this._container.get(Collection.name);
+        const chest: Chest = this._container.get(Chest.name);
+        this._heroList = new HeroListGraphicComponent(
+            this._container,
             "Your Heroes",
             collection.getCardList(),
             this._templateContainerCard,
             this._instancePreviewCardHero,
             this
         );
-        instanceContainerCollectionAndChest.appendChild(heroList);
-        let itemList = new ItemListGraphicComponent(
-            container,
+        this._itemList = new ItemListGraphicComponent(
+            this._container,
             "Your Items",
             chest.getCardList(),
             this._templateContainerCard,
             this._instancePreviewCardItem,
             this
         );
-        instanceContainerCollectionAndChest.appendChild(itemList);
+        this._instanceContainerCollectionAndChest.appendChild(this._heroList);
+        this._instanceContainerCollectionAndChest.appendChild(this._itemList);
     }
 
     showHeroPreview(container:HTMLElement, hero: Hero) {
@@ -99,7 +109,7 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
     showItemPreview(container:HTMLElement, item: Item) {
         container.innerHTML = "";
         let preview = new ItemPreviewGraphicComponent(this._container, item, this._templateContainerCard);
-    container.appendChild(preview);
+        container.appendChild(preview);
     }
 
     getCurrentHero() {

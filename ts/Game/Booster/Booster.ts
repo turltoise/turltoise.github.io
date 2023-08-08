@@ -4,32 +4,40 @@ import WorldList from "../Adventure/WorldList.js";
 
 class Booster {
     private _container: Container;
-    private _bootserInventory:  Map<string, number>;
-    private _bootserAlreadyBought:  Map<string, number>;
+    private _boosterInventory:  Map<string, number>;
+    private _boosterAlreadyBought:  Map<string, number>;
 
     constructor(container: Container) {
         this._container = container;
         let worldList = this._container.get(WorldList.name);
-        this._bootserInventory = new Map();
-        this._bootserAlreadyBought = new Map();
+        this._boosterInventory = new Map();
+        this._boosterAlreadyBought = new Map();
         worldList.getList().forEach((world: AbstractWorld) => {
-            this._bootserInventory.set(world.getName(), 0);
-            this._bootserAlreadyBought.set(world.getName(), 0);
+            this._boosterInventory.set(world.getName(), 0);
+            this._boosterAlreadyBought.set(world.getName(), 0);
         });
     }
 
+    getboosterAlreadyBoughtForWorld(world: AbstractWorld): number {return this._boosterAlreadyBought.get(world.getName());}
+
     buyBooster(world:AbstractWorld): void {
-        this._bootserInventory.set(world.getName(), this._bootserInventory.get(world.getName()) + 1);
-        this._bootserAlreadyBought.set(world.getName(), this._bootserAlreadyBought.get(world.getName()) + 1);
+        this._boosterInventory.set(world.getName(), this._boosterInventory.get(world.getName()) + 1);
+        this._boosterAlreadyBought.set(world.getName(), this._boosterAlreadyBought.get(world.getName()) + 1);
     }
 
     getNumberBoosterOwnedForWorld(world: AbstractWorld): number {
-        return this._bootserInventory.get(world.getName());
+        return this._boosterInventory.get(world.getName());
+    }
+
+    decrementNumberBoosterOwnedForWorld(world: AbstractWorld) {
+        let n: number = this._boosterInventory.get(world.getName());
+        n-=1;
+        this._boosterInventory.set(world.getName(), n);
     }
 
     getTotalNumberBoosterOwned(): number {
         let count: number = 0;
-        this._bootserInventory.forEach((total, worldName) => {
+        this._boosterInventory.forEach((total, worldName) => {
            count+=total; 
         });
         return count;

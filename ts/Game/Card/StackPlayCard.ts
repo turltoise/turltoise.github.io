@@ -1,6 +1,7 @@
 import SpriteManager from '../../Component/Card/SpriteManager.js';
 import Container from '../../Container.js';
 import Chat from '../Chat/Chat.js';
+import ChatMessage from '../Chat/ChatMessage.js';
 import AbstractCapacity from '../Fight/Capacity/List/AbstractCapacity.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import Status from '../Fight/Status/Status.js';
@@ -87,7 +88,10 @@ class StackPlayCard extends AbstractPrintableCard {
 				let goldEarned: number = this.getMainPlayCard().getCollectionCard().getGold()
 				resource.addGold(goldEarned);
 				let chat: Chat = this._container.get(Chat.name);
-				chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", null);
+				chat.addChatMessage(
+					"You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.",
+					ChatMessage.COMBAT()
+				);
 			}
 		} else {
 			this.setCombatSpriteText(SpriteManager.IMG_HIT1());

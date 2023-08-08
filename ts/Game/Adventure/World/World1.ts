@@ -1,7 +1,6 @@
 import Container from "../../../Container.js";
 import CollectionCard from "../../Card/CollectionCard.js";
 import Enemy from "../../Card/Enemy.js";
-import Item from "../../Card/Item.js";
 import World1_Hero1 from "../../Hero/World1_Hero1.js";
 import UUID from "../../Tools/UUID.js";
 import AbstractWorld from "./AbstractWorld.js";
@@ -18,21 +17,15 @@ class World1 extends AbstractWorld {
 		return new World1_Enemy1(this._container, numberLevel);
 	}
 
-	/*getCardAvailable(): Map <string, string> {
+	getHeroListByLevel(level: number): Map <string, CollectionCard> {
 		let map = new Map();
-		map.set(UUID.generateUUID(), World1_Hero1.name);
-		return
-	}*/
-
-	getHeroList(): Map <string, string> {
-		let map = new Map();
-		map.set(UUID.generateUUID(), World1_Hero1);
+		map.set(UUID.generateUUID(), new World1_Hero1(this._container, level));
 		return map;
 	}
 
-	getItemList(): Map <string, string> {
+	getItemListByLevel(level: number): Map <string, CollectionCard> {
 		let map = new Map();
-		map.set(UUID.generateUUID(), World1_Item1);
+		map.set(UUID.generateUUID(), new World1_Item1(this._container, level));
 		return map;
 	}
 }

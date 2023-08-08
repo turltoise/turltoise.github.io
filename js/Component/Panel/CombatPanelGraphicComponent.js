@@ -138,7 +138,7 @@ _CombatPanelGraphicComponent_instances = new WeakSet(), _CombatPanelGraphicCompo
     }
     else {
         let chat = this._container.get(Chat.name);
-        chat.addChatMessage("You can't change world, if a level is in progress.", ChatMessage.ERROR());
+        chat.addChatMessage("You can't change world, if a level is in progress.", ChatMessage.COMBAT());
     }
 };
 customElements.define('combat-panel', CombatPanelGraphicComponent);

@@ -5,6 +5,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _a, _CapacityMessage_addMessage, _CapacityMessage_fontForStackPlayCard, _CapacityMessage_fontForSkillCombat, _CapacityMessage_classForStackPlayCard, _CapacityMessage_fontWithClass;
 import Chat from "../../Chat/Chat.js";
+import ChatMessage from "../../Chat/ChatMessage.js";
 import F from "../../Tools/F.js";
 class CapacityMessage {
     static failed(container, attackName) {
@@ -42,7 +43,7 @@ class CapacityMessage {
 }
 _a = CapacityMessage, _CapacityMessage_addMessage = function _CapacityMessage_addMessage(container, text, className) {
     const chat = container.get(Chat.name);
-    chat.addChatMessage(__classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontWithClass).call(CapacityMessage, text, className), null);
+    chat.addChatMessage(__classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontWithClass).call(CapacityMessage, text, className), ChatMessage.COMBAT());
 }, _CapacityMessage_fontForStackPlayCard = function _CapacityMessage_fontForStackPlayCard(stackPlayCard) {
     return __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_fontWithClass).call(CapacityMessage, stackPlayCard.getTitle(), __classPrivateFieldGet(CapacityMessage, _a, "m", _CapacityMessage_classForStackPlayCard).call(CapacityMessage, stackPlayCard));
 }, _CapacityMessage_fontForSkillCombat = function _CapacityMessage_fontForSkillCombat(attackName) {

@@ -7,6 +7,7 @@ var _ShopPanelGraphicComponent_instances, _ShopPanelGraphicComponent_animationBt
 import WorldList from "../../Game/Adventure/WorldList.js";
 import Booster from "../../Game/Booster/Booster.js";
 import Chat from "../../Game/Chat/Chat.js";
+import ChatMessage from "../../Game/Chat/ChatMessage.js";
 import Resource from "../../Game/Resource.js";
 import Number from "../../Game/Tools/Number.js";
 import BoosterCard from "../Card/BoosterCard.js";
@@ -101,7 +102,7 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             let instanceLeftContainer = templateLeftContainer.cloneNode(true);
             let instanceRightContainer = templateRightContainer.cloneNode(true);
             let instanceBtnBuy = templateBtnBuy.cloneNode(true);
-            instanceBtnBuy.onclick = () => self.buyBooster(world);
+            instanceContainerExtension.onclick = () => self.buyBooster(world);
             instanceBtnBuy.innerHTML = Number.displayNumber(world.getPriceNextBooster()) + " Gold";
             this._btnBuyList.set(world, instanceBtnBuy);
             let boosterCard = new BoosterCard(container, world);
@@ -122,10 +123,10 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             __classPrivateFieldGet(this, _ShopPanelGraphicComponent_instances, "m", _ShopPanelGraphicComponent_animationBoosterBuyBooster).call(this, world);
             resource.removeGold(world.getPriceNextBooster());
             booster.buyBooster(world);
-            chat.addChatMessage("You bought booster " + world.getName() + ".");
+            chat.addChatMessage("You bought booster " + world.getName() + ".", ChatMessage.BOOSTER());
         }
         else {
-            chat.addChatMessage("You don't have enough money to buy booster " + world.getName() + ".");
+            chat.addChatMessage("You don't have enough money to buy booster " + world.getName() + ".", ChatMessage.BOOSTER());
         }
     }
 }

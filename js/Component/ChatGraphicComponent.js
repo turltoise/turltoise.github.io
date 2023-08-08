@@ -109,6 +109,7 @@ _ChatGraphicComponent_instances = new WeakSet(), _ChatGraphicComponent_refreshCh
     chat.getGraphicMessageToAdd().forEach((message, uuid) => {
         this._instanceMessage = this._templateMessage.cloneNode(true);
         this._instanceMessage.setAttribute('id', uuid);
+        this._instanceMessage.style.backgroundColor = message.getColor();
         this._instanceMessage.innerHTML = message.getText();
         this._instanceContainerMessage.insertBefore(this._instanceMessage, this._anchor);
         //this._instanceContainerMessage.scrollingElement.scroll(0, 1);

@@ -128,6 +128,7 @@ class ChatGraphicComponent extends AbstractGraphicComponent {
     	chat.getGraphicMessageToAdd().forEach((message: ChatMessage, uuid: string) => {
     		this._instanceMessage = <HTMLElement> this._templateMessage.cloneNode(true);
     		this._instanceMessage.setAttribute('id', uuid);
+        this._instanceMessage.style.backgroundColor = message.getColor();
     		this._instanceMessage.innerHTML = message.getText();
 
     		this._instanceContainerMessage.insertBefore(this._instanceMessage, this._anchor);

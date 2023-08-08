@@ -1,6 +1,7 @@
 import Container from "../../../Container.js";
 import CollectionCard from "../../Card/CollectionCard.js";
 import Enemy from "../../Card/Enemy.js";
+import Hero from "../../Card/Hero.js";
 import Item from "../../Card/Item.js";
 import World1_Hero1 from "../../Hero/World1_Hero1.js";
 import UUID from "../../Tools/UUID.js";
@@ -34,20 +35,13 @@ class AbstractWorld {
 		return null;
 	}
 
-	getHeroList(): Map <string, string> {
+	getHeroListByLevel(level: number): Map <string, CollectionCard> {
 		return null;
 	}
 
-	getItemList(): Map <string, string> {
+	getItemListByLevel(level: number): Map <string, CollectionCard> {
 		return null;
 	}
-
-	/*generateItem(): Item{
-		let keys = Array.from(this._itemClassList.keys());
-		let className: string = this._itemClassList.get(keys[Math.floor(Math.random() * keys.length)]);
-		let item: Item = eval(`new ${className}()`);
-		return item;
-	}*/
 
 	getName(): string {return this._title;}
 	getTitle(): string {return this._title;}

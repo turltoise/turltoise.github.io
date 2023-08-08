@@ -39,37 +39,17 @@ class Level {
             this._phase = Level.PHASE_HERO();
         }
     }
-    /**
-    hit(card, state) {
-        state.addChatMessage(this._title + " hits " + card._title + " for " + this._currentStrength + ".", ChatMessage.SWORD());
-        console.debug(card._currentLife + "/" + card._life);
-        card._currentLife = parseInt(card._currentLife) - parseInt(this._currentStrength);
-        console.debug(card._currentLife + "/" + card._life);
-
-        this._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.ATTACK()));
-
-        card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DAMAGE(), "-"+this._currentStrength));
-        if (card._currentLife <= 0) {
-            state.addChatMessage(card._title + " dies!", ChatMessage.DIES());
-            card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DIE()));
-            if (card._type == Card.ENEMY_TYPE()) {
-                state._resource._gold = state._resource._gold + card._gold;
-                state.addChatMessage(card._gold + " gold earned.", ChatMessage.GOLD());
-            }
-        }
-    }
-**/
     prestart(currentWorld) {
         __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateHeroListForFight).call(this);
         __classPrivateFieldGet(this, _Level_instances, "m", _Level_generateEnemyList).call(this, currentWorld);
     }
     start() {
         const chat = this._container.get(Chat.name);
-        chat.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
+        chat.addChatMessage("Starting level " + this._levelNumber, ChatMessage.COMBAT());
     }
     stop() {
         const chat = this._container.get(Chat.name);
-        chat.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
+        chat.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.COMBAT());
         this._enemyList = new Map();
         this._heroListForFight = new Map();
     }
@@ -102,9 +82,6 @@ class Level {
 _Level_instances = new WeakSet(), _Level_action = function _Level_action(thrower, target) {
     thrower.triggerStatus();
     thrower.playCapacity(this._container, target);
-    /*capacity.trigger(thrower, target);
-    thrower.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
-    target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
 }, _Level_generateEnemyList = function _Level_generateEnemyList(currentWorld) {
     let idListCard = Level.ZERO();
     const currentLevel = currentWorld.getWorldLeveldByNumber(this._levelNumber);

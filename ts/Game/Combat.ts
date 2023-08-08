@@ -92,7 +92,10 @@ class Combat {
 		this._combatState = Combat.STATE_STARTING();
 		const text = "Level " + this.#getCurrentLevelName() + " starts in " + this._combatCountDownLevel + ".";
 		this._combatStatusText = text;
-		chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+		chat.addChatMessage(
+			text,
+			ChatMessage.COMBAT()
+		);
 		this._combatCountDownLevel -= 1;
 		
 		const adventureSceneGraphicComponent:AdventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
@@ -107,7 +110,10 @@ class Combat {
 		let chat: Chat = this._container.get(Chat.name);
 		this._currentLevel = null;
 		this._combatState = null;
-		chat.addChatMessage("Level forfeited, you can now choose another world.", null);
+		chat.addChatMessage(
+			"Level forfeited, you can now choose another world.",
+			ChatMessage.COMBAT()
+		);
 		const adventureSceneGraphicComponent:AdventureSceneGraphicComponent = this._container.get(AdventureSceneGraphicComponent.name);
 		adventureSceneGraphicComponent.cleanHeroCards();
 		adventureSceneGraphicComponent.cleanEnemyCards();
@@ -122,7 +128,7 @@ class Combat {
 		} else {
 			chat.addChatMessage(
 				"Can't increase above level " + allWorldProgress.getCurrentLevelForWorld(this._currentWorld.getName()) + ". You need to win current level first.",
-				ChatMessage.ERROR()
+				ChatMessage.COMBAT()
 			);
 			this._combatState = Combat.STATE_STOP();
 		}
@@ -148,7 +154,10 @@ class Combat {
 			// start the new level
 			this._combatState = Combat.STATE_START();
 		} else {
-			chat.addChatMessage("Level can't be reduce", ChatMessage.ERROR());
+			chat.addChatMessage(
+				"Level can't be reduce",
+				ChatMessage.COMBAT()
+			);
 			this._combatState = Combat.STATE_STOP();
 		}
 	}
@@ -157,7 +166,10 @@ class Combat {
 		const chat: Chat = this._container.get(Chat.name);
 		const text = "Level " + this.#getCurrentLevelName() + " starts in " + this._combatCountDownLevel + ".";
 		this._combatStatusText = text;
-		chat.addChatMessage(text, ChatMessage.COUNT_DOWN());
+		chat.addChatMessage(
+			text,
+			ChatMessage.COMBAT()
+		);
 		if (this._combatCountDownLevel == 0) {
 			this._currentLevel.start();
 			// then continue
@@ -183,7 +195,10 @@ class Combat {
 		let currentHero = this._currentLevel.getCurrentHero();
 
 		if (currentEnemy == null) {
-			chat.addChatMessage("You win !  Level " + this.#getCurrentLevelName() + " completed !", ChatMessage.SUCCES());
+			chat.addChatMessage(
+				"You win !  Level " + this.#getCurrentLevelName() + " completed !",
+				ChatMessage.COMBAT()
+			);
 			this._combatState = null;
 			allWorldProgress.setMaxLevelReachForWorld(
 				this._currentWorld.getName(),
@@ -198,7 +213,10 @@ class Combat {
 			return;
 		}
 		if (currentHero == null) {
-			chat.addChatMessage("You loose !  Level " + this.#getCurrentLevelName() + ".", ChatMessage.FAILURE());
+			chat.addChatMessage(
+				"You loose !  Level " + this.#getCurrentLevelName() + ".",
+				ChatMessage.COMBAT()
+			);
 			this._combatState = null;
 			this._currentLevel = null;
 			this.setCombatStatusText("You lost!");

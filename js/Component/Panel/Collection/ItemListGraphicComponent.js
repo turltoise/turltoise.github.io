@@ -44,11 +44,11 @@ class ItemListGraphicComponent extends AbstractListGraphicComponent {
         let chat = this._container.get(Chat.name);
         let itemCard = chest.getCardFromUUID(uuid);
         if (!HeroItemLinker.link(this._container, this._collectionPanelGraphicComponent.getCurrentHero(), itemCard)) {
-            chat.addChatMessage("Max card in deck reached. Max is set to : " + Hero.getMaxItem(), ChatMessage.ERROR());
+            chat.addChatMessage("Max card in deck reached. Max is set to : " + Hero.getMaxItem(), ChatMessage.COLLECTION());
             return;
         }
         this.setToRemoveBtn(uuid);
-        chat.addChatMessage("Card " + itemCard.getTitle() + " add to current Hero.", ChatMessage.ADD());
+        chat.addChatMessage("Card " + itemCard.getTitle() + " add to current Hero.", ChatMessage.COLLECTION());
     }
     btnActionRemoveFromHero(uuid) {
         let chest = this._container.get(Chest.name);
@@ -56,7 +56,7 @@ class ItemListGraphicComponent extends AbstractListGraphicComponent {
         let itemCard = chest.getCardFromUUID(uuid);
         HeroItemLinker.unlink(this._container, this._collectionPanelGraphicComponent.getCurrentHero(), itemCard);
         this.setToAddBtn(uuid);
-        chat.addChatMessage("Card " + itemCard.getTitle() + " remove from deck.", ChatMessage.REMOVE());
+        chat.addChatMessage("Card " + itemCard.getTitle() + " remove from deck.", ChatMessage.COLLECTION());
     }
 }
 customElements.define('item-list', ItemListGraphicComponent);

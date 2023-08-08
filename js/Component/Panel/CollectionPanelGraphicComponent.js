@@ -30,27 +30,33 @@ class CollectionPanelGraphicComponent extends AbstractPanelGraphicComponent {
         instancePreviewCard.style.verticalAlign = "top";
         this._instanceContainer.appendChild(instancePreviewCard);
         this._heroPreview = new HeroPreviewGraphicComponent(this._container, this._currentHero, this._templateContainerCard);
-        this._itemPreview = new ItemPreviewGraphicComponent(this._container, this._currentItem, this._templateContainerCard);
+        //this._itemPreview = new ItemPreviewGraphicComponent(this._container, this._currentItem, this._templateContainerCard);
         this._instancePreviewCardHero = this.getCurrentDocument().createElement('div');
         this._instancePreviewCardHero.style.marginBottom = "20px";
         this._instancePreviewCardItem = this.getCurrentDocument().createElement('div');
         this._instancePreviewCardHero.appendChild(this._heroPreview);
-        this._instancePreviewCardItem.appendChild(this._itemPreview);
+        //this._instancePreviewCardItem.appendChild(this._itemPreview);
         instancePreviewCard.appendChild(this._instancePreviewCardHero);
         instancePreviewCard.appendChild(this._instancePreviewCardItem);
         const instanceColumn = this.getCurrentDocument().createElement('div');
         this._instanceContainer.appendChild(instanceColumn);
         instanceColumn.style.width = "1%";
         instanceColumn.style.display = "inline-block";
-        const instanceContainerCollectionAndChest = this.getCurrentDocument().createElement('div');
-        this._instanceContainer.appendChild(instanceContainerCollectionAndChest);
-        instanceContainerCollectionAndChest.style.display = "inline-block";
-        instanceContainerCollectionAndChest.style.width = "59%";
-        instanceContainerCollectionAndChest.style.verticalAlign = "top";
-        let heroList = new HeroListGraphicComponent(container, "Your Heroes", collection.getCardList(), this._templateContainerCard, this._instancePreviewCardHero, this);
-        instanceContainerCollectionAndChest.appendChild(heroList);
-        let itemList = new ItemListGraphicComponent(container, "Your Items", chest.getCardList(), this._templateContainerCard, this._instancePreviewCardItem, this);
-        instanceContainerCollectionAndChest.appendChild(itemList);
+        this._instanceContainerCollectionAndChest = this.getCurrentDocument().createElement('div');
+        this._instanceContainer.appendChild(this._instanceContainerCollectionAndChest);
+        this._instanceContainerCollectionAndChest.style.display = "inline-block";
+        this._instanceContainerCollectionAndChest.style.width = "59%";
+        this._instanceContainerCollectionAndChest.style.verticalAlign = "top";
+        this.refreshCardLists();
+    }
+    refreshCardLists() {
+        this._instanceContainerCollectionAndChest.innerHTML = "";
+        const collection = this._container.get(Collection.name);
+        const chest = this._container.get(Chest.name);
+        this._heroList = new HeroListGraphicComponent(this._container, "Your Heroes", collection.getCardList(), this._templateContainerCard, this._instancePreviewCardHero, this);
+        this._itemList = new ItemListGraphicComponent(this._container, "Your Items", chest.getCardList(), this._templateContainerCard, this._instancePreviewCardItem, this);
+        this._instanceContainerCollectionAndChest.appendChild(this._heroList);
+        this._instanceContainerCollectionAndChest.appendChild(this._itemList);
     }
     showHeroPreview(container, hero) {
         container.innerHTML = "";

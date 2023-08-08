@@ -3,47 +3,31 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _ChatMessage_instances, _ChatMessage_computeType, _ChatMessage_generateMapType;
+var _ChatMessage_instances, _ChatMessage_generateColorMapForType;
 class ChatMessage {
     constructor(text, type) {
         _ChatMessage_instances.add(this);
         this._text = text;
         this._type = type !== null && type !== void 0 ? type : ChatMessage.NONE();
-        this._mapType = new Map();
-        __classPrivateFieldGet(this, _ChatMessage_instances, "m", _ChatMessage_generateMapType).call(this);
+        this._colorList = new Map();
+        __classPrivateFieldGet(this, _ChatMessage_instances, "m", _ChatMessage_generateColorMapForType).call(this);
     }
     getText() {
-        return __classPrivateFieldGet(this, _ChatMessage_instances, "m", _ChatMessage_computeType).call(this) + " " + this._text;
+        return this._text;
     }
-    //💥
-    static GOLD() { return 'gold'; }
-    static COUNT_DOWN() { return 'count-down'; }
-    static SUCCES() { return 'succes'; }
-    static FAILURE() { return 'failure'; }
-    static LEVEL_START() { return 'level-start'; }
-    static LEVEL_STOP() { return 'level-stop'; }
-    static DIES() { return 'dies'; }
-    static SWORD() { return 'sword'; }
-    static ADD() { return 'add'; }
-    static REMOVE() { return 'remove'; }
-    static ERROR() { return 'error'; }
+    getColor() {
+        return this._colorList.get(this._type);
+    }
+    static COMBAT() { return 'combat'; }
+    static BOOSTER() { return 'booster'; }
+    static COLLECTION() { return 'collection'; }
     static NONE() { return 'none'; }
 }
-_ChatMessage_instances = new WeakSet(), _ChatMessage_computeType = function _ChatMessage_computeType() {
-    return this._mapType.get(this._type);
-}, _ChatMessage_generateMapType = function _ChatMessage_generateMapType() {
-    this._mapType.set(ChatMessage.GOLD(), "💰");
-    this._mapType.set(ChatMessage.COUNT_DOWN(), "⏱");
-    this._mapType.set(ChatMessage.SUCCES(), "🟢");
-    this._mapType.set(ChatMessage.FAILURE(), "🔴");
-    this._mapType.set(ChatMessage.LEVEL_START(), "🏳");
-    this._mapType.set(ChatMessage.LEVEL_STOP(), "🏴");
-    this._mapType.set(ChatMessage.DIES(), "💀");
-    this._mapType.set(ChatMessage.SWORD(), "⚔️");
-    this._mapType.set(ChatMessage.ADD(), "➕");
-    this._mapType.set(ChatMessage.REMOVE(), "➖");
-    this._mapType.set(ChatMessage.ERROR(), "❗");
-    this._mapType.set(ChatMessage.NONE(), "");
+_ChatMessage_instances = new WeakSet(), _ChatMessage_generateColorMapForType = function _ChatMessage_generateColorMapForType() {
+    this._colorList.set(ChatMessage.COMBAT(), "blue");
+    this._colorList.set(ChatMessage.BOOSTER(), "black");
+    this._colorList.set(ChatMessage.COLLECTION(), "red");
+    this._colorList.set(ChatMessage.COLLECTION(), "green");
 };
 export default ChatMessage;
 //# sourceMappingURL=ChatMessage.js.map

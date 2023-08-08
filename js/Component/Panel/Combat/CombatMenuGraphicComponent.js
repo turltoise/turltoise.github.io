@@ -5,6 +5,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _CombatMenuGraphicComponent_instances, _CombatMenuGraphicComponent_displayBtnText, _CombatMenuGraphicComponent_setAnimationBtn, _CombatMenuGraphicComponent_setBackgroundImage, _CombatMenuGraphicComponent_updateTextStatus, _CombatMenuGraphicComponent_updateLevelText, _CombatMenuGraphicComponent_getCurrentLevelName, _CombatMenuGraphicComponent_getMaxLevelReachName;
 import Chat from "../../../Game/Chat/Chat.js";
+import ChatMessage from "../../../Game/Chat/ChatMessage.js";
 import Combat from "../../../Game/Combat.js";
 import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import F from "../../../Game/Tools/F.js";
@@ -100,7 +101,7 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     setAutomaticMode(automaticMode) {
         const combat = this._container.get(Combat.name);
         const chat = this._container.get(Chat.name);
-        chat.addChatMessage("Automatic mode set to " + automaticMode, null);
+        chat.addChatMessage("Automatic mode set to " + automaticMode, ChatMessage.COMBAT());
         combat.setAutomaticMode(automaticMode);
         if (combat.getAutomaticMode() == Combat.AUTOMATIC_MODE_INCREMENT()) {
             __classPrivateFieldGet(this, _CombatMenuGraphicComponent_instances, "m", _CombatMenuGraphicComponent_setAnimationBtn).call(this, this._btnLoop, true);

@@ -6,6 +6,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _StackPlayCard_instances, _StackPlayCard_getRandomCapacity, _StackPlayCard_computeStat, _StackPlayCard_aggregatedStatOfAllSoloCardLinkToThisAggregateCard, _StackPlayCard_checkBuffForCarac;
 import SpriteManager from '../../Component/Card/SpriteManager.js';
 import Chat from '../Chat/Chat.js';
+import ChatMessage from '../Chat/ChatMessage.js';
 import PhysicalAttack from '../Fight/Capacity/List/PhysicalAttack.js';
 import Resource from '../Resource.js';
 import UUID from '../Tools/UUID.js';
@@ -66,7 +67,7 @@ class StackPlayCard extends AbstractPrintableCard {
                 let goldEarned = this.getMainPlayCard().getCollectionCard().getGold();
                 resource.addGold(goldEarned);
                 let chat = this._container.get(Chat.name);
-                chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", null);
+                chat.addChatMessage("You earn <font class='message-earn-gold'>" + goldEarned + " golds</font>.", ChatMessage.COMBAT());
             }
         }
         else {

@@ -11,19 +11,14 @@ class World1 extends AbstractWorld {
     getEnemy1(numberLevel) {
         return new World1_Enemy1(this._container, numberLevel);
     }
-    /*getCardAvailable(): Map <string, string> {
+    getHeroListByLevel(level) {
         let map = new Map();
-        map.set(UUID.generateUUID(), World1_Hero1.name);
-        return
-    }*/
-    getHeroList() {
-        let map = new Map();
-        map.set(UUID.generateUUID(), World1_Hero1);
+        map.set(UUID.generateUUID(), new World1_Hero1(this._container, level));
         return map;
     }
-    getItemList() {
+    getItemListByLevel(level) {
         let map = new Map();
-        map.set(UUID.generateUUID(), World1_Item1);
+        map.set(UUID.generateUUID(), new World1_Item1(this._container, level));
         return map;
     }
 }

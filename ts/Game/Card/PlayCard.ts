@@ -44,5 +44,4 @@ class PlayCard {
 		return currentStat + Math.floor(mainStat / 10);
 	}
 }
-
 export default PlayCard;

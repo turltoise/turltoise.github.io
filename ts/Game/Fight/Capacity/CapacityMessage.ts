@@ -1,6 +1,7 @@
 import Container from "../../../Container.js";
 import StackPlayCard from "../../Card/StackPlayCard.js";
 import Chat from "../../Chat/Chat.js";
+import ChatMessage from "../../Chat/ChatMessage.js";
 import F from "../../Tools/F.js";
 
 class CapacityMessage {
@@ -69,7 +70,10 @@ class CapacityMessage {
 
     static #addMessage(container: Container, text: string, className: string): void {
         const chat: Chat = container.get(Chat.name);
-        chat.addChatMessage(CapacityMessage.#fontWithClass(text, className), null);
+        chat.addChatMessage(
+            CapacityMessage.#fontWithClass(text, className),
+            ChatMessage.COMBAT()
+        );
     }
 
     static #fontForStackPlayCard(stackPlayCard: StackPlayCard): string {

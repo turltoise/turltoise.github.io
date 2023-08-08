@@ -56,30 +56,7 @@ class Level {
 	#action(thrower: StackPlayCard, target: StackPlayCard) {
 		thrower.triggerStatus();
 		thrower.playCapacity(this._container, target);
-		/*capacity.trigger(thrower, target);
-		thrower.addFightAnimation(new CardAnimation(CardAnimation.ATTACK()));
-		target.addFightAnimation(new CardAnimation(CardAnimation.DAMAGE(), "4"));*/
 	}
-	/**
-	hit(card, state) {
-		state.addChatMessage(this._title + " hits " + card._title + " for " + this._currentStrength + ".", ChatMessage.SWORD());
-		console.debug(card._currentLife + "/" + card._life);
-		card._currentLife = parseInt(card._currentLife) - parseInt(this._currentStrength);
-		console.debug(card._currentLife + "/" + card._life);
-
-		this._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.ATTACK()));
-
-		card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DAMAGE(), "-"+this._currentStrength));
-		if (card._currentLife <= 0) {
-			state.addChatMessage(card._title + " dies!", ChatMessage.DIES());
-			card._animation.set(UUID.generateUUID(), new CardAnimation(CardAnimation.DIE()));
-			if (card._type == Card.ENEMY_TYPE()) {
-				state._resource._gold = state._resource._gold + card._gold;
-				state.addChatMessage(card._gold + " gold earned.", ChatMessage.GOLD());
-			}
-		}
-	}
-**/
 
 	prestart(currentWorld:AbstractWorld): void {
 		this.#generateHeroListForFight();
@@ -88,12 +65,18 @@ class Level {
 
 	start(): void {
 		const chat: Chat = this._container.get(Chat.name);
-		chat.addChatMessage("Starting level " + this._levelNumber, ChatMessage.LEVEL_START());
+		chat.addChatMessage(
+			"Starting level " + this._levelNumber,
+			ChatMessage.COMBAT()
+		);
 	}
 
 	stop(): void {
 		const chat: Chat = this._container.get(Chat.name);
-		chat.addChatMessage("Stopping level " + this._levelNumber, ChatMessage.LEVEL_STOP());
+		chat.addChatMessage(
+			"Stopping level " + this._levelNumber,
+			ChatMessage.COMBAT()
+		);
 		this._enemyList = new Map();
 		this._heroListForFight = new Map();
 	}

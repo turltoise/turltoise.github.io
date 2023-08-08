@@ -1,5 +1,6 @@
 import Container from "../../../Container.js";
 import Chat from "../../../Game/Chat/Chat.js";
+import ChatMessage from "../../../Game/Chat/ChatMessage.js";
 import Combat from "../../../Game/Combat.js";
 import AllWorldProgress from "../../../Game/State/AllWorldProgress.js";
 import F from "../../../Game/Tools/F.js";
@@ -123,7 +124,10 @@ class CombatMenuGraphicComponent extends AbstractGraphicComponent {
     setAutomaticMode(automaticMode: string) {
         const combat: Combat = this._container.get(Combat.name);
         const chat: Chat = this._container.get(Chat.name);
-        chat.addChatMessage("Automatic mode set to " + automaticMode, null);
+        chat.addChatMessage(
+            "Automatic mode set to " + automaticMode,
+            ChatMessage.COMBAT()
+        );
         combat.setAutomaticMode(automaticMode);
         if (combat.getAutomaticMode() == Combat.AUTOMATIC_MODE_INCREMENT()) {
             this.#setAnimationBtn(this._btnLoop, true);

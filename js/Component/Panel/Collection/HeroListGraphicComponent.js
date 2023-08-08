@@ -51,11 +51,11 @@ class HeroListGraphicComponent extends AbstractListGraphicComponent {
         let collection = this._container.get(Collection.name);
         let card = collection.getCardFromUUID(uuid);
         if (!deck.addCard(card)) {
-            chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.ERROR());
+            chat.addChatMessage("Max card in deck reached. Max is set to : " + deck.getMaxCard(), ChatMessage.COLLECTION());
             return;
         }
         this.setToRemoveBtn(uuid);
-        chat.addChatMessage("Card " + card.getTitle() + " add to deck.", ChatMessage.ADD());
+        chat.addChatMessage("Card " + card.getTitle() + " add to deck.", ChatMessage.COLLECTION());
     }
     btnActionRemoveFromDeck(uuid) {
         const deck = this._container.get(Deck.name);
@@ -64,7 +64,7 @@ class HeroListGraphicComponent extends AbstractListGraphicComponent {
         let card = collection.getCardFromUUID(uuid);
         deck.removeCard(card);
         this.setToAddBtn(uuid);
-        chat.addChatMessage("Card " + card.getTitle() + " remove from deck.", ChatMessage.REMOVE());
+        chat.addChatMessage("Card " + card.getTitle() + " remove from deck.", ChatMessage.COLLECTION());
     }
 }
 customElements.define('hero-list', HeroListGraphicComponent);
