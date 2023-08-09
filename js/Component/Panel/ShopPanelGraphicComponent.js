@@ -53,6 +53,7 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
         this._instanceContainer.style.paddingBottom = "20px";
         this._instanceContainer.style.paddingTop = "20px";
         this._instanceContainer.style.backgroundSize = "100%";
+        this._instanceContainer.style.textAlign = "center";
         let worldList = container.get(WorldList.name);
         let instanceTitleShop = this.getCurrentDocument().createElement('div');
         instanceTitleShop.innerHTML = "The Shop";
@@ -60,14 +61,28 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
         instanceTitleShop.style.fontSize = "30px";
         instanceTitleShop.style.marginLeft = "40px";
         instanceTitleShop.style.marginBottom = "40px";
+        instanceTitleShop.style.textAlign = "left";
         this._instanceContainer.appendChild(instanceTitleShop);
+        let templateVerticalPlank = this.getCurrentDocument().createElement('div');
+        templateVerticalPlank.style.backgroundColor = "#B25B21";
+        templateVerticalPlank.style.border = "1px solid black";
+        templateVerticalPlank.style.width = "20px";
+        templateVerticalPlank.style.height = "546px";
+        templateVerticalPlank.style.display = "inline-block";
+        templateVerticalPlank.style.verticalAlign = "top";
+        let instanceLeftWoodenPlank = templateVerticalPlank.cloneNode(true);
+        let instanceRightWoodenPlank = templateVerticalPlank.cloneNode(true);
         let instanceContainerListExtension = this.getCurrentDocument().createElement('div');
+        instanceContainerListExtension.style.display = "inline-block";
+        instanceContainerListExtension.style.verticalAlign = "top";
         instanceContainerListExtension.style.backgroundColor = "#e05048";
-        instanceContainerListExtension.style.marginLeft = "70px";
-        instanceContainerListExtension.style.marginRight = "70px";
-        instanceContainerListExtension.style.marginBottom = "70px";
+        //instanceContainerListExtension.style.marginLeft = "70px";
+        //instanceContainerListExtension.style.marginRight = "70px";
+        //instanceContainerListExtension.style.marginBottom = "70px";
         instanceContainerListExtension.style.borderRadius = "3px";
+        this._instanceContainer.appendChild(instanceLeftWoodenPlank);
         this._instanceContainer.appendChild(instanceContainerListExtension);
+        this._instanceContainer.appendChild(instanceRightWoodenPlank);
         let templateContainerExtension = this.getCurrentDocument().createElement('div');
         templateContainerExtension.style.display = "inline-block";
         templateContainerExtension.style.textAlign = "center";
@@ -97,8 +112,19 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
         templateBtnBuy.style.userSelect = "none";
         templateBtnBuy.style.caretColor = "transparent";
         templateBtnBuy.style.fontSize = "14px";
+        let templateWoodenPlank = this.getCurrentDocument().createElement('div');
+        templateWoodenPlank.style.width = "100%";
+        templateWoodenPlank.style.height = "20px";
+        templateWoodenPlank.style.boxSizing = "border-box";
+        templateWoodenPlank.style.backgroundColor = "#B25B21";
+        templateWoodenPlank.style.borderTop = "1px solid black";
+        templateWoodenPlank.style.borderBottom = "1px solid black";
+        let instanceWoodenPlank = templateWoodenPlank.cloneNode(true);
+        instanceContainerListExtension.appendChild(instanceWoodenPlank);
         let self = this;
+        let count = 0;
         worldList.getList().forEach(((world, position) => {
+            count++;
             let instanceContainerExtension = templateContainerExtension.cloneNode(true);
             let instanceLeftContainer = templateLeftContainer.cloneNode(true);
             let instanceRightContainer = templateRightContainer.cloneNode(true);
@@ -113,7 +139,16 @@ class ShopPanelGraphicComponent extends AbstractPanelGraphicComponent {
             instanceContainerExtension.appendChild(instanceLeftContainer);
             instanceContainerExtension.appendChild(instanceRightContainer);
             instanceContainerListExtension.appendChild(instanceContainerExtension);
+            if (count >= 5) {
+                count = 0;
+                let instanceWoodenPlank = templateWoodenPlank.cloneNode(true);
+                instanceContainerListExtension.appendChild(instanceWoodenPlank);
+            }
         }));
+        if (count != 0) {
+            let instanceWoodenPlank = templateWoodenPlank.cloneNode(true);
+            instanceContainerListExtension.appendChild(instanceWoodenPlank);
+        }
     }
     buyBooster(world) {
         __classPrivateFieldGet(this, _ShopPanelGraphicComponent_instances, "m", _ShopPanelGraphicComponent_animationBtnBuyBooster).call(this, world);

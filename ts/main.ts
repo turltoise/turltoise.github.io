@@ -13,7 +13,6 @@ import OpeningPanelGraphicComponent from "./Component/Panel/OpeningPanelGraphicC
 import ShopPanelGraphicComponent from "./Component/Panel/ShopPanelGraphicComponent.js";
 import StoreGraphicComponent from "./Component/StoreGraphicComponent.js";
 import Container from "./Container.js";
-import World1_Item1 from "./Game/Adventure/World/World1/World1_Item1.js";
 import WorldList from "./Game/Adventure/WorldList.js";
 import Booster from "./Game/Booster/Booster.js";
 import ItemRarity from "./Game/Card/ItemRarity.js";
