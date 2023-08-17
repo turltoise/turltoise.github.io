@@ -30,6 +30,7 @@ class OpenedBoosterGraphicComponent extends AbstractPanelGraphicComponent {
         let cardList = RewardComputer.generate(this._container, world);
         let templateCardContainer = this.getCurrentDocument().createElement('div');
         templateCardContainer.style.display = "inline-block";
+        templateCardContainer.style.verticalAlign = "top";
         templateCardContainer.style.margin = "5px";
         cardList.forEach((collectionCard) => {
             let instanceCardContainer = templateCardContainer.cloneNode(true);

@@ -7,8 +7,8 @@ import UUID from "../Tools/UUID.js";
 
 class World1_Hero1 extends Hero {
     constructor(container: Container, levelNumber:number) {
-        let name = "Cayne";
-        let backgroundImage = "hero/Cayne";
+        let name = "Athena Pierce's Clone";
+        let backgroundImage = "hero/Athena Pierce's Clone";
 
         let carac = new RawCarac();
         carac._rawStrength = 3;
@@ -41,12 +41,12 @@ class World1_Hero1 extends Hero {
         ]);
 
         let cardGraphicSetting  = new CardGraphicSetting();
-        cardGraphicSetting._maxSpriteDie1  = 11;
-        cardGraphicSetting._maxSpriteStand = 3;
-        cardGraphicSetting._maxSpriteHit1  = -1;
-        cardGraphicSetting._maxSpriteAttack1 = 10;
-        cardGraphicSetting._xSprite = "-30px";
-        cardGraphicSetting._ySprite = "-20px";
+        cardGraphicSetting._maxSpriteDie1  = 14;
+        cardGraphicSetting._maxSpriteStand = 2;
+        cardGraphicSetting._maxSpriteHit1  = 0;
+        cardGraphicSetting._maxSpriteAttack1 = 2;
+        cardGraphicSetting._xSprite = "-25px";
+        cardGraphicSetting._ySprite = "-21px";
 
         super(container, carac, levelNumber, name, backgroundImage, capacities, cardGraphicSetting);
     }

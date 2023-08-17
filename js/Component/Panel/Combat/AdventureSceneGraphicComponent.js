@@ -14,6 +14,7 @@ class AdventureSceneGraphicComponent extends AbstractGraphicComponent {
         templateContainerCard.setAttribute('class', this.getClassName('container-card'));
         //templateContainerCard.style.backgroundColor = "#88AA33";
         templateContainerCard.style.display = "inline-block";
+        templateContainerCard.style.verticalAlign = "top";
         //templateContainerCard.style.margin = "5px";
         templateContainerCard.style.padding = "5px";
         this._templateContainerCard = templateContainerCard;
