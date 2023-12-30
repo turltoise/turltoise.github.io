@@ -16,13 +16,13 @@ class World1_Hero1 extends Hero {
         carac._rawIntelligence = 3;
         carac._rawLuck = 3;
 
-        carac._rawPhysicalDamage = 3;
-        carac._rawPhysicalCriticalRate = 3;
-        carac._rawPhysicalCriticalNumber = 3;
+        carac._rawPhysicalDamage = 0;
+        carac._rawPhysicalCriticalRate = 0;
+        carac._rawPhysicalCriticalNumber = 0;
 
-        carac._rawMagicDamage = 3;
-        carac._rawMagicCriticalRate = 3;
-        carac._rawMagicCriticalNumber = 3;
+        carac._rawMagicDamage = 0;
+        carac._rawMagicCriticalRate = 0;
+        carac._rawMagicCriticalNumber = 0;
 
         carac._rawFireResistance = 0;
         carac._rawWaterResistance = 0;

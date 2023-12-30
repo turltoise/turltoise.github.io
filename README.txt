@@ -10,6 +10,8 @@ To reload ts files :
 ```npx tsc
 ```
 
+Open with 'Live server'
+
 ## Contributing
 
 Pull requests are welcome.
